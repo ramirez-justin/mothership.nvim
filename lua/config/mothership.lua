@@ -1,10 +1,11 @@
-require("mothership.tractor_beam")
-require("mothership.autopilot")
-require("mothership.control_panel")
+require("cofig.tractor_beam")
+require("config.autopilot")
+require("config.control_panel")
 
 vim.wo.relativenumber = true
 vim.wo.number = true
 vim.opt.clipboard = 'unnamedplus'
+
 -- Auto-sync Packer
 vim.cmd([[
 	augroup packer_user_config
