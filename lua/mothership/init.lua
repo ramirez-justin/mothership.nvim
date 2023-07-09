@@ -1,0 +1,5 @@
+require('mothership.options')
+require('mothership.plugins')
+require('mothership.keymaps')
+require('mothership.colorscheme')
+require('mothership.completion')

@@ -1,8 +1,9 @@
--- This file is automatically loaded by plugins.core
+local opt = vim.opt
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
-local opt = vim.opt
+vim.wo.relativenumber = true
+vim.wo.number = true
 
 opt.autowrite = true -- Enable auto write
 opt.clipboard = "unnamedplus" -- Sync with system clipboard
