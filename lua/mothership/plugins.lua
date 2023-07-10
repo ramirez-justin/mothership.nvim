@@ -26,6 +26,39 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- Telescope
+require('telescope').setup{
+  defaults = {
+    -- Default configuration for telescope goes here:
+    -- config_key = value,
+    mappings = {
+      i = {
+        -- map actions.which_key to <C-h> (default: <C-/>)
+        -- actions.which_key shows the mappings for your picker,
+        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+        ["<C-h>"] = "which_key"
+      }
+    }
+  },
+  pickers = {
+    -- Default configuration for builtin pickers goes here:
+    -- picker_name = {
+    --   picker_config_key = value,
+    --   ...
+    -- }
+    -- Now the picker_config_key will be applied every time you call this
+    -- builtin picker
+  },
+  extensions = {
+    -- Your extension configuration goes here:
+    -- extension_name = {
+    --   extension_config_key = value,
+    -- }
+    -- please take a look at the readme of the extension you want to configure
+  }
+}
+
+
 -- lualine config
 require('lualine').get_config()
 require('lualine').setup{
@@ -122,16 +155,18 @@ require('dashboard').setup {
         key = 'f',
       },
       {
-        desc = ' Apps',
+        icon = ' ',
+        desc = 'keymaps',
         group = 'DiagnosticHint',
-        action = 'Telescope app',
-        key = 'a',
+        action = 'Telescope keymaps',
+        key = 'k',
       },
       {
-        desc = ' dotfiles',
+        icon = ' ',
+        desc = 'live grep',
         group = 'Number',
-        action = 'Telescope dotfiles',
-        key = 'd',
+        action = 'Telescope live_grep',
+        key = 'g',
       },
     },
     { desc = '󰊳 Update', group = '@property', action = 'Lazy update', key = 'u' },
