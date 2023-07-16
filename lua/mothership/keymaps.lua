@@ -8,10 +8,9 @@ vim.keymap.set("n", "<leader>t", vim.cmd.NvimTreeToggle)
 -- Easy Commands
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader>q", vim.cmd.q)
-vim.keymap.set("n", "<leader>so", vim.cmd.source)
 vim.keymap.set("n", "<leader>h", vim.cmd.noh)
 vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
-vim.keymap.set("n", "<leader>c", vim.cmd.bd)
+vim.keymap.set("n", "<C-c>", vim.cmd.bd)
 
 
 -- LazyGit

@@ -93,9 +93,9 @@ require("lazy").setup({
   {'akinsho/toggleterm.nvim', version = "*", config = true},
   -- Bufferline
   {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
-
+  -- Notify
+  {'rcarriga/nvim-notify'},
 })
-
 
 require('mothership')
 
