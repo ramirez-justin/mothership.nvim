@@ -1,10 +1,6 @@
 https://github.com/nanotee/nvim-lua-guide
 
-https://github.com/wbthomason/packer.nvim
-
 https://github.com/nvim-treesitter/nvim-treesitter
-
-https://github.com/nvim-lua/kickstart.nvim  #used this to help design my repo and get ideas for flow
 
 https://github.com/nvim-lualine/lualine.nvim
 
@@ -14,7 +10,7 @@ https://github.com/sindrets/diffview.nvim       # Not Used yet
 
 https://github.com/phaazon/hop.nvim           # Not Used yet
 
-
+https://github.com/nvimdev/dashboard-nvim
 
 
 

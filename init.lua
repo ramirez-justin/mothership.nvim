@@ -1,3 +1,5 @@
+-- My config using lazyvim
+
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -29,6 +31,8 @@ require("lazy").setup({
     -- or                              , branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
+  -- Recent files extenssion
+  {"smartpde/telescope-recent-files"},
   -- Catppuccin theme
   { "catppuccin/nvim", name = "catppuccin", 
     priority = 1000
@@ -84,8 +88,14 @@ require("lazy").setup({
     end,
   },
   -- COC.nvim
-  {'neoclide/coc.nvim', branch = 'release'}
+  {'neoclide/coc.nvim', branch = 'release'},
+  -- Toggler term
+  {'akinsho/toggleterm.nvim', version = "*", config = true},
+  -- Bufferline
+  {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+
 })
 
 
 require('mothership')
+

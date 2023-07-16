@@ -5,6 +5,8 @@ vim.g.maplocalleader = " "
 vim.wo.relativenumber = true
 vim.wo.number = true
 
+
+
 opt.autowrite = true -- Enable auto write
 opt.clipboard = "unnamedplus" -- Sync with system clipboard
 opt.completeopt = "menu,menuone,noselect"
