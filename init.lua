@@ -95,6 +95,7 @@ require("lazy").setup({
   {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
   -- Notify
   {'rcarriga/nvim-notify'},
+  {'gelguy/wilder.nvim'},
 })
 
 require('mothership')

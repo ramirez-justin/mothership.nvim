@@ -1,3 +1,5 @@
+-- Once copilot is running, run `:Copilot auth` to start the authentication process.
+
 require('copilot').setup({
   panel = {
     enabled = true,

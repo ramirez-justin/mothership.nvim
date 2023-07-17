@@ -220,3 +220,7 @@ nvim_notify.setup {
 }
 
 vim.notify = nvim_notify
+
+-- Wilder
+local wilder = require('wilder')
+wilder.setup({modes = {':', '/', '?'}})
