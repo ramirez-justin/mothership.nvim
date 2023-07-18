@@ -34,42 +34,42 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<C-g>", builtin.git_files, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set("n", "<leader>fg", function()
-  builtin.grep_string({ search = vim.fn.input("Grep > ") });
+    builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
 
 -- NVIM-Tree plugin and keymap
 local function my_on_attach(bufnr)
-  local api = require "nvim-tree.api"
-  local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
+    local api = require "nvim-tree.api"
+    local function opts(desc)
+        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
 
-  -- default mappings
-  api.config.mappings.default_on_attach(bufnr)
+    -- default mappings
+    api.config.mappings.default_on_attach(bufnr)
 
-  -- custom mappings
-  vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
-  vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
+    -- custom mappings
+    vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
+    vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
 end
 
 -- Undotree keymap
-vim.keymap.set('n', '<leader>x', require('undotree').toggle, 
-{ noremap = true, silent = true })
+vim.keymap.set('n', '<leader>x', require('undotree').toggle,
+    { noremap = true, silent = true })
 
 -- Whichkey
 local wk = require("which-key")
 --wk.register(mappings, opts)
 --wk.register({
-  --f = {
-    --name = "file", -- optional group name
-    --f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
-    --r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap=false, buffer = 123 }, -- additional options for creating the keymap
-    --n = { "New File" }, -- just a label. don't create any mapping
-    --e = "Edit File", -- same as above
-    --["1"] = "which_key_ignore",  -- special label to hide it in the popup
-    --b = { function() print("bar") end, "Foobar" } -- you can also pass functions!
-  --},
---}, { prefix = "<leader>" })
+    --f = {
+        --name = "file", -- optional group name
+        --f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
+        --r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap=false, buffer = 123 }, -- additional options for creating the keymap
+        --n = { "New File" }, -- just a label. don't create any mapping
+        --e = "Edit File", -- same as above
+        --["1"] = "which_key_ignore",  -- special label to hide it in the popup
+        --b = { function() print("bar") end, "Foobar" } -- you can also pass functions!
+        --},
+        --}, { prefix = "<leader>" })
 
 --Toggleterm
 vim.keymap.set("n", "<C-t>", vim.cmd.ToggleTerm)
