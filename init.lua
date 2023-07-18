@@ -19,11 +19,14 @@ vim.opt.rtp:prepend(lazypath)
 -- Lazyloader
 require("lazy").setup({
     -- default lazy keybinds
-    {"folke/which-key.nvim", event = "VeryLazy",
-      init = function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-      end,
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 500
+        end,
+        opts = {}
     },
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     "folke/neodev.nvim",
@@ -57,7 +60,8 @@ require("lazy").setup({
     -- Indent Blankline plugin
     "lukas-reineke/indent-blankline.nvim",
     -- LSP Plugins
-    { "williamboman/mason.nvim",
+    {
+        "williamboman/mason.nvim",
         build = ":MasonUpdate" -- :MasonUpdate updates registry contents
     },
     "williamboman/mason-lspconfig.nvim",
@@ -70,7 +74,8 @@ require("lazy").setup({
     "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
     "L3MON4D3/LuaSnip", -- Snippets plugin
     "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
-    { "kdheepak/lazygit.nvim",
+    {
+        "kdheepak/lazygit.nvim",
         -- optional for floating window border decoration
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -99,6 +104,17 @@ require("lazy").setup({
     {'gelguy/wilder.nvim'},
     -- DBTpal
     {'PedramNavid/dbtpal'},
+    {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    },
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {} -- this is equalent to setup({}) function
+    },
 })
 
 require('mothership')
