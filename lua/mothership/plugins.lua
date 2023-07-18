@@ -59,7 +59,7 @@ require('telescope').setup{
 }
 
 require("telescope").load_extension("recent_files")
-
+require('telescope').load_extension('dbtpal')
 
 -- lualine config
 require('lualine').get_config()
@@ -101,30 +101,6 @@ require("indent_blankline").setup {
   -- for example, context is off by default, use this to turn it on
   show_current_context = true,
   show_current_context_start = true,
-}
-
--- Mason
-require("mason").setup({
-  log_level = vim.log.levels.DEBUG,
-  ui = {
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
-    },
-  },
-})
-require("mason-lspconfig").setup()
-
-require("mason-lspconfig").setup_handlers {
-  -- The first entry (without a key) will be the default handler
-  -- and will be called for each installed server that doesn't have
-  -- a dedicated handler.
-  function (server_name) -- default handler (optional)
-    require("lspconfig")[server_name].setup {}
-  end,
-  -- Next, you can provide a dedicated handler for specific servers.
-  -- For example, a handler override for the `rust_analyzer`:
 }
 
 
@@ -224,3 +200,24 @@ vim.notify = nvim_notify
 -- Wilder
 local wilder = require('wilder')
 wilder.setup({modes = {':', '/', '?'}})
+wilder.set_option('renderer', wilder.popupmenu_renderer({
+  highlighter = wilder.basic_highlighter(),
+  left = {' ', wilder.popupmenu_devicons()},
+  right = {' ', wilder.popupmenu_scrollbar()},
+}))
+-- DBTpal
+local dbt = require('dbtpal')
+dbt.setup {
+  -- Path to the dbt executable
+  path_to_dbt = "dbt",
+  -- Path to the dbt project, if blank, will auto-detect
+  -- using currently open buffer for all sql,yml, and md files
+  path_to_dbt_project = "",
+  -- Path to dbt profiles directory
+  path_to_dbt_profiles_dir = vim.fn.expand "~/.dbt",
+  -- Search for ref/source files in macros and models folders
+  extended_path_search = true,
+  -- Prevent modifying sql files in target/(compiled|run) folders
+  protect_compiled_files = true
+}
+

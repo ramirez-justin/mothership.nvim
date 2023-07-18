@@ -76,3 +76,10 @@ vim.keymap.set("n", "<C-t>", vim.cmd.ToggleTerm)
 
 -- Bufferline
 vim.keymap.set("n", "<leader>gb", vim.cmd.BufferLinePick)
+
+--DBTpal
+local dbt = require('dbtpal')
+vim.keymap.set('n', '<leader>drf', dbt.run)
+vim.keymap.set('n', '<leader>drp', dbt.run_all)
+vim.keymap.set('n', '<leader>dtf', dbt.test)
+vim.keymap.set('n', '<leader>dm', require('dbtpal.telescope').dbt_picker)

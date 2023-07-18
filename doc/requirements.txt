@@ -1,4 +1,5 @@
 brew install neovim
 brew install ripgrip
 brew install cask font-space-mono-nerd-font
+brew install lua-language-server
 

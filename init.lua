@@ -34,7 +34,7 @@ require("lazy").setup({
   -- Recent files extenssion
   {"smartpde/telescope-recent-files"},
   -- Catppuccin theme
-  { "catppuccin/nvim", name = "catppuccin", 
+  { "catppuccin/nvim", name = "catppuccin",
     priority = 1000
   },
   -- Treesitter plugin
@@ -48,9 +48,9 @@ require("lazy").setup({
   -- Nvim-web-devicons
   "nvim-tree/nvim-web-devicons",
   -- Undotree plugin and config
-  "jiaoshijie/undotree",	
+  "jiaoshijie/undotree",
   -- Nvim-tree plugin
-  "nvim-tree/nvim-tree.lua", 	
+  "nvim-tree/nvim-tree.lua",
   -- Lualine plugin
   "nvim-lualine/lualine.nvim",
   -- Indent Blankline plugin
@@ -68,6 +68,7 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
   "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
   "L3MON4D3/LuaSnip", -- Snippets plugin
+  "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
   {"kdheepak/lazygit.nvim",
     -- optional for floating window border decoration
     dependencies = {
@@ -87,15 +88,16 @@ require("lazy").setup({
       require("copilot").setup({})
     end,
   },
-  -- COC.nvim
-  {'neoclide/coc.nvim', branch = 'release'},
   -- Toggler term
   {'akinsho/toggleterm.nvim', version = "*", config = true},
   -- Bufferline
   {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
   -- Notify
   {'rcarriga/nvim-notify'},
+  -- Wilder
   {'gelguy/wilder.nvim'},
+  -- DBTpal
+  {'PedramNavid/dbtpal'},
 })
 
 require('mothership')
