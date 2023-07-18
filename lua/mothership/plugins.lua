@@ -3,63 +3,10 @@ require("nvim-tree").setup {
   on_attach = my_on_attach,
 }
 
--- Treesitter config
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "sql", "rust", "python", "json", "java" },
 
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+-- Comment
+require('Comment').setup()
 
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI insrequire'nvim-treesitter.configs'.setup {}
-  auto_install = true,
-
-  highlight = {
-    enable = true,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
-
--- Telescope
-require('telescope').setup{
-  defaults = {
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
-    mappings = {
-      i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-h>"] = "which_key"
-      }
-    }
-  },
-  pickers = {
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  },
-  extensions = {
-    -- Your extension configuration goes here:
-    -- extension_name = {
-    --   extension_config_key = value,
-    -- }
-    -- please take a look at the readme of the extension you want to configure
-  }
-}
-
-require("telescope").load_extension("recent_files")
-require('telescope').load_extension('dbtpal')
 
 -- lualine config
 require('lualine').get_config()
@@ -93,6 +40,7 @@ require('lualine').setup{
   }
 }
 
+
 -- Indent Blankspace config
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
@@ -102,88 +50,6 @@ require("indent_blankline").setup {
   show_current_context = true,
   show_current_context_start = true,
 }
-
-
--- Dashboard
-require('dashboard').setup {
-  theme = 'doom', --  theme is doom and hyper default is hyper
-  disable_move,    --  default is false disable move keymap for hyper
-  shortcut_type,   --  shorcut type 'letter' or 'number'
-  change_to_vcs_root, -- default is false,for open file in hyper mru. it will change to the root of vcs
-  config = {
-    header = {
-      '',
-      'MMMMMMMM               MMMMMMMM     OOOOOOOOO     TTTTTTTTTTTTTTTTTTTTTTTHHHHHHHHH     HHHHHHHHHEEEEEEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRR      SSSSSSSSSSSSSSS HHHHHHHHH     HHHHHHHHHIIIIIIIIIIPPPPPPPPPPPPPPPPP   ',
-      'M:::::::M             M:::::::M   OO:::::::::OO   T:::::::::::::::::::::TH:::::::H     H:::::::HE::::::::::::::::::::ER::::::::::::::::R   SS:::::::::::::::SH:::::::H     H:::::::HI::::::::IP::::::::::::::::P  ',
-      'M::::::::M           M::::::::M OO:::::::::::::OO T:::::::::::::::::::::TH:::::::H     H:::::::HE::::::::::::::::::::ER::::::RRRRRR:::::R S:::::SSSSSS::::::SH:::::::H     H:::::::HI::::::::IP::::::PPPPPP:::::P ',
-      'M:::::::::M         M:::::::::MO:::::::OOO:::::::OT:::::TT:::::::TT:::::THH::::::H     H::::::HHEE::::::EEEEEEEEE::::ERR:::::R     R:::::RS:::::S     SSSSSSSHH::::::H     H::::::HHII::::::IIPP:::::P     P:::::P',
-      'M::::::::::M       M::::::::::MO::::::O   O::::::OTTTTTT  T:::::T  TTTTTT  H:::::H     H:::::H    E:::::E       EEEEEE  R::::R     R:::::RS:::::S              H:::::H     H:::::H    I::::I    P::::P     P:::::P',
-      'M:::::::::::M     M:::::::::::MO:::::O     O:::::O        T:::::T          H:::::H     H:::::H    E:::::E               R::::R     R:::::RS:::::S              H:::::H     H:::::H    I::::I    P::::P     P:::::P',
-      'M:::::::M::::M   M::::M:::::::MO:::::O     O:::::O        T:::::T          H::::::HHHHH::::::H    E::::::EEEEEEEEEE     R::::RRRRRR:::::R  S::::SSSS           H::::::HHHHH::::::H    I::::I    P::::PPPPPP:::::P ',
-      'M::::::M M::::M M::::M M::::::MO:::::O     O:::::O        T:::::T          H:::::::::::::::::H    E:::::::::::::::E     R:::::::::::::RR    SS::::::SSSSS      H:::::::::::::::::H    I::::I    P:::::::::::::PP  ',
-      'M::::::M  M::::M::::M  M::::::MO:::::O     O:::::O        T:::::T          H:::::::::::::::::H    E:::::::::::::::E     R::::RRRRRR:::::R     SSS::::::::SS    H:::::::::::::::::H    I::::I    P::::PPPPPPPPP    ',
-      'M::::::M   M:::::::M   M::::::MO:::::O     O:::::O        T:::::T          H::::::HHHHH::::::H    E::::::EEEEEEEEEE     R::::R     R:::::R       SSSSSS::::S   H::::::HHHHH::::::H    I::::I    P::::P            ',
-      'M::::::M    M:::::M    M::::::MO:::::O     O:::::O        T:::::T          H:::::H     H:::::H    E:::::E               R::::R     R:::::R            S:::::S  H:::::H     H:::::H    I::::I    P::::P            ',
-      'M::::::M     MMMMM     M::::::MO::::::O   O::::::O        T:::::T          H:::::H     H:::::H    E:::::E       EEEEEE  R::::R     R:::::R            S:::::S  H:::::H     H:::::H    I::::I    P::::P            ',
-      'M::::::M               M::::::MO:::::::OOO:::::::O      TT:::::::TT      HH::::::H     H::::::HHEE::::::EEEEEEEE:::::ERR:::::R     R:::::RSSSSSSS     S:::::SHH::::::H     H::::::HHII::::::IIPP::::::PP          ',
-      'M::::::M               M::::::M OO:::::::::::::OO       T:::::::::T      H:::::::H     H:::::::HE::::::::::::::::::::ER::::::R     R:::::RS::::::SSSSSS:::::SH:::::::H     H:::::::HI::::::::IP::::::::P          ',
-      'M::::::M               M::::::M   OO:::::::::OO         T:::::::::T      H:::::::H     H:::::::HE::::::::::::::::::::ER::::::R     R:::::RS:::::::::::::::SS H:::::::H     H:::::::HI::::::::IP::::::::P          ',
-      'MMMMMMMM               MMMMMMMM     OOOOOOOOO           TTTTTTTTTTT      HHHHHHHHH     HHHHHHHHHEEEEEEEEEEEEEEEEEEEEEERRRRRRRR     RRRRRRR SSSSSSSSSSSSSSS   HHHHHHHHH     HHHHHHHHHIIIIIIIIIIPPPPPPPPPP          ',
-      '',                                                                                                                                                                                                                  
-      '',                                                                                                                                                                                                                  
-      '',                                                                                                                                                                                                                  
-      '',                                                                                                                                                                                                                  
-      '',                                                                                                                                                                                                                  
-    },
-    center = {
-      { 
-        icon = " 󰈞 ",
-        desc = "Find  File                              ",
-        action = "Telescope find_files",
-        key = "f",
-      },
-      {
-        icon = "  ",
-        desc = "Recently opened files                   ",
-        action = "lua require('telescope').extensions.recent_files.pick()",
-        key = "r",
-      },
-      {
-        icon = " 󱠿 ",
-        desc = "Project grep                            ",
-      action = "Telescope live_grep",
-        key = "g",
-      },
-      {
-        icon = "  ",
-        desc = "Open Nvim config                        ",
-        action = "tabnew $MYVIMRC | tcd %:p:h",
-        key = "c",
-      },
-      {
-        icon = " 󰎔 ",
-        desc = "New file                                ",
-        action = "enew",
-        key = "e",
-      },
-      {
-        icon = " 󰩈 ",
-        desc = "Quit Nvim                               ",
-        action = "quit",
-        key = "q",
-      },
-      { 
-        icon = " 󰊳  ", 
-        desc = "Update                               ", 
-        action = "Lazy update", 
-        key = "u" },
-    },
-    
-  },
-}
-
---toggleterm
-require("toggleterm").setup{}
 
 --Notify
 local nvim_notify = require("notify")
@@ -197,6 +63,7 @@ nvim_notify.setup {
 
 vim.notify = nvim_notify
 
+
 -- Wilder
 local wilder = require('wilder')
 wilder.setup({modes = {':', '/', '?'}})
@@ -205,19 +72,24 @@ wilder.set_option('renderer', wilder.popupmenu_renderer({
   left = {' ', wilder.popupmenu_devicons()},
   right = {' ', wilder.popupmenu_scrollbar()},
 }))
--- DBTpal
-local dbt = require('dbtpal')
-dbt.setup {
-  -- Path to the dbt executable
-  path_to_dbt = "dbt",
-  -- Path to the dbt project, if blank, will auto-detect
-  -- using currently open buffer for all sql,yml, and md files
-  path_to_dbt_project = "",
-  -- Path to dbt profiles directory
-  path_to_dbt_profiles_dir = vim.fn.expand "~/.dbt",
-  -- Search for ref/source files in macros and models folders
-  extended_path_search = true,
-  -- Prevent modifying sql files in target/(compiled|run) folders
-  protect_compiled_files = true
-}
+
+-- -- DBTpal
+-- local dbt = require('dbtpal')
+-- dbt.setup {
+--     -- Path to the dbt executable
+--     path_to_dbt = "dbt",
+--     -- Path to the dbt project, if blank, will auto-detect
+--     -- using currently open buffer for all sql,yml, and md files
+--     path_to_dbt_project = "",
+--     -- Path to dbt profiles directory
+--     path_to_dbt_profiles_dir = vim.fn.expand "~/.dbt",
+--     -- Search for ref/source files in macros and models folders
+--     extended_path_search = true,
+--     -- Prevent modifying sql files in target/(compiled|run) folders
+--     protect_compiled_files = truem,
+--     vim.keymap.set('n', '<leader>rf', dbt.run),
+--     vim.keymap.set('n', '<leader>ra', dbt.run_all),
+--     vim.keymap.set('n', '<leader>td', dbt.test),
+--     vim.keymap.set('n', '<leader>dm', require('dbtpal.telescope').dbt_picker)
+-- }
 

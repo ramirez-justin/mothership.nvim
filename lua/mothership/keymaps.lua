@@ -2,84 +2,66 @@
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
--- Toggle Nvim-Tree
-vim.keymap.set("n", "<leader>t", vim.cmd.NvimTreeToggle)
+-- -- Easy Commands
 
--- Easy Commands
-vim.keymap.set("n", "<leader>w", vim.cmd.w)
-vim.keymap.set("n", "<leader>q", vim.cmd.q)
-vim.keymap.set("n", "<leader>h", vim.cmd.noh)
-vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
+--
+--vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
 vim.keymap.set("n", "<C-c>", vim.cmd.bd)
+--
+--
 
+--
+-- -- Harpoon plugins and keymap
+-- local mark = require("harpoon.mark")
+-- local ui = require("harpoon.ui")
+--
+-- vim.keymap.set("n", "<leader>a", mark.add_file)
+-- vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+--
+-- vim.keymap.set("n", "<C-n>", function() ui.nav_file(1) end)
+-- vim.keymap.set("n", "<C-m>", function() ui.nav_file(2) end)
+-- vim.keymap.set("n", "<C-o>", function() ui.nav_file(3) end)
+-- vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
+--
 
--- LazyGit
-vim.keymap.set("n", "<leader>gg" , vim.cmd.LazyGit)
+-- -- Undotree keymap
+-- vim.keymap.set('n', '<leader>x', require('undotree').toggle,
+--     { noremap = true, silent = true })
 
--- Harpoon plugins and keymap
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
-
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-vim.keymap.set("n", "<C-n>", function() ui.nav_file(1) end)
-vim.keymap.set("n", "<C-m>", function() ui.nav_file(2) end)
-vim.keymap.set("n", "<C-o>", function() ui.nav_file(3) end)
-vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
-
--- Telescope plugin and keymap
-local builtin = require('telescope.builtin')
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<C-g>", builtin.git_files, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set("n", "<leader>fg", function()
-    builtin.grep_string({ search = vim.fn.input("Grep > ") });
-end)
-
--- NVIM-Tree plugin and keymap
-local function my_on_attach(bufnr)
-    local api = require "nvim-tree.api"
-    local function opts(desc)
-        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-    end
-
-    -- default mappings
-    api.config.mappings.default_on_attach(bufnr)
-
-    -- custom mappings
-    vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
-    vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
-end
-
--- Undotree keymap
-vim.keymap.set('n', '<leader>x', require('undotree').toggle,
-    { noremap = true, silent = true })
-
--- Whichkey
+--Whichkey
 local wk = require("which-key")
---wk.register(mappings, opts)
---wk.register({
-    --f = {
-        --name = "file", -- optional group name
-        --f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
-        --r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap=false, buffer = 123 }, -- additional options for creating the keymap
-        --n = { "New File" }, -- just a label. don't create any mapping
-        --e = "Edit File", -- same as above
-        --["1"] = "which_key_ignore",  -- special label to hide it in the popup
-        --b = { function() print("bar") end, "Foobar" } -- you can also pass functions!
-        --},
-        --}, { prefix = "<leader>" })
+wk.register({
+    f = {
+        name = "Telescope", -- optional group name
+        f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
+        b = { "<cmd>Telescope buffers<cr>", "Buffers" },
+        r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap=false }, -- additional options for creating the keymap
+        g = { function() require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") }) end, "Grep > " }, -- you can also pass functions!
+    },
+    g = {
+        n = "Lazygit",
+        g =  {"<cmd>LazyGit<cr>", "Open LazyGit", noremap=false },
+    },
+    e = { ":NvimTreeToggle<cr>", "Toggle NVIM Tree" },
+    --["1"] = "which_key_ignore",  -- special label to hide it in the popup
+    w = { "<cmd>w<cr>", "Write File" },
+    q = { "<cmd>q<cr>", "Quit" },
+    h = { "<cmd>noh<cr>", "Remove Highlights" },
+},
+{
+    prefix = "<leader>",
+    presets = {
+      operators = true, -- adds help for operators like d, y, ...
+      motions = true, -- adds help for motions
+      text_objects = true, -- help for text objects triggered after entering an operator
+      windows = true, -- default bindings on <c-w>
+      nav = true, -- misc bindings to work with windows
+      z = true, -- bindings for folds, spelling and others prefixed with z
+      g = true, -- bindings for prefixed with g
+    },
+})
 
---Toggleterm
-vim.keymap.set("n", "<C-t>", vim.cmd.ToggleTerm)
 
 -- Bufferline
 vim.keymap.set("n", "<leader>gb", vim.cmd.BufferLinePick)
 
---DBTpal
-local dbt = require('dbtpal')
-vim.keymap.set('n', '<leader>drf', dbt.run)
-vim.keymap.set('n', '<leader>drp', dbt.run_all)
-vim.keymap.set('n', '<leader>dtf', dbt.test)
-vim.keymap.set('n', '<leader>dm', require('dbtpal.telescope').dbt_picker)
