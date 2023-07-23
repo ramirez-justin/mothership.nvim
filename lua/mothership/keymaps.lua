@@ -2,31 +2,25 @@
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
--- -- Easy Commands
-
---
---vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
+vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
 vim.keymap.set("n", "<C-c>", vim.cmd.bd)
---
---
 
---
 -- -- Harpoon plugins and keymap
--- local mark = require("harpoon.mark")
--- local ui = require("harpoon.ui")
---
--- vim.keymap.set("n", "<leader>a", mark.add_file)
--- vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
---
--- vim.keymap.set("n", "<C-n>", function() ui.nav_file(1) end)
--- vim.keymap.set("n", "<C-m>", function() ui.nav_file(2) end)
--- vim.keymap.set("n", "<C-o>", function() ui.nav_file(3) end)
--- vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
---
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<leader>a", mark.add_file)
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+
+vim.keymap.set("n", "<C-n>", function() ui.nav_file(1) end)
+vim.keymap.set("n", "<C-m>", function() ui.nav_file(2) end)
+vim.keymap.set("n", "<C-o>", function() ui.nav_file(3) end)
+vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
+
 
 -- -- Undotree keymap
--- vim.keymap.set('n', '<leader>x', require('undotree').toggle,
---     { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>x', require('undotree').toggle,
+    { noremap = true, silent = true })
 
 --Whichkey
 local wk = require("which-key")
@@ -47,17 +41,19 @@ wk.register({
     w = { "<cmd>w<cr>", "Write File" },
     q = { "<cmd>q<cr>", "Quit" },
     h = { "<cmd>noh<cr>", "Remove Highlights" },
+    d = "Dashboard",
+    a = "Harpoon  Add File",
 },
 {
     prefix = "<leader>",
     presets = {
-      operators = true, -- adds help for operators like d, y, ...
-      motions = true, -- adds help for motions
-      text_objects = true, -- help for text objects triggered after entering an operator
-      windows = true, -- default bindings on <c-w>
-      nav = true, -- misc bindings to work with windows
-      z = true, -- bindings for folds, spelling and others prefixed with z
-      g = true, -- bindings for prefixed with g
+        operators = true, -- adds help for operators like d, y, ...
+        motions = true, -- adds help for motions
+        text_objects = true, -- help for text objects triggered after entering an operator
+        windows = true, -- default bindings on <c-w>
+        nav = true, -- misc bindings to work with windows
+        z = true, -- bindings for folds, spelling and others prefixed with z
+        g = true, -- bindings for prefixed with g
     },
 })
 

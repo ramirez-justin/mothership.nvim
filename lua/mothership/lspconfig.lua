@@ -10,7 +10,22 @@ require("mason").setup({
     },
 })
 
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        "bashls",
+        "cssls",
+        "clangd",
+        "dockerls",
+        "gopls",
+        "html",
+        "jsonls",
+        "ruff_lsp",
+        "rust_analyzer",
+        "tsserver",
+        "vimls",
+        "yamlls",
+    },
+}
 
 
 local on_attach = function(_, _)
@@ -43,7 +58,8 @@ end
 
 -- Autocomplete
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require'lspconfig'.lua_ls.setup {
+local lspconfig = require('lspconfig')
+lspconfig.lua_ls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -66,7 +82,87 @@ require'lspconfig'.lua_ls.setup {
         },
     },
 }
-
+lspconfig.tsserver.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        documentFormatting = false,
+    },
+}
+lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "clippy",
+            },
+            cargo = {
+                loadOutDirsFromCheck = true,
+            },
+            procMacro = {
+                enable = true,
+            },
+        },
+    },
+}
+lspconfig.gopls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+        },
+    },
+}
+lspconfig.clangd.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { "clangd", "--background-index" },
+    filetypes = { "c", "cpp", "objc", "objcpp" },
+    init_options = {
+        clangdFileStatus = true,
+        usePlaceholders = true,
+        completeUnimported = true,
+        semanticHighlighting = true,
+    },
+    root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+}
+lspconfig.html.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.cssls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.dockerls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.jsonls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.vimls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.yamlls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.bashls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+lspconfig.ruff_lsp.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 
 -- Null-ls.nvim
 local null_ls = require("null-ls")

@@ -30,6 +30,7 @@ require("lazy").setup({
     },
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     "folke/neodev.nvim",
+
     -- Telescope.nvim
     { 'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                              , branch = '0.1.x',
@@ -39,10 +40,8 @@ require("lazy").setup({
     -- Recent files extenssion
     { "smartpde/telescope-recent-files"},
 
-    -- Catppuccin theme
-    { "catppuccin/nvim", name = "catppuccin",
-        priority = 1000
-    },
+    -- Material theme
+    "marko-cerovac/material.nvim",
 
     -- Treesitter plugin
     "nvim-treesitter/nvim-treesitter",
@@ -60,7 +59,15 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
 
     -- Undotree plugin and config
-    "jiaoshijie/undotree",
+    {
+        "jiaoshijie/undotree",
+        config = function()
+            require('undotree').setup()
+        end,
+        requires = {
+            "nvim-lua/plenary.nvim",
+        },
+    },
 
     -- Nvim-tree plugin
     "nvim-tree/nvim-tree.lua",
@@ -83,12 +90,14 @@ require("lazy").setup({
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
     { "jose-elias-alvarez/null-ls.nvim", requires = {"nvim-lua/plenary.nvim"} },
+    
     -- nvim-cmp
     "hrsh7th/nvim-cmp", -- Autocompletion plugin
     "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
     "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
     "L3MON4D3/LuaSnip", -- Snippets plugin
     "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
+    
     -- Lazygit
     {
         "kdheepak/lazygit.nvim",
