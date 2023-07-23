@@ -23,8 +23,26 @@ local on_attach = function(_, _)
     vim.keymap.set('n', 'K', vim.lsp.buf.rename, {})
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+-- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+require("neodev").setup({
+    library = { plugins = { "nvim-dap-ui" }, types = true },
+    -- add any options here, or leave empty to use the default settings
+})
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
+
+-- Autocomplete
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require'lspconfig'.lua_ls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -50,3 +68,16 @@ require'lspconfig'.lua_ls.setup {
 }
 
 
+-- Null-ls.nvim
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.completion.spell,
+        null_ls.builtins.code_actions.proselint,
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.completion.luasnip,
+
+    },
+})
