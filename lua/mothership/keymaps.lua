@@ -25,6 +25,7 @@ vim.keymap.set('n', '<leader>x', require('undotree').toggle,
 --Whichkey
 local wk = require("which-key")
 wk.register({
+    b = { "<cmd>bnext<cr>" , "Switch Buffer" },
     f = {
         name = "Telescope", -- optional group name
         f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
@@ -33,7 +34,7 @@ wk.register({
         g = { function() require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") }) end, "Grep > " }, -- you can also pass functions!
     },
     g = {
-        n = "Lazygit",
+        name = "Lazygit",
         g =  {"<cmd>LazyGit<cr>", "Open LazyGit", noremap=false },
     },
     e = { ":NvimTreeToggle<cr>", "Toggle NVIM Tree" },
@@ -42,7 +43,9 @@ wk.register({
     q = { "<cmd>q<cr>", "Quit" },
     h = { "<cmd>noh<cr>", "Remove Highlights" },
     d = "Dashboard",
-    a = "Harpoon  Add File",
+    a = "Harpoon Add File",
+    x = "Undotree",
+    r = "Rename",
 },
 {
     prefix = "<leader>",

@@ -1,6 +1,6 @@
 -- My config using lazyvim
 -- Author: Justin Ramirez
---
+
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -90,14 +90,14 @@ require("lazy").setup({
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
     { "jose-elias-alvarez/null-ls.nvim", requires = {"nvim-lua/plenary.nvim"} },
-    
+
     -- nvim-cmp
     "hrsh7th/nvim-cmp", -- Autocompletion plugin
     "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
     "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
     "L3MON4D3/LuaSnip", -- Snippets plugin
     "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
-    
+
     -- Lazygit
     {
         "kdheepak/lazygit.nvim",
@@ -106,11 +106,13 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
         },
     },
+
     -- Dashboard
     { "glepnir/dashboard-nvim",
         event = 'VimEnter',
         dependencies = { {'nvim-tree/nvim-web-devicons'}}
     },
+
     -- Github Copilot
     { "github/copilot.vim" },
 
@@ -128,12 +130,15 @@ require("lazy").setup({
 
     -- DBTpal
     {'PedramNavid/dbtpal'},
+
+    -- Comment
     {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
         end
     },
+
     -- Autopairs
     {
         'windwp/nvim-autopairs',
@@ -142,5 +147,5 @@ require("lazy").setup({
     },
 })
 
+-- The mothership
 require('mothership')
-
