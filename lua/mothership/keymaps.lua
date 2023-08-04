@@ -19,8 +19,16 @@ vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
 
 
 -- -- Undotree keymap
-vim.keymap.set('n', '<leader>x', require('undotree').toggle,
+vim.keymap.set('n', '<leader>z', require('undotree').toggle,
     { noremap = true, silent = true })
+
+-- Trouble keymap
+vim.keymap.set("n", "<leader>xx", function() require("trouble").open() end)
+vim.keymap.set("n", "<leader>xw", function() require("trouble").open("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() require("trouble").open("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() require("trouble").open("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").open("loclist") end)
+vim.keymap.set("n", "gR", function() require("trouble").open("lsp_references") end)
 
 --Whichkey
 local wk = require("which-key")
@@ -44,7 +52,15 @@ wk.register({
     h = { "<cmd>noh<cr>", "Remove Highlights" },
     d = "Dashboard",
     a = "Harpoon Add File",
-    x = "Undotree",
+    x = {
+        name = "Trouble",
+        x = { "<cmd>TroubleToggle<cr>", "Trouble Toggle" },
+        w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
+        d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics" },
+        q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix" },
+        l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
+    },
+    z = "Undotree",
     r = "Rename",
 },
 {

@@ -1,5 +1,3 @@
--- pass to setup along with your other options
-
 -- Comment
 require('Comment').setup()
 
@@ -68,4 +66,21 @@ wilder.set_option('renderer', wilder.popupmenu_renderer({
   right = {' ', wilder.popupmenu_scrollbar()},
 }))
 
+-- Trouble
+require("trouble").setup {
+    auto_open = false,
+    auto_close = true,
+    auto_preview = false,
+    auto_fold = false,
+    use_lsp_diagnostic_signs = true,
+}
+--Keybindings
+-- jump to the next item, skipping the groups
+require("trouble").next({skip_groups = true, jump = true});
+-- jump to the previous item, skipping the groups
+require("trouble").previous({skip_groups = true, jump = true});
+-- jump to the first item, skipping the groups
+require("trouble").first({skip_groups = true, jump = true});
+-- jump to the last item, skipping the groups
+require("trouble").last({skip_groups = true, jump = true});
 

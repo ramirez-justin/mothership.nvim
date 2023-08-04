@@ -30,6 +30,11 @@ require("lazy").setup({
     },
     { "folke/neoconf.nvim", cmd = "Neoconf" },
     "folke/neodev.nvim",
+    -- Trouble
+    {
+        "folke/trouble.nvim",
+        cmd = "TroubleToggle",
+    },
 
     -- Telescope.nvim
     { 'nvim-telescope/telescope.nvim', tag = '0.1.2',
@@ -89,7 +94,6 @@ require("lazy").setup({
     -- nvim-dap plugin
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
-    { "jose-elias-alvarez/null-ls.nvim", requires = {"nvim-lua/plenary.nvim"} },
 
     -- nvim-cmp
     "hrsh7th/nvim-cmp", -- Autocompletion plugin
