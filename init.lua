@@ -101,6 +101,11 @@ require("lazy").setup({
     "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
     "L3MON4D3/LuaSnip", -- Snippets plugin
     "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
+    "hrsh7th/cmp-buffer", -- Buffer source for nvim-cmp
+    "hrsh7th/cmp-path", -- Path source for nvim-cmp
+    "hrsh7th/cmp-calc", -- Calculator source for nvim-cmp
+    "hrsh7th/cmp-emoji", -- Emoji source for nvim-cmp
+    "hrsh7th/cmp-cmdline", -- Cmdline source for nvim-cmp
 
     -- Lazygit
     {

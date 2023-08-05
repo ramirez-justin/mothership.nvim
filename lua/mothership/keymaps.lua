@@ -22,13 +22,6 @@ vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
 vim.keymap.set('n', '<leader>z', require('undotree').toggle,
     { noremap = true, silent = true })
 
--- Trouble keymap
-vim.keymap.set("n", "<leader>xx", function() require("trouble").open() end)
-vim.keymap.set("n", "<leader>xw", function() require("trouble").open("workspace_diagnostics") end)
-vim.keymap.set("n", "<leader>xd", function() require("trouble").open("document_diagnostics") end)
-vim.keymap.set("n", "<leader>xq", function() require("trouble").open("quickfix") end)
-vim.keymap.set("n", "<leader>xl", function() require("trouble").open("loclist") end)
-vim.keymap.set("n", "gR", function() require("trouble").open("lsp_references") end)
 
 --Whichkey
 local wk = require("which-key")
@@ -54,11 +47,11 @@ wk.register({
     a = "Harpoon Add File",
     x = {
         name = "Trouble",
-        x = { "<cmd>TroubleToggle<cr>", "Trouble Toggle" },
-        w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
-        d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document Diagnostics" },
-        q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix" },
-        l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
+        x = { "<cmd>Trouble<cr>", "Trouble Toggle" },
+        w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+        d = { "<cmd>Trouble document_diagnostics<cr>", "Document Diagnostics" },
+        q = { "<cmd>Trouble quickfix<cr>", "Quickfix" },
+        l = { "<cmd>Trouble loclist<cr>", "Loclist" },
     },
     z = "Undotree",
     r = "Rename",
