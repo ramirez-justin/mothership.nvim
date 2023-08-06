@@ -53,7 +53,7 @@ material.setup({
     async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
     colors = require 'material.colors',
     custom_colors = function(colors)
-        colors.syntax.string = "#ffbefe"
+        colors.syntax.string = "#33ff7b"
     end,
     custom_highlights = {
         DashboardHeader = { fg = "#c4b9ff" },

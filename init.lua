@@ -3,6 +3,7 @@
 
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -36,14 +37,12 @@ require("lazy").setup({
         cmd = "TroubleToggle",
     },
 
-    -- Telescope.nvim
+    -- Telescope
     { 'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                              , branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
-
-    -- Recent files extenssion
-    { "smartpde/telescope-recent-files"},
+    "smartpde/telescope-recent-files",   -- Telescope plugin for recent files
 
     -- Material theme
     "marko-cerovac/material.nvim",
@@ -56,6 +55,9 @@ require("lazy").setup({
 
     -- Harpoon plugin
     "theprimeagen/harpoon",
+
+    -- Popup plugin
+    "nvim-lua/popup.nvim",
 
     -- Plenary
     "nvim-lua/plenary.nvim",
@@ -89,13 +91,13 @@ require("lazy").setup({
         build = ":MasonUpdate" -- :MasonUpdate updates registry contents
     },
     "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
+    "neovim/nvim-lspconfig", --Quickstart configurations for the LSP client
 
     -- nvim-dap plugin
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
 
-    -- nvim-cmp
+    -- Completion Plugins
     "hrsh7th/nvim-cmp", -- Autocompletion plugin
     "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
     "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
@@ -123,7 +125,12 @@ require("lazy").setup({
     },
 
     -- Github Copilot
-    { "github/copilot.vim" },
+    { "zbirenbaum/copilot.lua" },
+    { "zbirenbaum/copilot-cmp",
+        config = function ()
+            require("copilot_cmp").setup()
+        end
+    },
 
     -- Toggler term
     {'akinsho/toggleterm.nvim', version = "*", config = true},
@@ -154,6 +161,12 @@ require("lazy").setup({
         event = "InsertEnter",
         opts = {} -- this is equalent to setup({}) function
     },
+
+    -- Database Management
+    { "tpope/vim-dadbod", cmd = { "DB", "DBUI", "DBUIToggle" } },
+    { "kristijanhusak/vim-dadbod-ui", cmd = { "DBUI", "DBUIToggle" } },
+    { "kristijanhusak/vim-dadbod-completion" },
+    -- TODO: Add the following plugins
 })
 
 -- The mothership

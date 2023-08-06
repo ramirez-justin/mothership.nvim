@@ -1,0 +1,62 @@
+-- This code means nothing as long as you are running material theme since tha overrides the lualine config
+-- lualine config
+require('lualine').setup{
+    -- options = {
+    --     theme = 'auto',
+    --     globalstatus = true,
+    --     sections = {
+    --         lualine_a = {
+    --             {
+    --                 'filename',
+    --                 file_status = true,      -- Displays file status (readonly status, modified status)
+    --                 newfile_status = true,  -- Display new file status (new file means no write after created)
+    --                 path = 3,                -- 0: Just the filename
+    --                 -- 1: Relative path
+    --                 -- 2: Absolute path
+    --                 -- 3: Absolute path, with tilde as the home directory
+    --                 -- 4: Filename and parent dir, with tilde as the home directory
+    --
+    --                 shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+    --                 -- for other components. (terrible name, any suggestions?)
+    --                 symbols = {
+    --                     modified = '[+]',      -- Text to show when the file is modified.
+    --                     readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+    --                     unnamed = '[No Name]', -- Text to show for unnamed buffers.
+    --                     newfile = '[New]',     -- Text to show for newly created file before first write
+    --                 }
+    --             },
+    --         },
+    --         lualine_b = {
+    --             {
+    --                 'diagnostics',
+    --                 sources = {'nvim_lsp', 'nvim_diagnostic', 'cmp_lsp'},
+    --                 sections = {'error', 'warn', 'info', 'hint'},
+    --                 symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '},
+    --                 colored = true, -- Set to false to disable the highlight for the diagnostic symbols.
+    --                 diagnostics_color = {
+    --                     color_error = {fg = '#ff0000', gui = 'bold'},
+    --                     color_warn = {fg = '#ffff00', gui = 'bold'},
+    --                     color_info = {fg = '#00ff00', gui = 'bold'},
+    --                     color_hint = {fg = '#00ffff', gui = 'bold'},
+    --                 },
+    --                 update_in_insert = false, -- If set to true the statusline will be updated in insert mode
+    --                 always_visible = false, -- If set to true the statusline will be always visible
+    --             },
+    --         },
+    --         lualine_c = {
+    --             {}
+    --         },
+    --         lualine_x = {
+    --             {}
+    --         },
+    --         lualine_y = {
+    --                 {}
+    --         },
+    --         lualine_z = {
+    --                 {}
+    --         },
+    --     }
+    -- }
+}
+require('lualine').get_config()
+

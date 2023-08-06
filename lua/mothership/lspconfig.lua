@@ -19,6 +19,7 @@ require("mason-lspconfig").setup {
         "gopls",
         "html",
         "jsonls",
+        "lua_ls",
         "ruff_lsp",
         "rust_analyzer",
         "tsserver",
@@ -27,14 +28,13 @@ require("mason-lspconfig").setup {
     },
 }
 
-
 local on_attach = function(_, _)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
+    vim.keymap.set('n', '<leader>ra', vim.lsp.buf.code_action, {})
 
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {})
-    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, {})
+    vim.keymap.set('n', 'rd', vim.lsp.buf.definition, {})
+    vim.keymap.set('n', 'ri', vim.lsp.buf.implementation, {})
+    vim.keymap.set('n', 'rr', require('telescope.builtin').lsp_references, {})
     vim.keymap.set('n', 'K', vim.lsp.buf.rename, {})
 end
 
@@ -44,15 +44,16 @@ require("neodev").setup({
     library = { plugins = { "nvim-dap-ui" }, types = true },
     -- add any options here, or leave empty to use the default settings
 })
+
 local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
+    dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
+    dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
+    dapui.close()
 end
 
 
@@ -163,4 +164,7 @@ lspconfig.ruff_lsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
+
+
 
