@@ -48,8 +48,8 @@ local kind_icons = {
   Operator = "",
   TypeParameter = "󰉺",
 }
-
 -- find more here: https://www.nerdfonts.com/cheat-sheet
+
 require("copilot").setup({
     suggestion = { enabled = false },
     panel = { enabled = false },
@@ -138,4 +138,5 @@ require('nvim-autopairs').setup({
     ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
 })
 require('nvim-autopairs').clear_rules()
+
 

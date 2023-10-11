@@ -4,15 +4,21 @@ require('Comment').setup()
 
 
 -- Indent Blankspace config
-vim.opt.list = true
-vim.opt.listchars:append "space:⋅"
-vim.opt.listchars:append "eol: "
-vim.g.indent_blankline_buftype_exclude = "Dashboard"
-require("indent_blankline").setup {
-  -- for example, context is off by default, use this to turn it on
-  show_current_context = true,
-  show_current_context_start = true,
-}
+--vim.opt.list = true
+--vim.opt.listchars:append "space:⋅"
+--vim.opt.listchars:append "eol: "
+-- require("ibl").setup ({
+--     --for example, context is off by default, use this to turn it on
+--     show_current_context = true,
+--     show_current_context_start = true,
+--    --  exclude = {
+--    --      buftypes = {"nofile", "Dashboard"},
+--    --      filetypes = {"help", "dashboard"},
+--    --      buflisted = true,
+--    --      bufname = {},
+--    --      bufnr = {},
+--    -- },
+-- })
 
 
 --Notify

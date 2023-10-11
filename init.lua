@@ -83,7 +83,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
 
     -- Indent Blankline plugin
-    "lukas-reineke/indent-blankline.nvim",
+   -- { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
     -- LSP Plugins
     {
