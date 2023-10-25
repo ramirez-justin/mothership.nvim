@@ -47,14 +47,17 @@ local kind_icons = {
   Event = "",
   Operator = "",
   TypeParameter = "󰉺",
+  Copilot = "",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
 require("copilot").setup({
     suggestion = { enabled = false },
     panel = { enabled = false },
 })
 require("copilot_cmp").setup()
+
 
 cmp.setup({
     snippet = {
