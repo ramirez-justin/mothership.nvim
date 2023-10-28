@@ -56,5 +56,14 @@ if vim.fn.has("nvim-0.9.0") == 1 then
   opt.shortmess:append({ C = true })
 end
 
+-- Special indentation rule
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+pattern = {"*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.graphql", "*.md", "*.mdx", "*.tf"},
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+  end
+})
+
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
