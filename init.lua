@@ -168,7 +168,11 @@ require("lazy").setup({
     { "tpope/vim-dadbod", cmd = { "DB", "DBUI", "DBUIToggle" } },
     { "kristijanhusak/vim-dadbod-ui", cmd = { "DBUI", "DBUIToggle" } },
     { "kristijanhusak/vim-dadbod-completion" },
+
     -- TODO: Add the following plugins
+    -- https://github.com/Zeioth/compiler.nvim
+    -- https://github.com/dlvhdr/gh-dash
+    -- 
 })
 
 -- The mothership
