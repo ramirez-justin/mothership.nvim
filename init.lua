@@ -93,6 +93,8 @@ require("lazy").setup({
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig", --Quickstart configurations for the LSP client
 
+    -- none-ls
+    "nvimtools/none-ls.nvim",
     -- nvim-dap plugin
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
