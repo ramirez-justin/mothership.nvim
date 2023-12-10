@@ -164,15 +164,23 @@ require("lazy").setup({
         opts = {} -- this is equalent to setup({}) function
     },
 
+    -- TODO: actually implement this or replace with something else
     -- Database Management
     { "tpope/vim-dadbod", cmd = { "DB", "DBUI", "DBUIToggle" } },
     { "kristijanhusak/vim-dadbod-ui", cmd = { "DBUI", "DBUIToggle" } },
     { "kristijanhusak/vim-dadbod-completion" },
+    -- maybe this: https://github.com/Xemptuous/sqlua.nvim
+
 
     -- TODO: Add the following plugins
+    -- add chatGPT
+    -- https://github.com/jackMort/ChatGPT.nvim
+
+    -- add compiler buffer
     -- https://github.com/Zeioth/compiler.nvim
+
+    -- add git dashboard
     -- https://github.com/dlvhdr/gh-dash
-    -- 
 })
 
 -- The mothership

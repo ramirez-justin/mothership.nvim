@@ -176,7 +176,7 @@ null_ls.setup({
         null_ls.builtins.code_actions.proselint,
         null_ls.builtins.formatting.prettier,
         null_ls.builtins.completion.luasnip,
-
+        null_ls.builtins.formatting.sqlfmt,
     },
 })
 
