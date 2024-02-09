@@ -58,3 +58,19 @@ function _G.set_terminal_keymaps()
   vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 end
 
+
+local Terminal = require('toggleterm.terminal').Terminal
+local spotify_tui = Terminal:new({
+  cmd = "spt", -- Command to execute (spotify-tui)
+  direction = "float", -- Terminal layout (float, horizontal, vertical)
+  dir = "~/", -- Start in the git repository directory, or use your preferred start directory
+  close_on_exit = true, -- Close the terminal window when spt exits
+})
+
+-- Function to toggle the spotify-tui terminal
+function _toggle_spotify_tui()
+  spotify_tui:toggle()
+end
+
+-- Keymap to toggle spotify-tui with <C-s>
+vim.api.nvim_set_keymap("n", "<leader>gs", "<cmd>lua _toggle_spotify_tui()<CR>", {noremap = true, silent = true})
