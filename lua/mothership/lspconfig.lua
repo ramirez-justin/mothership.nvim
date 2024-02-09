@@ -16,7 +16,6 @@ require("mason-lspconfig").setup {
         "cssls",
         "clangd",
         "dockerls",
-        "gopls",
         "html",
         "jsonls",
         "lua_ls",
@@ -107,18 +106,7 @@ lspconfig.rust_analyzer.setup {
         },
     },
 }
-lspconfig.gopls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = true,
-            },
-            staticcheck = true,
-        },
-    },
-}
+
 lspconfig.clangd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -174,9 +162,9 @@ null_ls.setup({
         null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.completion.spell,
         null_ls.builtins.code_actions.proselint,
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.completion.luasnip,
+        -- null_ls.builtins.formatting.prettier, --requires install: https://prettier.io/docs/en/install.html
         null_ls.builtins.formatting.sqlfmt,
+        null_ls.builtins.formatting.black,
     },
 })
 

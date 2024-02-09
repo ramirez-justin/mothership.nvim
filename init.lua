@@ -164,6 +164,23 @@ require("lazy").setup({
         opts = {} -- this is equalent to setup({}) function
     },
 
+    -- Peek: preview markdown files
+    {
+        "toppair/peek.nvim",
+        event = { "VeryLazy" },
+        build = "deno task --quiet build:fast",
+        config = function()
+            require("peek").setup()
+            -- refer to `configuration to change defaults`
+            vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+            vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+        end,
+    },
+
+    -- TODO: setup buffer for sptify-tui
+    -- requires spotify-tui: https://github.com/Rigellute/spotify-tui
+    -- requires spotifyd: https://github.com/Spotifyd/spotifyd
+
     -- TODO: actually implement this or replace with something else
     -- Database Management
     { "tpope/vim-dadbod", cmd = { "DB", "DBUI", "DBUIToggle" } },
@@ -181,6 +198,7 @@ require("lazy").setup({
 
     -- add git dashboard
     -- https://github.com/dlvhdr/gh-dash
+
 })
 
 -- The mothership
