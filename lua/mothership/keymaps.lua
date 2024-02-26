@@ -66,3 +66,5 @@ vim.keymap.set('n', '<leader>z', require('undotree').toggle,
 -- Bufferline
 vim.keymap.set("n", "<leader>gb", vim.cmd.BufferLinePick)
 
+-- defintion or references
+vim.keymap.set("n", "gd", require("definition-or-references").definition_or_references, { silent = true })

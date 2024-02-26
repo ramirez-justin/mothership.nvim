@@ -23,4 +23,7 @@ Start Neovim!
 
 Refer to the comments in the files on how to customize LazyVim.
 
+setup buffer for sptify-tui:
+  requires spotify-tui: https://github.com/Rigellute/spotify-tui
+  requires spotifyd: https://github.com/Spotifyd/spotifyd
 
