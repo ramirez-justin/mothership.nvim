@@ -177,9 +177,8 @@ require("lazy").setup({
         end,
     },
 
-    -- TODO: setup buffer for sptify-tui
-    -- requires spotify-tui: https://github.com/Rigellute/spotify-tui
-    -- requires spotifyd: https://github.com/Spotifyd/spotifyd
+    -- Definition-or-references.nvim: JetBrains like definition and references handling
+    {"KostkaBrukowa/definition-or-references.nvim"},
 
     -- TODO: actually implement this or replace with something else
     -- Database Management
