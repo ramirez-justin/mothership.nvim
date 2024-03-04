@@ -17,6 +17,9 @@ Clone the starter
 
     git clone https://github.com/ramirez-justin/mothership.nvim ~/.config/nvim
 
+Rename directory to nvim and move to .config/
+install npm luarocks go lazygit ripgrep fd-find gh rust
+
 Start Neovim!
 
     nvim
