@@ -1,5 +1,7 @@
 -- My config using lazyvim
 -- Author: Justin Ramirez
+-- Set python environment based on file path
+require('env_switcher')
 
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -35,6 +37,21 @@ require("lazy").setup({
     {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",
+    },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        }
     },
 
     -- Telescope
@@ -143,8 +160,8 @@ require("lazy").setup({
     -- Notify
     {'rcarriga/nvim-notify'},
 
-    -- Wilder
-    {'gelguy/wilder.nvim'},
+    -- NUI
+    {'MunifTanjim/nui.nvim'},
 
     -- DBTpal
     {'PedramNavid/dbtpal'},
