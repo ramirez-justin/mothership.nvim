@@ -58,7 +58,7 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 
--- Autocomplete
+-- Autocomplete & LSP Configs
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup {
