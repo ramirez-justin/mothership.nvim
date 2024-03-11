@@ -17,6 +17,11 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+-- Resizing panes
+keymap("n", "<Left>", ":vertical resize +1<CR>", opts)
+keymap("n", "<Right>", ":vertical resize -1<CR>", opts)
+keymap("n", "<Up>", ":resize -1<CR>", opts)
+keymap("n", "<Down>", ":resize +1<CR>", opts)
 
 
 -- INSERT MODE --
@@ -40,6 +45,7 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "jk", "<C-\\><C-n>", term_opts)
 
 
 -- PLUGINS --
@@ -53,7 +59,7 @@ local ui = require("harpoon.ui")
 -- Add and view harpoon files
 vim.keymap.set("n", "<leader>a", mark.add_file)
 vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
--- Navicate to saved files
+-- Navigate to saved files
 vim.keymap.set("n", "<C-n>", function() ui.nav_file(1) end)
 vim.keymap.set("n", "<C-m>", function() ui.nav_file(2) end)
 vim.keymap.set("n", "<C-o>", function() ui.nav_file(3) end)
@@ -68,3 +74,6 @@ vim.keymap.set("n", "<leader>gb", vim.cmd.BufferLinePick)
 
 -- defintion or references
 vim.keymap.set("n", "gd", require("definition-or-references").definition_or_references, { silent = true })
+
+-- Dismiss Noice Message
+vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", opts)

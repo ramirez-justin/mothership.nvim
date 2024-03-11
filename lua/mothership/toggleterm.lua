@@ -66,11 +66,26 @@ local spotify_tui = Terminal:new({
   dir = "~/", -- Start in the git repository directory, or use your preferred start directory
   close_on_exit = true, -- Close the terminal window when spt exits
 })
+local gh_dash = Terminal:new({
+  cmd = "gh dash", -- Command to execute (gh)
+  direction = "float", -- Terminal layout (float, horizontal, vertical)
+  dir = "~/", -- Start in the git repository directory, or use your preferred start directory
+  close_on_exit = true, -- Close the terminal window when gh exits
+})
+
 
 -- Function to toggle the spotify-tui terminal
 function _toggle_spotify_tui()
   spotify_tui:toggle()
 end
 
--- Keymap to toggle spotify-tui with <C-s>
+
+-- Function to toggle GH Dash
+function _toggle_gh_dash()
+  gh_dash:toggle()
+end
+
+
+-- Keymap to toggle spotify-tui
 vim.api.nvim_set_keymap("n", "<leader>gs", "<cmd>lua _toggle_spotify_tui()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>gb", "<cmd>lua _toggle_gh_dash()<CR>", {noremap = true, silent = true})

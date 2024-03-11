@@ -1,7 +1,12 @@
 --Whichkey
 local wk = require("which-key")
 wk.register({
-    b = { "<cmd>bnext<cr>" , "Switch Buffer" },
+    t = {
+        name = "Compiler/Change",
+        o = { "<cmd>CompilerOpen<cr>", "Open Compiler" },
+        r = { "<cmd>CompilerStop<cr><cmd>CompilerRedo<cr>", "Redo Last Option" },
+        c = { "<cmd>CompilerToggleResults<cr>", "Toggle Results" },
+    },
     f = {
         name = "Telescope", -- optional group name
         f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
