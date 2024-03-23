@@ -113,6 +113,7 @@ require("lazy").setup({
     -- nvim-dap plugin
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
+    { "nvim-neotest/nvim-nio" },
 
     -- Completion Plugins
     "hrsh7th/nvim-cmp", -- Autocompletion plugin
@@ -223,12 +224,15 @@ require("lazy").setup({
     { "kristijanhusak/vim-dadbod-completion" },
     -- maybe this: https://github.com/Xemptuous/sqlua.nvim
 
+    --pre-commit.nvim
+    { "ttibsi/pre-commit.nvim", },
 
     -- TODO: Add the following plugins
     -- add chatGPT
     -- https://github.com/jackMort/ChatGPT.nvim
 
     -- Maybe use octo.nvim instead of gh dash
+    --
 })
 
 -- The mothership
