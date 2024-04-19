@@ -21,6 +21,11 @@ Start Neovim!
 
     nvim
 
+Run command
+```
+:checkhealth
+```
+
 Refer to the comments in the files on how to customize LazyVim.
 
 
