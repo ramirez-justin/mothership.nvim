@@ -27,20 +27,10 @@ nvim_notify.setup {
     -- Animation style
     stages = "fade_in_slide_out",
     -- Default timeout for notifications
-    timeout = 5500,
+    timeout = 4000,
     background_colour = "#2E3440",
 }
 vim.notify = nvim_notify
-
-
--- Wilder
-local wilder = require('wilder')
-wilder.setup({modes = {':', '/', '?'}})
-wilder.set_option('renderer', wilder.popupmenu_renderer({
-  highlighter = wilder.basic_highlighter(),
-  left = {' ', wilder.popupmenu_devicons()},
-  right = {' ', wilder.popupmenu_scrollbar()},
-}))
 
 
 -- Trouble
@@ -61,3 +51,22 @@ require("trouble").first({skip_groups = true, jump = true});
 -- jump to the last item, skipping the groups
 require("trouble").last({skip_groups = true, jump = true});
 
+-- Noice config
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+})

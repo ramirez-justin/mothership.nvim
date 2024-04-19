@@ -3,9 +3,6 @@ local telescope = require("telescope")
 local actions = require("telescope.actions")
 local trouble = require("trouble.providers.telescope")
 
-telescope.load_extension("recent_files")
--- telescope.load_extension('dbtpal')
-
 telescope.setup{
     defaults = {
         -- Default configuration for telescope goes here:
@@ -52,5 +49,7 @@ telescope.setup{
     }
 }
 
-
-
+-- Extensions
+telescope.load_extension("recent_files")
+telescope.load_extension("noice")
+-- telescope.load_extension('dbtpal')

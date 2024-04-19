@@ -1,5 +1,7 @@
 -- My config using lazyvim
 -- Author: Justin Ramirez
+-- Set python environment based on file path
+require('env_switcher')
 
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -35,6 +37,19 @@ require("lazy").setup({
     {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",
+    },
+    -- Noice
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        }
     },
 
     -- Telescope
@@ -98,6 +113,7 @@ require("lazy").setup({
     -- nvim-dap plugin
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
+    { "nvim-neotest/nvim-nio" },
 
     -- Completion Plugins
     "hrsh7th/nvim-cmp", -- Autocompletion plugin
@@ -143,8 +159,8 @@ require("lazy").setup({
     -- Notify
     {'rcarriga/nvim-notify'},
 
-    -- Wilder
-    {'gelguy/wilder.nvim'},
+    -- NUI
+    {'MunifTanjim/nui.nvim'},
 
     -- DBTpal
     {'PedramNavid/dbtpal'},
@@ -177,9 +193,29 @@ require("lazy").setup({
         end,
     },
 
-    -- TODO: setup buffer for sptify-tui
-    -- requires spotify-tui: https://github.com/Rigellute/spotify-tui
-    -- requires spotifyd: https://github.com/Spotifyd/spotifyd
+    -- Compiler buffer
+    { --Compiler
+        "Zeioth/compiler.nvim",
+        cmd = {"CompilerOpen", "CompilerToggleResults", "CompilerRedo"},
+        dependencies = { "stevearc/overseer.nvim" },
+        opts = {},
+    },
+    { -- Task Runner
+        "stevearc/overseer.nvim",
+        commit = "68a2d344cea4a2e11acfb5690dc8ecd1a1ec0ce0",
+        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+            opts = {
+                task_list = {
+                    direction = "bottom",
+                    min_height = 25,
+                    max_height = 25,
+                    default_detail = 1
+                },
+            },
+    },
+
+    -- Definition-or-references.nvim: JetBrains like definition and references handling
+    {"KostkaBrukowa/definition-or-references.nvim"},
 
     -- TODO: actually implement this or replace with something else
     -- Database Management
@@ -188,17 +224,15 @@ require("lazy").setup({
     { "kristijanhusak/vim-dadbod-completion" },
     -- maybe this: https://github.com/Xemptuous/sqlua.nvim
 
+    --pre-commit.nvim
+    { "ttibsi/pre-commit.nvim", },
 
     -- TODO: Add the following plugins
     -- add chatGPT
     -- https://github.com/jackMort/ChatGPT.nvim
 
-    -- add compiler buffer
-    -- https://github.com/Zeioth/compiler.nvim
-
-    -- add git dashboard
-    -- https://github.com/dlvhdr/gh-dash
-
+    -- Maybe use octo.nvim instead of gh dash
+    --
 })
 
 -- The mothership

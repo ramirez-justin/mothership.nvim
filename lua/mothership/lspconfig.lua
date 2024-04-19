@@ -10,17 +10,20 @@ require("mason").setup({
     },
 })
 
+--Mason helps to ensure that all the required lsp servers are installed
 require("mason-lspconfig").setup {
     ensure_installed = {
         "bashls",
         "cssls",
         "clangd",
         "dockerls",
+        "eslint",
         "html",
         "jsonls",
         "lua_ls",
         "ruff_lsp",
         "rust_analyzer",
+        "terraformls",
         "tsserver",
         "vimls",
         "yamlls",
@@ -30,7 +33,6 @@ require("mason-lspconfig").setup {
 local on_attach = function(_, _)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
     vim.keymap.set('n', '<leader>ra', vim.lsp.buf.code_action, {})
-
     vim.keymap.set('n', 'rd', vim.lsp.buf.definition, {})
     vim.keymap.set('n', 'ri', vim.lsp.buf.implementation, {})
     vim.keymap.set('n', 'rr', require('telescope.builtin').lsp_references, {})
@@ -56,7 +58,7 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 
--- Autocomplete
+-- Autocomplete & LSP Configs
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup {
@@ -106,7 +108,6 @@ lspconfig.rust_analyzer.setup {
         },
     },
 }
-
 lspconfig.clangd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -152,6 +153,24 @@ lspconfig.ruff_lsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+lspconfig.eslint.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    -- Add additional ESLint config here as needed
+    settings = {
+        -- Example setting: auto-fix on save
+        codeActionOnSave = {
+            enable = true,
+            mode = "all",
+        },
+        -- Specify ESLint configuration options here
+        format = true, -- Enable or disable formatting
+    },
+}
+lspconfig.terraformls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 
 
 -- Null-ls.nvim(none-ls)
@@ -159,12 +178,13 @@ local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.stylua,
-        null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.completion.spell,
         null_ls.builtins.code_actions.proselint,
-        -- null_ls.builtins.formatting.prettier, --requires install: https://prettier.io/docs/en/install.html
         null_ls.builtins.formatting.sqlfmt,
         null_ls.builtins.formatting.black,
+        null_ls.builtins.diagnostics.sqlfluff.with({
+            extra_args = { "--dialect", "postgres" }, -- change to your dialect
+        }),
     },
 })
 
