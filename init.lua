@@ -136,7 +136,6 @@ require("lazy").setup({
     -- LSP Plugins
     {
         "williamboman/mason.nvim",
-        build = ":MasonUpdate" -- :MasonUpdate updates registry contents
     },
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig", --Quickstart configurations for the LSP client
