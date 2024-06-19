@@ -27,6 +27,7 @@ require("mason-lspconfig").setup {
         "tsserver",
         "vimls",
         "yamlls",
+        "jinja_lsp",
     },
 }
 
@@ -61,6 +62,8 @@ end
 -- Autocomplete & LSP Configs
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
+
+-- Setup for existing LSPs (Lua, TS, Rust, etc.)
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -84,6 +87,7 @@ lspconfig.lua_ls.setup {
         },
     },
 }
+
 lspconfig.tsserver.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -91,6 +95,7 @@ lspconfig.tsserver.setup {
         documentFormatting = false,
     },
 }
+
 lspconfig.rust_analyzer.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -108,6 +113,7 @@ lspconfig.rust_analyzer.setup {
         },
     },
 }
+
 lspconfig.clangd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -121,38 +127,47 @@ lspconfig.clangd.setup {
     },
     root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
 }
+
 lspconfig.html.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.cssls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.dockerls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.jsonls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.vimls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.yamlls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.bashls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.ruff_lsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
 lspconfig.eslint.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -167,7 +182,34 @@ lspconfig.eslint.setup {
         format = true, -- Enable or disable formatting
     },
 }
+
 lspconfig.terraformls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+-- Setup for jinja-lsp
+local configs = require('lspconfig.configs')
+
+if not configs.jinja_lsp then
+    configs.jinja_lsp = {
+        default_config = {
+            name = "jinja-lsp",
+            cmd = { 'path_to_lsp_or_command' },
+            filetypes = { 'jinja', 'rust' },
+            root_dir = function()
+                return "."
+            end,
+            init_options = {
+                templates = './templates',
+                backend = { './src' },
+                lang = "rust"
+            },
+        },
+    }
+end
+
+lspconfig.jinja_lsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
@@ -183,7 +225,7 @@ null_ls.setup({
         null_ls.builtins.formatting.sqlfmt,
         null_ls.builtins.formatting.black,
         null_ls.builtins.diagnostics.sqlfluff.with({
-            extra_args = { "--dialect", "postgres" }, -- change to your dialect
+            extra_args = { "--dialect", "snowflake" }, -- change to your dialect
         }),
     },
 })

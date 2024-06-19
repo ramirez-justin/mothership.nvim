@@ -1,7 +1,7 @@
 -- Telescope
 local telescope = require("telescope")
 local actions = require("telescope.actions")
-local trouble = require("trouble.providers.telescope")
+local trouble = require("trouble.sources.telescope")
 
 telescope.setup{
     defaults = {
@@ -18,7 +18,7 @@ telescope.setup{
                 -- Send to quickfix list
                 ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                 ["<C-c>"] = actions.close,
-                ["<C-t>"] = trouble.open_with_trouble,
+                ["<C-t>"] = trouble.open,
             },
             n = {
                 ["<C-n>"] = actions.cycle_history_next,
@@ -27,7 +27,7 @@ telescope.setup{
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                 ["<C-c>"] = actions.close,
-                ["<C-t>"] = trouble.open_with_trouble,
+                ["<C-t>"] = trouble.open,
             },
         }
     },

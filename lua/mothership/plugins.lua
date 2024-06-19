@@ -27,7 +27,7 @@ nvim_notify.setup {
     -- Animation style
     stages = "fade_in_slide_out",
     -- Default timeout for notifications
-    timeout = 4000,
+    timeout = 5000,
     background_colour = "#2E3440",
 }
 vim.notify = nvim_notify
@@ -35,21 +35,25 @@ vim.notify = nvim_notify
 
 -- Trouble
 require("trouble").setup {
-    auto_open = false,
-    auto_close = true,
-    auto_preview = false,
-    auto_fold = false,
-    use_diagnostic_signs = true,
+  modes = {
+    diagnostics = {
+      preview = {
+        type = "float",
+        relative = "editor",
+        border = "rounded",
+        title = "Preview",
+        title_pos = "center",
+        position = { 0, -2 },
+        size = { width = 0.3, height = 0.3 },
+        zindex = 200,
+      },
+    },
+  },
+  action_keys = {
+    hover = "K", -- opens a small popup with the full multiline message
+  },
+  auto_preview = true, -- automatically preview the location of the diagnostic
 }
---Keybindings
--- jump to the next item, skipping the groups
-require("trouble").next({skip_groups = true, jump = true});
--- jump to the previous item, skipping the groups
-require("trouble").previous({skip_groups = true, jump = true});
--- jump to the first item, skipping the groups
-require("trouble").first({skip_groups = true, jump = true});
--- jump to the last item, skipping the groups
-require("trouble").last({skip_groups = true, jump = true});
 
 -- Noice config
 require("noice").setup({
