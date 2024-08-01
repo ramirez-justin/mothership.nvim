@@ -219,13 +219,18 @@ lspconfig.jinja_lsp.setup {
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.stylua,
         null_ls.builtins.completion.spell,
+        null_ls.builtins.diagnostics.codespell,
         null_ls.builtins.code_actions.proselint,
         null_ls.builtins.formatting.sqlfmt,
         null_ls.builtins.formatting.black,
-        null_ls.builtins.diagnostics.sqlfluff.with({
-            extra_args = { "--dialect", "snowflake" }, -- change to your dialect
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettier.with({
+            filetypes = {
+                "javascript","typescript","css","scss","html",
+                "json","yaml","markdown","graphql","md","txt",
+                "yml"
+            },
         }),
     },
 })
