@@ -23,6 +23,16 @@ keymap("n", "<Right>", ":vertical resize -1<CR>", opts)
 keymap("n", "<Up>", ":resize -1<CR>", opts)
 keymap("n", "<Down>", ":resize +1<CR>", opts)
 
+-- Remapping <gc> related mappings
+keymap("n", "<gcL>", "<Plug>(comment_toggle_linewise)", opts)
+keymap("n", "<gcO>", "<Plug>(comment_insert_above)", opts)
+keymap("n", "<gco>", "<Plug>(comment_insert_below)", opts)
+keymap("n", "<gcA>", "<Plug>(comment_insert_eol)", opts)
+keymap("n", "<gcc>", "<Plug>(comment_toggle_linewise_current)", opts)
+
+-- Remapping <gb> related mappings
+keymap("n", "<gbl>", "<Plug>(comment_toggle_blockwise)", opts)
+keymap("n", "<gbc>", "<Plug>(comment_toggle_blockwise_current)", opts)
 
 -- INSERT MODE --
 -- Rapid escape
