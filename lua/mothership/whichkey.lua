@@ -1,7 +1,6 @@
 --Whichkey
 local wk = require("which-key")
 wk.add({
-    { "<leader>a", desc = "Harpoon Add File" },
     { "<leader>d", desc = "Dashboard" },
     { "<leader>e", ":NvimTreeToggle<cr>", desc = "Toggle NVIM Tree" },
     { "<leader>f", group = "Telescope" },

@@ -104,9 +104,6 @@ require("lazy").setup({
     --Playground plugin
     "nvim-treesitter/playground",
 
-    -- Harpoon plugin
-    "theprimeagen/harpoon",
-
     -- Popup plugin
     "nvim-lua/popup.nvim",
 

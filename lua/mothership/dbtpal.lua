@@ -2,7 +2,7 @@
 local dbt = require('dbtpal')
 dbt.setup {
     -- Path to the dbt executable
-    path_to_dbt = "dbt",
+    path_to_dbt = "~/gametime/gametime-data/airflow/dags/dbt",
     -- Path to the dbt project, if blank, will auto-detect
     -- using currently open buffer for all sql,yml, and md files
     path_to_dbt_project = "",

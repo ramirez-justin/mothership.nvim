@@ -24,7 +24,7 @@ require("mason-lspconfig").setup {
         "ruff_lsp",
         "rust_analyzer",
         "terraformls",
-        "tsserver",
+        "ts_ls",
         "vimls",
         "yamlls",
         "jinja_lsp",
@@ -88,7 +88,7 @@ lspconfig.lua_ls.setup {
     },
 }
 
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
