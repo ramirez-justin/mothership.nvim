@@ -74,3 +74,6 @@ require("noice").setup({
     lsp_doc_border = false, -- add a border to hover docs and signature help
   },
 })
+
+-- Avante
+require('avante_lib').load()
