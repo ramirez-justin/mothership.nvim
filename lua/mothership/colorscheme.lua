@@ -40,7 +40,7 @@ material.setup({
     },
     disable = {
         colored_cursor = false, -- Disable the colored cursor
-        borders = false, -- Disable borders between verticaly split windows
+        borders = false, -- Disable borders between vertically split windows
         background = true, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
         term_colors = false, -- Prevent the theme from setting terminal colors
         eob_lines = false -- Hide the end-of-buffer lines
@@ -50,7 +50,7 @@ material.setup({
         darker = true -- Enable higher contrast text for darker style
     },
     lualine_style = "stealth", -- Lualine style ( can be 'stealth' or 'default' )
-    async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+    async_loading = true, -- Load parts of the theme asynchronously for faster startup (turned on by default)
     colors = require 'material.colors',
     custom_colors = function(colors)
         colors.syntax.string = "#33ff7b"

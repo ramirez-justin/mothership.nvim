@@ -28,6 +28,7 @@ require("mason-lspconfig").setup {
         "vimls",
         "yamlls",
         "jinja_lsp",
+        "tflint",
     },
 }
 
@@ -232,6 +233,8 @@ null_ls.setup({
                 "yml"
             },
         }),
+        null_ls.builtins.formatting.terraform_fmt,
+        null_ls.builtins.diagnostics.terraform_validate,
     },
 })
 
