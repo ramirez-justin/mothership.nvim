@@ -21,7 +21,7 @@ require("mason-lspconfig").setup {
         "html",
         "jsonls",
         "lua_ls",
-        "ruff_lsp",
+        "ruff",
         "rust_analyzer",
         "terraformls",
         "ts_ls",
