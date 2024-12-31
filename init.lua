@@ -1,7 +1,6 @@
 -- My config using lazyvim
 -- Author: Justin Ramirez
--- Set python environment based on file path
-require('env_switcher')
+vim.g.python3_host_prog = os.getenv('PYENV_ROOT') .. '/versions/nvim_python3/bin/python'
 
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -328,11 +327,11 @@ require("lazy").setup({
     { "ttibsi/pre-commit.nvim", },
 
     -- TODO: Add the following plugins
-    -- add chatGPT
-    -- https://github.com/jackMort/ChatGPT.nvim
+    -- investigate replacing many of these with snacks.nvim
+    -- https://github.com/folke/snacks.nvim
 
     -- Maybe use octo.nvim instead of gh dash
-    --
+    -- https://github.com/pwntester/octo.nvim
 })
 
 -- The mothership
