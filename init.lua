@@ -241,29 +241,6 @@ require("lazy").setup({
     -- NUI
     {'MunifTanjim/nui.nvim'},
 
-    -- DBTpal
-    {
-        "PedramNavid/dbtpal",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-        ft = {
-            "sql",
-            "md",
-            "yaml",
-        },
-        keys = {
-            { "<leader>drf", "<cmd>DbtRun<cr>" },
-            { "<leader>drp", "<cmd>DbtRunAll<cr>" },
-            { "<leader>dtf", "<cmd>DbtTest<cr>" },
-            { "<leader>dm", "<cmd>lua require('dbtpal.telescope').dbt_picker()<cr>" },
-        },
-        config = function()
-            require('dbtpal_setup')  -- Load additional configuration from dbtpal.lua
-        end,
-    },
-
     -- Comment
     {
         'numToStr/Comment.nvim',

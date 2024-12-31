@@ -52,4 +52,3 @@ telescope.setup{
 -- Extensions
 telescope.load_extension("recent_files")
 telescope.load_extension("noice")
--- telescope.load_extension('dbtpal')
