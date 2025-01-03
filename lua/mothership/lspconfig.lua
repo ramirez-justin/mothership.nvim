@@ -1,3 +1,9 @@
+-- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+require("neodev").setup({
+	library = { plugins = { "nvim-dap-ui" }, types = true },
+	-- add any options here, or leave empty to use the default settings
+})
+
 -- Mason
 require("mason").setup({
 	log_level = vim.log.levels.DEBUG,
@@ -12,6 +18,7 @@ require("mason").setup({
 
 --Mason helps to ensure that all the required lsp servers are installed
 require("mason-lspconfig").setup({
+	automatic_installation = true,
 	ensure_installed = {
 		"bashls",
 		"cssls",
@@ -32,20 +39,37 @@ require("mason-lspconfig").setup({
 	},
 })
 
-local on_attach = function(_, _)
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
-	vim.keymap.set("n", "<leader>ra", vim.lsp.buf.code_action, {})
-	vim.keymap.set("n", "rd", vim.lsp.buf.definition, {})
-	vim.keymap.set("n", "ri", vim.lsp.buf.implementation, {})
-	vim.keymap.set("n", "rr", require("telescope.builtin").lsp_references, {})
-	vim.keymap.set("n", "K", vim.lsp.buf.rename, {})
+-- Autocomplete & LSP Configs
+local lspconfig = require("lspconfig")
+
+local on_attach = function(client, bufnr)
+	local function buf_set_keymap(...)
+		vim.api.nvim_buf_set_keymap(bufnr, ...)
+	end
+	local function buf_set_option(...)
+		vim.api.nvim_buf_set_option(bufnr, ...)
+	end
+
+	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+	local opts = { noremap = true, silent = true }
+
+	buf_set_keymap("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+	buf_set_keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+	buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	buf_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	buf_set_keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+	buf_set_keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+	buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+	buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+	buf_set_keymap("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
+	buf_set_keymap("n", "<leader>lR", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+	client.server_capabilities.document_formatting = true
 end
 
--- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-require("neodev").setup({
-	library = { plugins = { "nvim-dap-ui" }, types = true },
-	-- add any options here, or leave empty to use the default settings
-})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+capabilities.textDocument.hover = { dynamicRegistration = false }
+capabilities.textDocument.signatureHelp = { dynamicRegistration = false }
 
 local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -57,13 +81,6 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
 	dapui.close()
 end
-
--- Autocomplete & LSP Configs
-local lspconfig = require("lspconfig")
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-capabilities.textDocument.hover = { dynamicRegistration = false }
-capabilities.textDocument.signatureHelp = { dynamicRegistration = false }
 
 -- Setup for existing LSPs (Lua, TS, Rust, etc.)
 lspconfig.lua_ls.setup({
@@ -247,7 +264,7 @@ if has_null_ls then
 			}),
 			null_ls.builtins.diagnostics.terraform_validate,
 			null_ls.builtins.diagnostics.sqlfluff.with({
-				extra_args = { "--dialect", "snowflake" }, -- change to your dialect
+				extra_args = { "--dialect", "postgres" }, -- change to your dialect
 			}),
 		},
 		-- format on save
