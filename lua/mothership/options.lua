@@ -7,25 +7,24 @@ vim.g.loaded_netrwPlugin = 1
 vim.wo.relativenumber = true
 vim.wo.number = true
 
-
-opt.autoindent = true                      -- Enable autoindent
-opt.autowrite = true                       -- Enable auto write
-opt.clipboard = "unnamedplus"              -- Sync with system clipboard
+opt.autoindent = true -- Enable autoindent
+opt.autowrite = true -- Enable auto write
+opt.clipboard = "unnamedplus" -- Sync with system clipboard
 opt.completeopt = "menu,menuone,noselect"
-opt.conceallevel = 3                       -- Hide * markup for bold and italic
-opt.confirm = true                         -- Confirm to save changes before exiting modified buffer
-opt.cursorline = true                      -- Enable highlighting of the current line
-opt.expandtab = true                       -- Use spaces instead of tabs
-opt.formatoptions = "jcroqlnt"             -- tcqj
+opt.conceallevel = 3 -- Hide * markup for bold and italic
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.cursorline = true -- Enable highlighting of the current line
+opt.expandtab = true -- Use spaces instead of tabs
+opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
-opt.ignorecase = true                      -- Ignore case
-opt.inccommand = "nosplit"                 -- preview incremental substitute
-opt.laststatus = 0
-opt.list = true                            -- Show some invisible characters (tabs...
-opt.mouse = "a"                            -- Enable mouse mode
-opt.number = true                          -- Print line number
-opt.pumblend = 10                          -- Popup blend
+opt.ignorecase = true -- Ignore case
+opt.inccommand = "nosplit" -- preview incremental substitute
+opt.laststatus = 3
+opt.list = false -- Show some invisible characters (tabs...
+opt.mouse = "a" -- Enable mouse mode
+opt.number = true -- Print line number
+opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
 opt.relativenumber = true -- Relative line numbers
 opt.scrolloff = 4 -- Lines of context
@@ -52,17 +51,17 @@ opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 
 if vim.fn.has("nvim-0.9.0") == 1 then
-  opt.splitkeep = "screen"
-  opt.shortmess:append({ C = true })
+	opt.splitkeep = "screen"
+	opt.shortmess:append({ C = true })
 end
 
 -- Special indentation rule
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-pattern = {"*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.graphql", "*.md", "*.mdx", "*.tf"},
-  callback = function()
-    vim.bo.shiftwidth = 2
-    vim.bo.tabstop = 2
-  end
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.graphql", "*.md", "*.mdx", "*.tf" },
+	callback = function()
+		vim.bo.shiftwidth = 2
+		vim.bo.tabstop = 2
+	end,
 })
 
 -- Fix markdown indentation settings

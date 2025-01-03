@@ -23,6 +23,16 @@ keymap("n", "<Right>", ":vertical resize -1<CR>", opts)
 keymap("n", "<Up>", ":resize -1<CR>", opts)
 keymap("n", "<Down>", ":resize +1<CR>", opts)
 
+-- Remapping <gc> related mappings
+keymap("n", "<gcL>", "<Plug>(comment_toggle_linewise)", opts)
+keymap("n", "<gcO>", "<Plug>(comment_insert_above)", opts)
+keymap("n", "<gco>", "<Plug>(comment_insert_below)", opts)
+keymap("n", "<gcA>", "<Plug>(comment_insert_eol)", opts)
+keymap("n", "<gcc>", "<Plug>(comment_toggle_linewise_current)", opts)
+
+-- Remapping <gb> related mappings
+keymap("n", "<gbl>", "<Plug>(comment_toggle_blockwise)", opts)
+keymap("n", "<gbc>", "<Plug>(comment_toggle_blockwise_current)", opts)
 
 -- INSERT MODE --
 -- Rapid escape
@@ -52,18 +62,6 @@ keymap("t", "jk", "<C-\\><C-n>", term_opts)
 -- Dashboard plugin and keymap
 vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
 vim.keymap.set("n", "<C-c>", vim.cmd.bd)
-
--- -- Harpoon plugins and keymap
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
--- Add and view harpoon files
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
--- Navigate to saved files
-vim.keymap.set("n", "<C-n>", function() ui.nav_file(1) end)
-vim.keymap.set("n", "<C-m>", function() ui.nav_file(2) end)
-vim.keymap.set("n", "<C-o>", function() ui.nav_file(3) end)
-vim.keymap.set("n", "<C-p>", function() ui.nav_file(4) end)
 
 -- -- Undotree keymap
 vim.keymap.set('n', '<leader>z', require('undotree').toggle,
