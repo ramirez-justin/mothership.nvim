@@ -1,6 +1,6 @@
 ------ keymapping ------
 local opts = { silent = true, noremap = true }
-local term_opts = {silent = true}
+local term_opts = { silent = true }
 local keymap = vim.api.nvim_set_keymap
 
 keymap("", "<Space>", "<Nop>", opts)
@@ -38,7 +38,6 @@ keymap("n", "<gbc>", "<Plug>(comment_toggle_blockwise_current)", opts)
 -- Rapid escape
 keymap("i", "jk", "<ESC>", opts)
 
-
 -- VISUAL MODE --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
@@ -48,7 +47,6 @@ keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts) -- paste without yanking
 
-
 -- TERMINAL MODE --
 -- terminal mode navigation
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
@@ -57,20 +55,18 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 keymap("t", "jk", "<C-\\><C-n>", term_opts)
 
-
 -- PLUGINS --
 -- Dashboard plugin and keymap
 vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
 vim.keymap.set("n", "<C-c>", vim.cmd.bd)
 
 -- -- Undotree keymap
-vim.keymap.set('n', '<leader>z', require('undotree').toggle,
-    { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>z", require("undotree").toggle, { noremap = true, silent = true })
 
 -- Bufferline
 vim.keymap.set("n", "<leader>gb", vim.cmd.BufferLinePick)
 
--- defintion or references
+-- definition or references
 vim.keymap.set("n", "gd", require("definition-or-references").definition_or_references, { silent = true })
 
 -- Dismiss Noice Message
