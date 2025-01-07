@@ -59,9 +59,23 @@ return {
     { --  helps you remember your Neovim keymaps, by showing available keybindings in a popup as you type.
         "folke/which-key.nvim",
         event = "VeryLazy",
-        enabled = true,
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
         config = function()
             require("which-key").setup({})
+            require("config.keymaps")
         end,
     },
 
@@ -168,29 +182,6 @@ return {
             local actions = require("telescope.actions")
             local trouble = require("trouble.providers.telescope")
 
-            -- Merge your custom options into the opts table
-            opts.defaults = {
-                mappings = {
-                    i = {
-                        ["<C-n>"] = actions.cycle_history_next,
-                        ["<C-p>"] = actions.cycle_history_prev,
-                        ["<C-j>"] = actions.move_selection_next,
-                        ["<C-k>"] = actions.move_selection_previous,
-                        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                        ["<C-c>"] = actions.close,
-                        ["<C-t>"] = trouble.open_with_trouble,
-                    },
-                    n = {
-                        ["<C-n>"] = actions.cycle_history_next,
-                        ["<C-p>"] = actions.cycle_history_prev,
-                        ["<C-j>"] = actions.move_selection_next,
-                        ["<C-k>"] = actions.move_selection_previous,
-                        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                        ["<C-c>"] = actions.close,
-                        ["<C-t>"] = trouble.open_with_trouble,
-                    },
-                },
-            }
             opts.pickers = {
                 -- Add picker-specific configurations here if needed
             }
