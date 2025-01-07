@@ -30,7 +30,7 @@ return {
 				"ruff",
 				"rust_analyzer",
 				"terraformls",
-				"tsserver",
+				"ts_ls",
 				"vimls",
 				"yamlls",
 				"jinja_lsp",
@@ -96,7 +96,7 @@ return {
 						},
 					},
 				},
-				tsserver = { settings = { documentFormatting = false } },
+				ts_ls = { settings = { documentFormatting = false } },
 				clangd = {
 					cmd = { "clangd", "--background-index" },
 					filetypes = { "c", "cpp", "objc", "objcpp" },

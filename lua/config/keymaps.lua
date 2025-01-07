@@ -90,13 +90,14 @@ keymap("n", "<leader>vt", toggle_light_dark_theme, { desc = "Toggle Light/Dark T
 
 -- Which-key mappings
 local wk = require("which-key")
+-- Register leader key mappings
 wk.register({
 	["<leader>"] = {
-		d = { desc = "Dashboard" },
-		gb = { desc = "Toggle GH Dash" },
-		gs = { desc = "Toggle Spotify TUI" },
-		vt = { desc = "Toggle Light/Dark Theme" },
-		z = { desc = "Undotree" },
+		d = { "<cmd>Dashboard<cr>", "Dashboard" }, -- Ensure 'Dashboard' command is available
+		gb = { "<cmd>ToggleGHDash<cr>", "Toggle GH Dash" }, -- Replace 'ToggleGHDash' with the actual command
+		gs = { "<cmd>SpotifyTUI<cr>", "Toggle Spotify TUI" }, -- Replace with the actual Spotify TUI toggle command
+		vt = { "<cmd>ToggleLightDarkTheme<cr>", "Toggle Light/Dark Theme" }, -- Ensure this function is defined
+		z = { "<cmd>UndotreeToggle<cr>", "Undotree" }, -- Undotree plugin
 		f = {
 			name = "Find (Telescope)",
 			f = { "<cmd>Telescope find_files<cr>", "Find Files" },
