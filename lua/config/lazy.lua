@@ -28,3 +28,10 @@ require("lazy").setup({
     -- automatically check for plugin updates
     checker = { enabled = true },
 })
+
+-- TODO: Add the following plugins
+-- investigate replacing many of these with snacks.nvim
+-- https://github.com/folke/snacks.nvim
+
+-- Maybe use octo.nvim instead of gh dash
+-- https://github.com/pwntester/octo.nvim

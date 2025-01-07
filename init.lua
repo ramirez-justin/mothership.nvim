@@ -5,49 +5,6 @@
 
 -- Lazyloader
 require("lazy").setup({
-    -- default lazy keybinds
-
-    -- Noice
-    {
-        "folke/noice.nvim",
-        event = "VeryLazy",
-        opts = {
-            -- add any options here
-        },
-        dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-        },
-    },
-
-    -- Telescope
-    {
-        "nvim-telescope/telescope.nvim",
-        tag = "0.1.2",
-        -- or                              , branch = '0.1.x',
-        dependencies = { "nvim-lua/plenary.nvim" },
-    },
-    "smartpde/telescope-recent-files", -- Telescope plugin for recent files
-
-    -- Material theme
-    "marko-cerovac/material.nvim",
-
-    -- mini.nvim
-    { "echasnovski/mini.nvim", version = false },
-
-    -- Treesitter plugin
-    "nvim-treesitter/nvim-treesitter",
-
-    --Playground plugin
-    "nvim-treesitter/playground",
-
-    -- Popup plugin
-    "nvim-lua/popup.nvim",
-
-    -- Plenary
-    "nvim-lua/plenary.nvim",
-
     -- Nvim-web-devicons
     "nvim-tree/nvim-web-devicons",
 
@@ -80,26 +37,7 @@ require("lazy").setup({
     { "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
     { "nvim-neotest/nvim-nio" },
 
-    -- Completion Plugins
-    "hrsh7th/nvim-cmp",          -- Autocompletion plugin
-    "hrsh7th/cmp-nvim-lsp",      -- LSP source for nvim-cmp
-    "saadparwaiz1/cmp_luasnip",  -- Snippets source for nvim-cmp
-    "L3MON4D3/LuaSnip",          -- Snippets plugin
-    "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
-    "hrsh7th/cmp-buffer",        -- Buffer source for nvim-cmp
-    "hrsh7th/cmp-path",          -- Path source for nvim-cmp
-    "hrsh7th/cmp-calc",          -- Calculator source for nvim-cmp
-    "hrsh7th/cmp-emoji",         -- Emoji source for nvim-cmp
-    "hrsh7th/cmp-cmdline",       -- Cmdline source for nvim-cmp
-
     -- Lazygit
-    {
-        "kdheepak/lazygit.nvim",
-        -- optional for floating window border decoration
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
 
     -- Github Copilot
     { "zbirenbaum/copilot.lua" },
@@ -183,17 +121,7 @@ require("lazy").setup({
 
     --pre-commit.nvim
     { "ttibsi/pre-commit.nvim" },
-
-    -- TODO: Add the following plugins
-    -- investigate replacing many of these with snacks.nvim
-    -- https://github.com/folke/snacks.nvim
-
-    -- Maybe use octo.nvim instead of gh dash
-    -- https://github.com/pwntester/octo.nvim
 })
-
--- The mothership
-require("mothership")
 
 -- new setup
 -- configuration files

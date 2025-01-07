@@ -1,6 +1,6 @@
 return {
     -- <https://github.com/nvim-lualine/lualine.nvim>
-    {
+    { -- A blazing fast and easy to configure Neovim statusline written in Lua.
         { "nvim-lualine/lualine.nvim" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = function(_, opts)
@@ -40,14 +40,53 @@ return {
             }
         end,
     },
+    -- <https://github.com/folke/noice.nvim>
+    { -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = function(_, opts)
+            opts.setup = {
+                lsp = {
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+                        ["vim.lsp.util.stylize_markdown"] = false,
+                        ["cmp.entry.get_documentation"] = false, -- requires hrsh7th/nvim-cmp
+                    },
+                },
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = false, -- use a classic bottom cmdline for search
+                    command_palette = true, -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                },
+            }
+        end,
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            {
+                "rcarriga/nvim-notify",
+                opts = function(_, opts)
+                    opts.setup = {
+                        stages = "fade_in_slide_out",
+                        timeout = 5000,
+                    }
+                end,
+            },
+        },
+    },
     -- <https://github.com/nvim-telescope/telescope.nvim>
-    {
+    { -- Gaze deeply into unknown regions using the power of the moon.
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         -- or tag = '0.1.8',
         dependencies = {
             { "nvim-lua/plenary.nvim" },
             { "nvim-telescope/telescope-ui-select.nvim" },
+            { "smartpde/telescope-recent-files" },
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
             { "nvim-telescope/telescope-dap.nvim" },
             {
@@ -111,11 +150,25 @@ return {
         opts = { signs = false },
     },
     -- <https://github.com/dstein64/nvim-scrollview>
-    { -- scrollbar
+    { -- a Neovim plugin that displays interactive vertical scrollbars and signs.
         "dstein64/nvim-scrollview",
         enabled = true,
         opts = {
             current_only = true,
         },
+    },
+    -- <https://github.com/folke/which-key.nvim>
+    { --  helps you remember your Neovim keymaps, by showing available keybindings in a popup as you type.
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        enabled = true,
+        config = function()
+            require("which-key").setup({})
+            require("config.keymaps")
+        end,
+    },
+    -- <https://github.com/KostkaBrukowa/definition-or-references.nvim>
+    { -- Definition-or-references.nvim: JetBrains like definition and references handling
+        "KostkaBrukowa/definition-or-references.nvim",
     },
 }

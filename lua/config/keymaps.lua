@@ -1,9 +1,9 @@
------- keymapping ------
-local opts = { silent = true, noremap = true }
-local term_opts = { silent = true }
-local keymap = vim.api.nvim_set_keymap
+-- General Keymaps
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
-keymap("", "<Space>", "<Nop>", opts)
+-- Resize splits with arrow keys
+keymap("n", "<Down>", ":resize +1<CR>", opts)
 
 -- NORMAL MODE --
 -- Rapid Jump up and down
@@ -23,14 +23,12 @@ keymap("n", "<Right>", ":vertical resize -1<CR>", opts)
 keymap("n", "<Up>", ":resize -1<CR>", opts)
 keymap("n", "<Down>", ":resize +1<CR>", opts)
 
--- Remapping <gc> related mappings
+-- Comment Mappings (<gc> and <gb>)
 keymap("n", "<gcL>", "<Plug>(comment_toggle_linewise)", opts)
 keymap("n", "<gcO>", "<Plug>(comment_insert_above)", opts)
 keymap("n", "<gco>", "<Plug>(comment_insert_below)", opts)
 keymap("n", "<gcA>", "<Plug>(comment_insert_eol)", opts)
 keymap("n", "<gcc>", "<Plug>(comment_toggle_linewise_current)", opts)
-
--- Remapping <gb> related mappings
 keymap("n", "<gbl>", "<Plug>(comment_toggle_blockwise)", opts)
 keymap("n", "<gbc>", "<Plug>(comment_toggle_blockwise_current)", opts)
 
@@ -47,27 +45,65 @@ keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
 keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts) -- paste without yanking
 
--- TERMINAL MODE --
--- terminal mode navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-keymap("t", "jk", "<C-\\><C-n>", term_opts)
+-- Terminal Mode Mappings
+function _G.set_terminal_keymaps()
+    local term_opts = { buffer = 0 }
+    keymap("t", "<esc>", [[<C-\><C-n>]], term_opts)
+    keymap("t", "jk", [[<C-\><C-n>]], term_opts)
+    keymap("t", "<C-h>", [[<Cmd>wincmd h<CR>]], term_opts)
+    keymap("t", "<C-j>", [[<Cmd>wincmd j<CR>]], term_opts)
+    keymap("t", "<C-k>", [[<Cmd>wincmd k<CR>]], term_opts)
+    keymap("t", "<C-l>", [[<Cmd>wincmd l<CR>]], term_opts)
+    keymap("t", "<C-w>", [[<C-\><C-n><C-w>]], term_opts)
+end
 
--- PLUGINS --
--- Dashboard plugin and keymap
-vim.keymap.set("n", "<leader>d", vim.cmd.Dashboard)
-vim.keymap.set("n", "<C-c>", vim.cmd.bd)
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
--- -- Undotree keymap
-vim.keymap.set("n", "<leader>z", require("undotree").toggle, { noremap = true, silent = true })
+-- Dashboard and Bufferline
+keymap("n", "<leader>d", vim.cmd.Dashboard, opts)
+keymap("n", "<leader>gb", vim.cmd.BufferLinePick, opts)
 
--- Bufferline
-vim.keymap.set("n", "<leader>gb", vim.cmd.BufferLinePick)
+-- Undotree
+keymap("n", "<leader>z", require("undotree").toggle, opts)
 
 -- definition or references
-vim.keymap.set("n", "gd", require("definition-or-references").definition_or_references, { silent = true })
+keymap("n", "gd", require("definition-or-references").definition_or_references, opts)
 
--- Dismiss Noice Message
-vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", opts)
+-- Noice Dismiss
+keymap("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", opts)
+
+-- Toggle GH Dash
+local gh_dash = Terminal:new({
+    cmd = "gh dash",
+    direction = "float",
+    dir = "~/",
+    close_on_exit = true,
+})
+local function toggle_gh_dash()
+    gh_dash:toggle()
+end
+keymap("n", "<leader>gb", toggle_gh_dash, opts)
+
+-- Light/Dark Theme Toggle
+local function toggle_light_dark_theme()
+    vim.o.background = vim.o.background == "light" and "dark" or "light"
+end
+keymap("n", "<leader>vt", toggle_light_dark_theme, { desc = "Toggle Light/Dark Theme" })
+
+-- Which-key mappings
+local wk = require("which-key")
+wk.register({
+    ["<leader>"] = {
+        d = { desc = "Dashboard" },
+        gb = { desc = "Toggle GH Dash" },
+        gs = { desc = "Toggle Spotify TUI" },
+        vt = { desc = "Toggle Light/Dark Theme" },
+        z = { desc = "Undotree" },
+        f = {
+            name = "Find (Telescope)",
+            f = { "<cmd>Telescope find_files<cr>", "Find Files" },
+            g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
+            b = { "<cmd>Telescope buffers<cr>", "Buffers" },
+        },
+    },
+})

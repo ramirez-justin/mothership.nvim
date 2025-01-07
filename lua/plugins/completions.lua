@@ -3,10 +3,14 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/nvim-cmp", -- Autocompletion plugin
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-calc",       -- Calculator source for nvim-cmp
+        "hrsh7th/cmp-emoji",      -- Emoji source for nvim-cmp
         "L3MON4D3/LuaSnip",
+        "rafamadriz/friendly-snippets", --Snippets source for nvim cmp
         "saadparwaiz1/cmp_luasnip",
         "zbirenbaum/copilot.lua",
         "zbirenbaum/copilot-cmp",
@@ -16,7 +20,9 @@ return {
         -- Set up nvim-cmp
         local cmp = require("cmp")
         local luasnip = require("luasnip")
+        local autopairs = require("nvim-autopairs")
         local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+        local ts_conds = require("nvim-autopairs.ts-conds")
 
         local has_words_before = function()
             unpack = unpack or table.unpack
@@ -63,6 +69,7 @@ return {
 
         vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
+        -- CMP Options
         opts.snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
@@ -72,12 +79,10 @@ return {
                 -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             end,
         }
-
         opts.window = {
             -- completion = cmp.config.window.bordered(),
             documentation = cmp.config.window.bordered(),
         }
-
         opts.mapping = cmp.mapping.preset.insert({
             ["<C-k>"] = cmp.mapping.select_prev_item(),
             ["<C-j>"] = cmp.mapping.select_next_item(),
@@ -129,30 +134,24 @@ return {
                 return vim_item
             end,
         }
+        -- TODO: ensure all sources are listed here
         opts.sources = {
             { name = "copilot" },
             { name = "render-markdown" },
             { name = "nvim_lsp" },
-            -- { name = 'vsnip' }, -- For vsnip users.
-            { name = "luasnip" }, -- For luasnip users.
-            -- { name = 'ultisnips' }, -- For ultisnips users.
-            -- { name = 'snippy' }, -- For snippy users.
+            { name = "luasnip" },
             { name = "buffer" },
             { name = "path" },
-            { name = "calc" },
-            { name = "emoji" },
             { name = "cmdline" },
         }
 
-        -- Search setup.
+        -- CMP Command-Line Sources
         cmp.setup.cmdline("/", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
                 { name = "buffer" },
             },
         })
-
-        -- Command setup.
         cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({
@@ -162,9 +161,22 @@ return {
             }),
         })
 
-        -- Autopairs integration
-        require("nvim-autopairs").setup({})
+        -- Autopairs Integration
+        autopairs.setup({
+            check_ts = true,
+            ts_config = {
+                lua = { "string" },
+                javascript = { "template_string" },
+                java = false,
+            },
+        })
         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+        -- Custom Pair Rules
+        autopairs.add_rules({
+            autopairs.rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+            autopairs.rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+        })
     end,
     config = function(_, opts)
         require("cmp").setup(opts)

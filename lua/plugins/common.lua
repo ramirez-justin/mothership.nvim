@@ -1,6 +1,12 @@
--- Tip
--- You can force enable/disable lazydev in certain project folders using :h 'exrc' with vim.g.lazydev_enabled = true or vim.g.lazydev_enabled = false-
 return {
+    -- <https://github.com/folke/neoconf.nvim>
+    { -- a Neovim plugin to manage global and project-local settings.
+        "folke/neoconf.nvim",
+        opts = {},
+        cmd = { "NeoConf" },
+    },
+    -- Tip: You can force enable/disable lazydev in certain project folders using :h
+    -- 'exrc' with vim.g.lazydev_enabled = true or vim.g.lazydev_enabled = false-
     -- <https://github.com/folke/lazydev.nvim>
     {
         "folke/lazydev.nvim",
@@ -41,5 +47,6 @@ return {
             },
         },
     },
-    -- { "folke/neodev.nvim", enabled = false }, -- make sure to uninstall or disable neodev.nvim
+    -- common dependencies
+    { "nvim-lua/plenary.nvim" },
 }

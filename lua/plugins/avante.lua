@@ -1,7 +1,6 @@
 -- <http://github.com/yetone/avante.nvim>
 return {
-    -- avante: Similar to cursor ai but for neovim
-    {
+    { -- avante: Similar to cursor ai but for neovim
         "yetone/avante.nvim",
         event = "VeryLazy",
         lazy = false,

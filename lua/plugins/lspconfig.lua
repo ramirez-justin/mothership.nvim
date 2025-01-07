@@ -39,8 +39,7 @@ return {
         },
     },
     -- <https://github.com/neovim/nvim-lspconfig>
-    -- Configures Neovim's Built-in LSP Client
-    {
+    { -- Configures Neovim's Built-in LSP Client
         "neovim/nvim-lspconfig",
         dependencies = {
             { "williamboman/mason.nvim" },
@@ -135,8 +134,7 @@ return {
         end,
     },
     -- <https://github.com/nvimtools/none-ls.nvim>
-    -- Null-LS: Linters and Formatters
-    {
+    { -- Null-LS: Linters and Formatters
         "jose-elias-alvarez/null-ls.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = function()
@@ -160,18 +158,38 @@ return {
             }
         end,
     },
-    -- Trouble.nvim: Diagnostics and References UI
-    {
+    --DEBUGGING
+    { -- Trouble.nvim: Diagnostics and References UI
         "folke/trouble.nvim",
-        opts = {}, -- Default options
-        cmd = "TroubleToggle",
+        opts = function(_, opts)
+            return vim.tbl_deep_extend("force", opts, {
+                modes = {
+                    diagnostics = {
+                        preview = {
+                            type = "float",
+                            relative = "editor",
+                            border = "rounded",
+                            title = "Preview",
+                            title_pos = "center",
+                            position = { 0, -2 },
+                            size = { width = 0.3, height = 0.3 },
+                            zindex = 200,
+                        },
+                    },
+                },
+                action_keys = {
+                    hover = "K", -- opens a small popup with the full multiline message
+                },
+                auto_preview = true, -- automatically preview the location of the diagnostic
+            })
+        end,
+        cmd = { "Trouble", "TroubleToggle" },
         keys = {
             { "<leader>xx", "<cmd>TroubleToggle<cr>",         desc = "Diagnostics (Trouble)" },
             { "<leader>xX", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
         },
     },
-    -- DAP (Debug Adapter Protocol) Setup
-    {
+    { -- DAP (Debug Adapter Protocol) Setup
         "mfussenegger/nvim-dap",
         dependencies = { "rcarriga/nvim-dap-ui" },
         config = function()
