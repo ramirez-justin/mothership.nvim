@@ -66,7 +66,6 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
 
     -- Lualine plugin
-    "nvim-lualine/lualine.nvim",
 
     -- Indent Blankline plugin
     -- { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
@@ -100,13 +99,6 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-    },
-
-    -- Dashboard
-    {
-        "glepnir/dashboard-nvim",
-        event = "VimEnter",
-        dependencies = { { "nvim-tree/nvim-web-devicons" } },
     },
 
     -- Github Copilot
