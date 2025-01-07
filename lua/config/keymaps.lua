@@ -2,9 +2,6 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Resize splits with arrow keys
-keymap("n", "<Down>", ":resize +1<CR>", opts)
-
 -- NORMAL MODE --
 -- Rapid Jump up and down
 keymap("n", "<C-u>", "<C-u>zz", opts)
@@ -47,21 +44,21 @@ keymap("v", "p", '"_dP', opts) -- paste without yanking
 
 -- Terminal Mode Mappings
 function _G.set_terminal_keymaps()
-    local term_opts = { buffer = 0 }
-    keymap("t", "<esc>", [[<C-\><C-n>]], term_opts)
-    keymap("t", "jk", [[<C-\><C-n>]], term_opts)
-    keymap("t", "<C-h>", [[<Cmd>wincmd h<CR>]], term_opts)
-    keymap("t", "<C-j>", [[<Cmd>wincmd j<CR>]], term_opts)
-    keymap("t", "<C-k>", [[<Cmd>wincmd k<CR>]], term_opts)
-    keymap("t", "<C-l>", [[<Cmd>wincmd l<CR>]], term_opts)
-    keymap("t", "<C-w>", [[<C-\><C-n><C-w>]], term_opts)
+	local term_opts = { buffer = 0 }
+	keymap("t", "<esc>", [[<C-\><C-n>]], term_opts)
+	keymap("t", "jk", [[<C-\><C-n>]], term_opts)
+	keymap("t", "<C-h>", [[<Cmd>wincmd h<CR>]], term_opts)
+	keymap("t", "<C-j>", [[<Cmd>wincmd j<CR>]], term_opts)
+	keymap("t", "<C-k>", [[<Cmd>wincmd k<CR>]], term_opts)
+	keymap("t", "<C-l>", [[<Cmd>wincmd l<CR>]], term_opts)
+	keymap("t", "<C-w>", [[<C-\><C-n><C-w>]], term_opts)
 end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 -- Dashboard and Bufferline
 keymap("n", "<leader>d", vim.cmd.Dashboard, opts)
-keymap("n", "<leader>gb", vim.cmd.BufferLinePick, opts)
+keymap("n", "<leader>bp", vim.cmd.BufferLinePick, opts)
 
 -- Undotree
 keymap("n", "<leader>z", require("undotree").toggle, opts)
@@ -72,38 +69,39 @@ keymap("n", "gd", require("definition-or-references").definition_or_references, 
 -- Noice Dismiss
 keymap("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", opts)
 
--- Toggle GH Dash
-local gh_dash = Terminal:new({
-    cmd = "gh dash",
-    direction = "float",
-    dir = "~/",
-    close_on_exit = true,
-})
-local function toggle_gh_dash()
-    gh_dash:toggle()
-end
-keymap("n", "<leader>gb", toggle_gh_dash, opts)
+-- TODO: Toggle GH Dash
+-- local gh_dash = Terminal:new({
+-- 	cmd = "gh dash",
+-- 	direction = "float",
+-- 	dir = "~/",
+-- 	close_on_exit = true,
+-- })
+-- local function toggle_gh_dash()
+-- 	gh_dash:toggle()
+-- end
+-- keymap("n", "<leader>gb", toggle_gh_dash, opts)
 
 -- Light/Dark Theme Toggle
 local function toggle_light_dark_theme()
-    vim.o.background = vim.o.background == "light" and "dark" or "light"
+	-- May need to change this to toggle between sub-theme names
+	vim.o.background = vim.o.background == "light" and "dark" or "light"
 end
 keymap("n", "<leader>vt", toggle_light_dark_theme, { desc = "Toggle Light/Dark Theme" })
 
 -- Which-key mappings
 local wk = require("which-key")
 wk.register({
-    ["<leader>"] = {
-        d = { desc = "Dashboard" },
-        gb = { desc = "Toggle GH Dash" },
-        gs = { desc = "Toggle Spotify TUI" },
-        vt = { desc = "Toggle Light/Dark Theme" },
-        z = { desc = "Undotree" },
-        f = {
-            name = "Find (Telescope)",
-            f = { "<cmd>Telescope find_files<cr>", "Find Files" },
-            g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
-            b = { "<cmd>Telescope buffers<cr>", "Buffers" },
-        },
-    },
+	["<leader>"] = {
+		d = { desc = "Dashboard" },
+		gb = { desc = "Toggle GH Dash" },
+		gs = { desc = "Toggle Spotify TUI" },
+		vt = { desc = "Toggle Light/Dark Theme" },
+		z = { desc = "Undotree" },
+		f = {
+			name = "Find (Telescope)",
+			f = { "<cmd>Telescope find_files<cr>", "Find Files" },
+			g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
+			b = { "<cmd>Telescope buffers<cr>", "Buffers" },
+		},
+	},
 })
