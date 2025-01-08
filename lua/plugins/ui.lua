@@ -182,12 +182,35 @@ return {
             local actions = require("telescope.actions")
             local trouble = require("trouble.providers.telescope")
 
+            opts.defaults = {
+                mappings = {
+                    i = {
+                        -- Cycle through history
+                        ["<C-n>"] = actions.cycle_history_next,
+                        ["<C-p>"] = actions.cycle_history_prev,
+                        -- Move up and down through the list
+                        ["<C-j>"] = actions.move_selection_next,
+                        ["<C-k>"] = actions.move_selection_previous,
+                        -- Send to quickfix list
+                        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                        ["<C-c>"] = actions.close,
+                        ["<C-t>"] = trouble.open_with_trouble,
+                    },
+                    n = {
+                        ["<C-n>"] = actions.cycle_history_next,
+                        ["<C-p>"] = actions.cycle_history_prev,
+                        ["<C-j>"] = actions.move_selection_next,
+                        ["<C-k>"] = actions.move_selection_previous,
+                        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                        ["<C-c>"] = actions.close,
+                        ["<C-t>"] = trouble.open_with_trouble,
+                    },
+                },
+            }
             opts.pickers = {
                 -- Add picker-specific configurations here if needed
             }
-            opts.extensions = {
-                fzf = {},
-            }
+            opts.extensions = {}
         end,
         config = function(_, opts)
             local telescope = require("telescope")
@@ -226,11 +249,12 @@ return {
             "MunifTanjim/nui.nvim",
             {
                 "rcarriga/nvim-notify",
-                opts = function(_, opts)
-                    opts.setup = {
+                config = function()
+                    require("notify").setup({
+                        background_colour = "#1e1e2e",
                         stages = "fade_in_slide_out",
                         timeout = 5000,
-                    }
+                    })
                 end,
             },
         },

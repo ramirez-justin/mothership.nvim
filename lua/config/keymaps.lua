@@ -9,6 +9,9 @@ keymap("n", "<leader>w", "<cmd>w<cr>", opts)
 -- Quit
 keymap("n", "<leader>q", "<cmd>q<cr>", opts)
 
+-- Close buffer
+keymap("n", "<C-c>", "<cmd>bd<cr>", opts)
+
 -- Rapid Jump up and down
 keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)
@@ -45,6 +48,26 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts) -- paste without yanking
 
 wk.add({
+	-- Dashboard
+	{ "<leader>d", "<cmd>Dashboard<cr>", desc = "Dashboard" },
+
+	-- NvimTree group
+	{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
+	{
+		"<C-t>",
+		function()
+			require("nvim-tree.api").tree.change_root_to_parent()
+		end,
+		desc = "Go to Parent Directory",
+	},
+	{
+		"?",
+		function()
+			require("nvim-tree.api").tree.toggle_help()
+		end,
+		desc = "Toggle Help",
+	},
+
 	-- Telescope group
 	{ "<leader>f", group = "Telescope" }, -- Group for file-related actions
 	{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File" },
@@ -53,32 +76,9 @@ wk.add({
 	{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
 	{ "<leader>fs", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
 
-	-- NvimTree group
-	{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
-
 	-- Lazygit group
 	{ "<leader>g", group = "Lazygit", icon = "" },
 	{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open Lazygit" },
-
-	-- Dashboard
-	{ "<leader>d", "<cmd>Dashboard<cr>", desc = "Dashboard" },
-
-	-- Quit and Save
-	{ "<leader>q", "<cmd>q<cr>", desc = "Quit" },
-	{ "<leader>w", "<cmd>w<cr>", desc = "Write File" },
-
-	-- Undotree
-	{ "<leader>z", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
-
-	-- Proxy example for windows
-	{ "<leader>w", proxy = "<c-w>", group = "Window Management" },
-
-	-- Nested example (NORMAL and VISUAL modes)
-	{
-		mode = { "n", "v" },
-		{ "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- Inherited modes
-		{ "<leader>w", "<cmd>w<cr>", desc = "Write" },
-	},
 
 	-- Comment group
 	{ "<gc>", group = "Linewise Comments" }, -- Group for linewise comment mappings
@@ -88,43 +88,28 @@ wk.add({
 	{ "<gco>", "<Plug>(comment_insert_below)", desc = "Insert Linewise Comment Below" },
 	{ "<gcA>", "<Plug>(comment_insert_eol)", desc = "Insert Comment at EOL" },
 	{ "<gcc>", "<Plug>(comment_toggle_linewise_current)", desc = "Toggle Linewise Current Line" },
-	{ "<gbl>", "<Plug>(comment_toggle_blockwise)", desc = "Toggle Blockwise Comment" },
+	{ "<gbl>", "<Plug>(comment_toggle_blockwise)", desc = "Toggle Blockwise Comment", remap = true },
 	{ "<gbc>", "<Plug>(comment_toggle_blockwise_current)", desc = "Toggle Blockwise Current Block" },
+
+	-- Precommit group
+	{ "<leader>p", group = "Precommit" }, -- Group for pre-commit-related actions
+	{ "<leader>pr", "<cmd>Precommit<cr>", desc = "Run Precommit" },
+
+	-- Quit and Save
+	{ "<leader>q", "<cmd>q<cr>", desc = "Quit" },
+	{ "<leader>w", "<cmd>w<cr>", desc = "Write File" },
+
+	-- Undotree
+	{ "<leader>z", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
+
+	-- Nested example (NORMAL and VISUAL modes)
+	{
+		mode = { "n", "v" },
+		{ "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- Inherited modes
+		{ "<leader>w", "<cmd>w<cr>", desc = "Write" },
+	},
 })
 
--- -- Telescope Mappings
--- keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" }, { group = "Telescope" })
--- keymap("n", "<leader>fg", "<cmd>Telescope git_files<cr>", { desc = "Git Files" }, { group = "Telescope" })
--- keymap(
---     "n",
---     "<leader>fr",
---     "<cmd>Telescope oldfiles<cr>",
---     { desc = "Open Recent File", remap = true },
---     { group = "Telescope" }
--- )
--- keymap("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Live Grep" }, { group = "Telescope" })
---
--- -- NvimTreeOpen
--- keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle NVIM Tree" })
---
-
---
-
---
--- -- Terminal Mode Mappings
--- function _G.set_terminal_keymaps()
---     local term_opts = { buffer = 0 }
---     keymap("t", "<esc>", [[<C-\><C-n>]], term_opts)
---     keymap("t", "jk", [[<C-\><C-n>]], term_opts)
---     keymap("t", "<C-h>", [[<Cmd>wincmd h<CR>]], term_opts)
---     keymap("t", "<C-j>", [[<Cmd>wincmd j<CR>]], term_opts)
---     keymap("t", "<C-k>", [[<Cmd>wincmd k<CR>]], term_opts)
---     keymap("t", "<C-l>", [[<Cmd>wincmd l<CR>]], term_opts)
---     keymap("t", "<C-w>", [[<C-\><C-n><C-w>]], term_opts)
--- end
---
--- vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
---
 -- -- Dashboard and Bufferline
 -- keymap("n", "<leader>d", vim.cmd.Dashboard, opts)
 -- keymap("n", "<leader>bp", vim.cmd.BufferLinePick, opts)
