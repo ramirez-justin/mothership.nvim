@@ -12,6 +12,9 @@ keymap("n", "<leader>q", "<cmd>q<cr>", opts)
 -- Close buffer
 keymap("n", "<C-c>", "<cmd>bd<cr>", opts)
 
+-- Toggle Highlight Search
+keymap("n", "<leader>h", ":set hlsearch!<CR>", opts)
+
 -- Rapid Jump up and down
 keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "<C-d>", "<C-d>zz", opts)
@@ -48,66 +51,80 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts) -- paste without yanking
 
 wk.add({
-	-- Dashboard
-	{ "<leader>d", "<cmd>Dashboard<cr>", desc = "Dashboard" },
+    -- Dadbod UI
+    { "<leader>b",   group = "Database" }, -- Group for all database-related actions
+    { "<leader>bu",  "<cmd>DBUI<CR>",                   desc = "Open DBUI Interface" },
+    { "<leader>bt",  "<cmd>DBUIToggle<CR>",             desc = "Toggle DBUI Interface" },
+    { "<leader>ba",  "<cmd>DBUIAddConnection<CR>",      desc = "Add DB Connection" },
+    { "<leader>bf",  "<cmd>DBUIFindBuffer<CR>",         desc = "Find DB Buffer" },
+    { "<leader>br",  "<cmd>DBUIRenameBuffer<CR>",       desc = "Rename Buffer or Query" },
+    { "<leader>bi",  "<cmd>DBUILastQueryInfo<CR>",      desc = "Last Query Info" },
+    { "<leader>bn",  "<cmd>DBUIHideNotifications<CR>",  desc = "Hide Notifications" },
+    -- Remap query-related actions
+    { "<Leader>bqs", "<Plug>(DBUI_ExecuteQuery)",       desc = "Execute Query (Selection)" },
+    { "<Leader>bnn", "<Plug>(DBUI_ToggleResultLayout)", desc = "Toggle Result Layout" },
+    { "<Leader>bde", "<Plug>(DBUI_EditBindParameters)", desc = "Edit Bind Parameters" },
 
-	-- NvimTree group
-	{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
-	{
-		"<C-t>",
-		function()
-			require("nvim-tree.api").tree.change_root_to_parent()
-		end,
-		desc = "Go to Parent Directory",
-	},
-	{
-		"?",
-		function()
-			require("nvim-tree.api").tree.toggle_help()
-		end,
-		desc = "Toggle Help",
-	},
+    -- Dashboard
+    { "<leader>d",   "<cmd>Dashboard<cr>",              desc = "Dashboard" },
 
-	-- Telescope group
-	{ "<leader>f", group = "Telescope" }, -- Group for file-related actions
-	{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File" },
-	{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-	{ "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Git Files" },
-	{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
-	{ "<leader>fs", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
+    -- NvimTree group
+    { "<leader>e",   "<cmd>NvimTreeToggle<cr>",         desc = "Toggle NvimTree" },
+    {
+        "<C-t>",
+        function()
+            require("nvim-tree.api").tree.change_root_to_parent()
+        end,
+        desc = "Go to Parent Directory",
+    },
+    {
+        "?",
+        function()
+            require("nvim-tree.api").tree.toggle_help()
+        end,
+        desc = "Toggle Help",
+    },
 
-	-- Lazygit group
-	{ "<leader>g", group = "Lazygit", icon = "" },
-	{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open Lazygit" },
+    -- Telescope group
+    { "<leader>f", group = "Telescope" }, -- Group for file-related actions
+    { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+    { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Git Files" },
+    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
+    { "<leader>fs", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
 
-	-- Comment group
-	{ "<gc>", group = "Linewise Comments" }, -- Group for linewise comment mappings
-	{ "<gb>", group = "Blockwise Comments" }, -- Group for blockwise comment mappings
-	{ "<gcL>", "<Plug>(comment_toggle_linewise)", desc = "Toggle Linewise Comment" },
-	{ "<gcO>", "<Plug>(comment_insert_above)", desc = "Insert Linewise Comment Above" },
-	{ "<gco>", "<Plug>(comment_insert_below)", desc = "Insert Linewise Comment Below" },
-	{ "<gcA>", "<Plug>(comment_insert_eol)", desc = "Insert Comment at EOL" },
-	{ "<gcc>", "<Plug>(comment_toggle_linewise_current)", desc = "Toggle Linewise Current Line" },
-	{ "<gbl>", "<Plug>(comment_toggle_blockwise)", desc = "Toggle Blockwise Comment", remap = true },
-	{ "<gbc>", "<Plug>(comment_toggle_blockwise_current)", desc = "Toggle Blockwise Current Block" },
+    -- Lazygit group
+    { "<leader>g", group = "Lazygit", icon = "" },
+    { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open Lazygit" },
 
-	-- Precommit group
-	{ "<leader>p", group = "Precommit" }, -- Group for pre-commit-related actions
-	{ "<leader>pr", "<cmd>Precommit<cr>", desc = "Run Precommit" },
+    -- Comment group
+    { "<gc>", group = "Linewise Comments" }, -- Group for linewise comment mappings
+    { "<gb>", group = "Blockwise Comments" }, -- Group for blockwise comment mappings
+    { "<gcL>", "<Plug>(comment_toggle_linewise)", desc = "Toggle Linewise Comment" },
+    { "<gcO>", "<Plug>(comment_insert_above)", desc = "Insert Linewise Comment Above" },
+    { "<gco>", "<Plug>(comment_insert_below)", desc = "Insert Linewise Comment Below" },
+    { "<gcA>", "<Plug>(comment_insert_eol)", desc = "Insert Comment at EOL" },
+    { "<gcc>", "<Plug>(comment_toggle_linewise_current)", desc = "Toggle Linewise Current Line" },
+    { "<gbl>", "<Plug>(comment_toggle_blockwise)", desc = "Toggle Blockwise Comment", remap = true },
+    { "<gbc>", "<Plug>(comment_toggle_blockwise_current)", desc = "Toggle Blockwise Current Block" },
 
-	-- Quit and Save
-	{ "<leader>q", "<cmd>q<cr>", desc = "Quit" },
-	{ "<leader>w", "<cmd>w<cr>", desc = "Write File" },
+    -- Precommit group
+    { "<leader>p", group = "Precommit" }, -- Group for pre-commit-related actions
+    { "<leader>pr", "<cmd>Precommit<cr>", desc = "Run Precommit" },
 
-	-- Undotree
-	{ "<leader>z", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
+    -- Quit and Save
+    { "<leader>q", "<cmd>q<cr>", desc = "Quit" },
+    { "<leader>w", "<cmd>w<cr>", desc = "Write File" },
 
-	-- Nested example (NORMAL and VISUAL modes)
-	{
-		mode = { "n", "v" },
-		{ "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- Inherited modes
-		{ "<leader>w", "<cmd>w<cr>", desc = "Write" },
-	},
+    -- Undotree
+    { "<leader>z", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
+
+    -- Nested example (NORMAL and VISUAL modes)
+    {
+        mode = { "n", "v" },
+        { "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- Inherited modes
+        { "<leader>w", "<cmd>w<cr>", desc = "Write" },
+    },
 })
 
 -- -- Dashboard and Bufferline
