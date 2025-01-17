@@ -3,10 +3,17 @@ local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- NORMAL MODE --
-keymap("n", "<leader>w", "<cmd>w<cr>", opts) -- Save
-keymap("n", "<leader>q", "<cmd>q<cr>", opts) -- Quit
-keymap("n", "<C-c>", "<cmd>bd<cr>", opts) -- Close buffer
-keymap("n", "<leader>h", ":set hlsearch!<CR>", opts) -- Toggle Highlight Search
+-- Save
+keymap("n", "<leader>w", "<cmd>w<cr>", opts)
+
+-- Quit
+keymap("n", "<leader>q", "<cmd>q<cr>", opts)
+
+-- Close buffer
+keymap("n", "<C-c>", "<cmd>bd<cr>", opts)
+
+-- Toggle Highlight Search
+keymap("n", "<leader>h", "<cmd>noh<cr>", opts)
 
 -- Rapid Jump up and down
 keymap("n", "<C-u>", "<C-u>zz", opts)
@@ -61,11 +68,6 @@ wk.add({
 	-- Dashboard
 	{ "<leader>d", "<cmd>Dashboard<cr>", desc = "Dashboard" },
 
-	-- Dashboard and Bufferline
-	{ "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "BufferLine Pick" },
-
-	-- Noice Dismiss
-	{ "<leader>nd", "<cmd>NoiceDismiss<CR>", desc = "Dismiss Noice" },
 	-- NvimTree group
 	{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
 	{
@@ -111,11 +113,18 @@ wk.add({
 	{ "<leader>pr", "<cmd>Precommit<cr>", desc = "Run Precommit" },
 
 	-- Quit and Save
-	{ "<leader>q", desc = "Quit" },
-	{ "<leader>w", desc = "Write File" },
+	{ "<leader>q", "<cmd>q<cr>", desc = "Quit" },
+	{ "<leader>w", "<cmd>w<cr>", desc = "Write File" },
 
 	-- Undotree
 	{ "<leader>z", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
+
+	-- Nested example (NORMAL and VISUAL modes)
+	{
+		mode = { "n", "v" },
+		{ "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- Inherited modes
+		{ "<leader>w", "<cmd>w<cr>", desc = "Write" },
+	},
 })
 
 -- -- TODO: Toggle GH Dash
