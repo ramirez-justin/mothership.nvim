@@ -1,7 +1,20 @@
 
 
 # A Neovim configuration repo to space out with
-
+prereqs:
+- deno
+- lazygit
+- pyenv(+setup virtual-env)
+- [Go](https://go.dev/doc/install)
+- [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+- [Lua](https://www.lua.org/download.html)
+- [luarocks](https://luarocks.org/)
+- [ruby](https://www.ruby-lang.org/en/documentation/installation/)
+- composer
+- php
+- npm
+- node
+- [Julia](https://julialang.org/downloads/)
 Install the LazyVim Starter
 Make a backup of your current Neovim files:
 
