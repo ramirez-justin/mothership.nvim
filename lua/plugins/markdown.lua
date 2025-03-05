@@ -20,6 +20,8 @@ return {
 		---@type render.md.UserConfig
 		opts = {
 			latex = { enabled = false },
+			file_types = { "markdown", "Avante" },
 		},
+		ft = { "markdown", "Avante" },
 	},
 }
