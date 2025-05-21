@@ -1,54 +1,87 @@
 -- <http://github.com/yetone/avante.nvim>
 return {
-    { -- avante: Similar to cursor ai but for neovim
-        "yetone/avante.nvim",
-        event = "VeryLazy",
-        lazy = false,
-        version = false, -- set this if you want to always pull the latest change
-        opts = {
-            web_search_enging = {
-                provider = "kagi",
-            },
-        },
-        -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-        build = "make",
-        -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "stevearc/dressing.nvim",
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-            --- The below dependencies are optional,
-            "nvim-tree/nvim-web-devicons",      -- or echasnovski/mini.icons
-            "zbirenbaum/copilot.lua",           -- for providers='copilot'
-            "MeanderingProgrammer/render-markdown.nvim", -- setup in markdown.lua
-            {
-                -- support for image pasting
-                "HakonHarnes/img-clip.nvim",
-                event = "VeryLazy",
-                opts = {
-                    -- recommended settings
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        -- required for Windows users
-                        use_absolute_path = true,
-                    },
-                },
-            },
-        },
-    },
-    {
-        "Exafunction/codeium.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "hrsh7th/nvim-cmp",
-        },
-        config = function()
-            require("codeium").setup({})
-        end,
-    },
+	{ -- avante: Similar to cursor ai but for neovim
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		version = false, -- set this if you want to always pull the latest change
+		opts = {
+			provider = "gemini",
+			gemini = {
+				endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
+				model = "gemini-2.5-flash-preview-04-17",
+				timeout = 30000, -- Timeout in milliseconds
+				temperature = 1,
+				max_tokens = 65000,
+			},
+			web_search_engine = {
+				provider = "kagi",
+			},
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- Configure the usage behavior of the plugin
+		behavior = {
+			enable_cursor_planning_mode = true,
+			enable_claude_text_editor_tool_mode = true,
+		},
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			--- The below dependencies are optional,
+			"echasnovski/mini.pick", -- for file_selector provider mini.pick
+			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+			"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+			"ibhagwan/fzf-lua", -- for file_selector provider fzf
+			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+			"zbirenbaum/copilot.lua", -- for providers='copilot'
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
+	},
+	{
+		"olimorris/codecompanion.nvim",
+		opts = {},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+	-- currently not working try again in future
+	-- {
+	-- 	"Exafunction/codeium.nvim",
+	-- 	event = "VeryLazy",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"hrsh7th/nvim-cmp",
+	-- 	},
+	-- 	config = function()
+	-- 		require("codeium").setup({})
+	-- 	end,
+	-- },
 }
