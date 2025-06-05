@@ -5,16 +5,29 @@ return {
 		event = "VeryLazy",
 		version = false, -- set this if you want to always pull the latest change
 		opts = {
-			provider = "gemini",
-			gemini = {
-				endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
-				model = "gemini-2.5-flash-preview-04-17",
-				timeout = 30000, -- Timeout in milliseconds
-				temperature = 1,
-				max_tokens = 65000,
-			},
-			web_search_engine = {
-				provider = "kagi",
+			mode = "agentic",
+			providers = {
+				claude = {
+					endpoint = "https://api.anthropic.com",
+					model = "claude-opus-4-20250514",
+					timeout = 40000, -- Timeout in milliseconds
+					extra_request_body = {
+						temperature = 0.7,
+						max_tokens = 4096,
+					},
+				},
+				web_search_engine = {
+					provider = "kagi",
+				},
+				behaviour = {
+					auto_suggestions = false, -- Experimental stage
+					auto_set_highlight_group = true,
+					auto_set_keymaps = true,
+					auto_apply_diff_after_generation = false,
+					support_paste_from_clipboard = true,
+					minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+					enable_token_counting = true, -- Whether to enable token counting. Default to true.
+				},
 			},
 		},
 		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -72,16 +85,14 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
-	-- currently not working try again in future
-	-- {
-	-- 	"Exafunction/codeium.nvim",
-	-- 	event = "VeryLazy",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"hrsh7th/nvim-cmp",
-	-- 	},
-	-- 	config = function()
-	-- 		require("codeium").setup({})
-	-- 	end,
-	-- },
+	{
+		"Exafunction/windsurf.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"hrsh7th/nvim-cmp",
+		},
+		config = function()
+			require("codeium").setup({})
+		end,
+	},
 }
