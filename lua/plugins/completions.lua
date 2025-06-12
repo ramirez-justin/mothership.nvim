@@ -21,7 +21,7 @@ return {
 		-- AI completion
 		"zbirenbaum/copilot.lua",
 		"zbirenbaum/copilot-cmp",
-		"Exafunction/codeium.nvim",
+		"Exafunction/windsurf.nvim",
 
 		-- Autopairs integration
 		"windwp/nvim-autopairs",
@@ -74,7 +74,7 @@ return {
 		}
 		-- find more here: https://www.nerdfonts.com/cheat-sheet
 
-		vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+		-- vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 		vim.api.nvim_set_hl(0, "CmpItemKindCodeium", { fg = "#09B6A2" })
 
 		-- Setup main completion
