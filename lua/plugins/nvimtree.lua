@@ -6,10 +6,34 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
+		local WIDTH_RATIO = 0.5
+		local HEIGHT_RATIO = 0.8
+
 		require("nvim-tree").setup({
-			sort_by = "case_sensitive",
 			view = {
-				width = 50,
+				relativenumber = true,
+				float = {
+					enable = true,
+					open_win_config = function()
+						local screen_w = vim.opt.columns:get()
+						local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+						local win_w = math.floor(screen_w * WIDTH_RATIO)
+						local win_h = math.floor(screen_h * HEIGHT_RATIO)
+						local win_x = (screen_w - win_w) / 2
+						local win_y = (screen_h - win_h) / 2
+						return {
+							border = "rounded",
+							relative = "editor",
+							row = win_y,
+							col = win_x,
+							width = win_w,
+							height = win_h,
+						}
+					end,
+				},
+				width = function()
+					return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
+				end,
 			},
 			renderer = {
 				group_empty = true,
@@ -18,6 +42,19 @@ return {
 				dotfiles = false,
 				git_ignored = false,
 			},
+			sort = {
+				sorter = "case_sensitive",
+			},
+		})
+
+		-- Optional: Close nvim-tree if it's the last window
+		vim.api.nvim_create_autocmd("BufEnter", {
+			nested = true,
+			callback = function()
+				if #vim.api.nvim_list_wins() == 1 and vim.bo.filetype == "NvimTree" then
+					vim.cmd("quit")
+				end
+			end,
 		})
 	end,
 }

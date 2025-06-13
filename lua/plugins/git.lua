@@ -20,6 +20,9 @@ return {
 		end,
 	},
 	{
+		"lewis6991/gitsigns.nvim",
+	},
+	{
 		"f-person/git-blame.nvim",
 		init = function()
 			require("gitblame").setup({
