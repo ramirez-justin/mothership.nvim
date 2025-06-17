@@ -2,19 +2,23 @@
 return {
 	{ -- avante: Similar to cursor ai but for neovim
 		"yetone/avante.nvim",
-		event = "VeryLazy",
 		version = false, -- set this if you want to always pull the latest change
+		cmd = { "AvanteAsk", "AvanteToggle", "AvanteChat" },
+		keys = {
+			{ "<leader>aa", "<cmd>AvanteToggle<cr>", desc = "Toggle Avante" },
+		},
 		opts = {
 			mode = "agentic",
 			providers = {
 				claude = {
 					endpoint = "https://api.anthropic.com",
-					model = "claude-opus-4-20250514",
+					model = "claude-sonnet-4-20250514",
 					timeout = 40000, -- Timeout in milliseconds
 					extra_request_body = {
 						temperature = 0.7,
 						max_tokens = 4096,
 					},
+					api_key_name = "cmd:op read op://dev_vault/ANTHROPIC_API_KEY/credential --no-newline",
 				},
 				web_search_engine = {
 					provider = "kagi",
@@ -79,11 +83,37 @@ return {
 	},
 	{
 		"olimorris/codecompanion.nvim",
-		opts = {},
+		opts = {
+			strategy = {
+				chat = {
+					adapter = "anthropic",
+				},
+				inline = {
+					adapter = "anthropic",
+				},
+			},
+			adapters = {},
+		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 		},
+		config = function(_, opts)
+			opts.adapters.anthropic = function()
+				return require("codecompanion.adapters").extend("anthropic", {
+					env = {
+						api_key = "cmd:op read op://dev_vault/ANTHROPIC_API_KEY/credential --no-newline",
+					},
+					schema = {
+						model = {
+							default = "claude-sonnet-4-20250514",
+						},
+					},
+				})
+			end
+
+			require("codecompanion").setup(opts)
+		end,
 	},
 	{
 		"Exafunction/windsurf.nvim",

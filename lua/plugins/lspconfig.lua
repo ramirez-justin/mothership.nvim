@@ -118,7 +118,7 @@ return {
 					settings = {
 						Lua = {
 							runtime = { version = "LuaJIT" },
-							diagnostics = { globals = { "vim" } },
+							diagnostics = { globals = { "vim", "Snacks" } },
 							workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
 							telemetry = { enable = false },
 						},
@@ -340,6 +340,20 @@ return {
 				"<leader>xQ",
 				"<cmd>Trouble qflist toggle<cr>",
 				desc = "Quickfix List (Trouble)",
+			},
+			{
+				"<leader>st",
+				function()
+					Snacks.picker.todo_comments()
+				end,
+				desc = "Todo",
+			},
+			{
+				"<leader>sT",
+				function()
+					Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
+				end,
+				desc = "Todo/Fix/Fixme",
 			},
 		},
 	},

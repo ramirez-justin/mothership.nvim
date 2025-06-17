@@ -43,8 +43,23 @@ return {
 
 	{ -- Highlight todo, notes, etc in comments
 		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
+		optional = true,
+		keys = {
+			{
+				"<leader>st",
+				function()
+					Snacks.picker.todo_comments()
+				end,
+				desc = "Todo",
+			},
+			{
+				"<leader>sT",
+				function()
+					Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
+				end,
+				desc = "Todo/Fix/Fixme",
+			},
+		},
 	},
 	-- <https://github.com/dstein64/nvim-scrollview>
 	{ -- a Neovim plugin that displays interactive vertical scrollbars and signs.
@@ -153,72 +168,6 @@ return {
 			require("Comment").setup() -- Simple setup without defining keymaps here
 		end,
 		event = "BufReadPost", -- Optional lazy-load on buffer read
-	},
-
-	-- <https://github.com/nvim-telescope/telescope.nvim>
-	{ -- Gaze deeply into unknown regions using the power of the moon.
-		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
-		-- or tag = '0.1.8',
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{ "smartpde/telescope-recent-files" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-			{ "nvim-telescope/telescope-dap.nvim" },
-			{
-				"jmbuhr/telescope-zotero.nvim",
-				enabled = true,
-				dev = false,
-				dependencies = {
-					{ "kkharji/sqlite.lua" },
-				},
-				config = function()
-					vim.keymap.set("n", "<leader>fz", ":Telescope zotero<cr>", { desc = "[z]otero" })
-				end,
-			},
-		},
-		opts = function(_, opts)
-			local actions = require("telescope.actions")
-			local trouble = require("trouble.sources.telescope")
-
-			opts.defaults = {
-				mappings = {
-					i = {
-						-- Cycle through history
-						["<C-n>"] = actions.cycle_history_next,
-						["<C-p>"] = actions.cycle_history_prev,
-						-- Move up and down through the list
-						["<C-j>"] = actions.move_selection_next,
-						["<C-k>"] = actions.move_selection_previous,
-						-- Send to quickfix list
-						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-						["<C-c>"] = actions.close,
-						["<C-t>"] = trouble.open,
-					},
-					n = {
-						["<C-n>"] = actions.cycle_history_next,
-						["<C-p>"] = actions.cycle_history_prev,
-						["<C-j>"] = actions.move_selection_next,
-						["<C-k>"] = actions.move_selection_previous,
-						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-						["<C-c>"] = actions.close,
-						["<C-t>"] = trouble.open,
-					},
-				},
-			}
-			opts.pickers = {
-				-- Add picker-specific configurations here if needed
-			}
-			opts.extensions = {}
-		end,
-		config = function(_, opts)
-			local telescope = require("telescope")
-			telescope.setup(opts)
-			telescope.load_extension("fzf")
-			telescope.load_extension("recent_files")
-			telescope.load_extension("noice")
-		end,
 	},
 
 	-- <https://github.com/folke/noice.nvim>

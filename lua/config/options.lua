@@ -49,6 +49,13 @@ opt.updatetime = 250 -- Save swap file and trigger CursorHold
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
+opt.foldmethod = "expr" -- Enable folding based on expression
+opt.foldexpr = "nvim_treesitter#foldexpr()" -- Use treesitter for folding
+opt.foldcolumn = "0" -- Disable fold column
+opt.foldtext = "" -- Disable fold text
+opt.foldlevel = 999 -- Disable all folds by default
+opt.foldlevelstart = 1 -- Start with folds open
+opt.foldnestmax = 4 -- Maximum fold nesting level
 
 if vim.fn.has("nvim-0.9.0") == 1 then
 	opt.splitkeep = "screen"
@@ -57,3 +64,15 @@ end
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+vim.diagnostic.config({
+	-- Global settings for diagnostics
+	virtual_text = {
+		spacing = 2, -- Adjust spacing for virtual text
+		prefix = "●", -- Set a prefix for virtual text
+	},
+	signs = true, -- Enable signs in the signcolumn
+	underline = true, -- Enable underlines for diagnostics
+	update_in_insert = false, -- Disable diagnostic updates in insert mode
+	severity_sort = true, -- Sort diagnostics by severity
+})
