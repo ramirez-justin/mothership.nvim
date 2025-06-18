@@ -33,16 +33,18 @@ return {
 		opts = {
 			bigfile = { enabled = true },
 			dashboard = {
-				sections = {
-					{
-						pane = 1,
-						text = [[
+				preset = {
+					header = [[
     ███╗   ███╗ ██████╗ ████████╗██╗  ██╗███████╗██████╗ ███████╗██╗  ██╗██╗██████╗
      ████╗ ████║██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██╔══██╗██╔════╝██║  ██║██║██╔══██╗
      ██╔████╔██║██║   ██║   ██║   ███████║█████╗  ██████╔╝███████╗███████║██║██████╔╝
     ██║╚██╔╝██║██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗╚════██║██╔══██║██║██╔═══╝
 ██║ ╚═╝ ██║╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║███████║██║  ██║██║██║
 ╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝]],
+				},
+				sections = {
+					{
+						section = "header",
 						align = "center",
 						gap = 2,
 						padding = 2,
@@ -59,6 +61,17 @@ return {
 							Snacks.gitbrowse()
 						end,
 					},
+					{
+						icon = " ",
+						desc = "Manage LSP & Tools",
+						key = "M",
+						padding = 1,
+						action = ":Mason",
+					},
+					{
+						pane = 2,
+						padding = 5,
+					},
 					function()
 						local in_git = Snacks.git.get_root() ~= nil
 						local cmds = {
@@ -70,7 +83,7 @@ return {
 								action = function()
 									vim.fn.jobstart("gh pr list --web", { detach = true })
 								end,
-								height = 5,
+								height = 4,
 							},
 							{
 								title = "GitHub Status",
@@ -86,8 +99,8 @@ return {
 								title = "Git Log",
 								icon = " ",
 								section = "terminal",
-								cmd = "git log --graph --oneline --abbrev-commit --decorate=short -n 5",
-								height = 8,
+								cmd = "git log --graph --oneline --abbrev-commit --decorate=short -n 4",
+								height = 7,
 								ttl = 300,
 							},
 						}
@@ -108,6 +121,8 @@ return {
 						text = {
 							{ quote, align = "center", hl = "Comment" },
 						},
+						padding = 2,
+						gap = 2,
 					},
 				},
 			},
@@ -137,10 +152,10 @@ return {
 								title_pos = "center",
 								cycle = false,
 								width = function()
-									return math.floor(vim.o.columns * 0.7)
+									return math.floor(vim.o.columns * 0.8)
 								end,
 								height = function()
-									return math.floor((vim.o.lines - vim.o.cmdheight) * 0.7)
+									return math.floor((vim.o.lines - vim.o.cmdheight) * 0.8)
 								end,
 								row = function()
 									return math.floor(
@@ -201,7 +216,12 @@ return {
 			},
 			indent = { enabled = true },
 			input = { enabled = true },
-			lazygit = { enabled = true },
+			lazygit = {
+				win = {
+					width = math.floor(vim.o.columns * 0.8),
+					height = math.floor(vim.o.lines * 0.8),
+				},
+			},
 			notifier = {
 				enabled = true,
 				timeout = 3000,
