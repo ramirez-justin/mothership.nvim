@@ -66,9 +66,6 @@ wk.add({
 	{ "<Leader>bnn", "<Plug>(DBUI_ToggleResultLayout)", desc = "Toggle Result Layout" },
 	{ "<Leader>bde", "<Plug>(DBUI_EditBindParameters)", desc = "Edit Bind Parameters" },
 
-	-- Dashboard
-	{ "<leader>d", "<cmd>Dashboard<cr>", desc = "Dashboard" },
-
 	-- Comment group
 	{ "<gc>", group = "Linewise Comments" }, -- Group for linewise comment mappings
 	{ "<gb>", group = "Blockwise Comments" }, -- Group for blockwise comment mappings

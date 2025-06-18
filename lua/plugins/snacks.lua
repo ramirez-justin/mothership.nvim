@@ -35,29 +35,22 @@ return {
 			dashboard = {
 				sections = {
 					{
-						text = {
-							[[███╗   ███╗ ██████╗ ████████╗██╗  ██╗███████╗██████╗ ███████╗██╗  ██╗██╗██████╗]],
-							[[████╗ ████║██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██╔══██╗██╔════╝██║  ██║██║██╔══██╗]],
-							[[██╔████╔██║██║   ██║   ██║   ███████║█████╗  ██████╔╝███████╗███████║██║██████╔╝]],
-							[[██║╚██╔╝██║██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗╚════██║██╔══██║██║██╔═══╝ ]],
-							[[██║ ╚═╝ ██║╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║███████║██║  ██║██║██║     ]],
-							[[╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ]],
-						},
+						pane = 1,
+						text = [[
+    ███╗   ███╗ ██████╗ ████████╗██╗  ██╗███████╗██████╗ ███████╗██╗  ██╗██╗██████╗
+     ████╗ ████║██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██╔══██╗██╔════╝██║  ██║██║██╔══██╗
+     ██╔████╔██║██║   ██║   ██║   ███████║█████╗  ██████╔╝███████╗███████║██║██████╔╝
+    ██║╚██╔╝██║██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗╚════██║██╔══██║██║██╔═══╝
+██║ ╚═╝ ██║╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║███████║██║  ██║██║██║
+╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝]],
 						align = "center",
-						padding = 1,
+						gap = 2,
+						padding = 2,
+						height = 5,
 					},
-					{
-						pane = 2,
-						icon = "󰙎 ",
-						title = "Quote of the Day",
-						text = {
-							{ quote, align = "center", hl = "Comment" },
-						},
-						padding = 1,
-					},
+
 					{ section = "keys", gap = 1, padding = 1 },
 					{
-						pane = 2,
 						icon = " ",
 						desc = "Browse Repo",
 						key = "b",
@@ -70,6 +63,16 @@ return {
 						local in_git = Snacks.git.get_root() ~= nil
 						local cmds = {
 							{
+								icon = " ",
+								title = "Open PRs",
+								cmd = "gh pr list -L 3",
+								key = "P",
+								action = function()
+									vim.fn.jobstart("gh pr list --web", { detach = true })
+								end,
+								height = 5,
+							},
+							{
 								title = "GitHub Status",
 								cmd = "gh status",
 								key = "n",
@@ -80,10 +83,10 @@ return {
 								end,
 							},
 							{
-								title = "Git Status",
+								title = "Git Log",
 								icon = " ",
 								section = "terminal",
-								cmd = "git status --short --branch --renames",
+								cmd = "git log --graph --oneline --abbrev-commit --decorate=short -n 5",
 								height = 8,
 								ttl = 300,
 							},
@@ -99,6 +102,13 @@ return {
 						end, cmds)
 					end,
 					{ section = "startup" },
+					{
+						icon = "󰙎 ",
+						title = "Quote of the Day",
+						text = {
+							{ quote, align = "center", hl = "Comment" },
+						},
+					},
 				},
 			},
 			picker = {
