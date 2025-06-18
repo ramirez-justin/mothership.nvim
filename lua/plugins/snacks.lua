@@ -211,9 +211,16 @@ return {
 			scroll = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
+			terminal = {
+				win = {
+					style = "float",
+					width = math.floor(vim.o.columns * 0.8),
+					height = math.floor(vim.o.lines * 0.8),
+				},
+			},
 			styles = {
 				notification = {
-					-- wo = { wrap = true } -- Wrap notifications
+					wo = { wrap = true }, -- Wrap notifications
 				},
 			},
 		},
@@ -657,11 +664,12 @@ return {
 				desc = "Dismiss All Notifications",
 			},
 			{
-				"<c-/>",
+				"<C-\\>",
 				function()
 					Snacks.terminal()
 				end,
 				desc = "Toggle Terminal",
+				mode = { "n", "t" },
 			},
 			{
 				"<c-_>",
