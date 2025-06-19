@@ -43,23 +43,8 @@ return {
 
 	{ -- Highlight todo, notes, etc in comments
 		"folke/todo-comments.nvim",
-		optional = true,
-		keys = {
-			{
-				"<leader>st",
-				function()
-					Snacks.picker.todo_comments()
-				end,
-				desc = "Todo",
-			},
-			{
-				"<leader>sT",
-				function()
-					Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
-				end,
-				desc = "Todo/Fix/Fixme",
-			},
-		},
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = { signs = false },
 	},
 	-- <https://github.com/dstein64/nvim-scrollview>
 	{ -- a Neovim plugin that displays interactive vertical scrollbars and signs.

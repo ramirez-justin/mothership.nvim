@@ -6,7 +6,7 @@ local daily_quotes = {
 	[[I don’t think the human race will survive the next thousand years unless we spread into space... — Stephen Hawking]],
 	[[The greatest enemy of knowledge is not ignorance, it is the illusion of knowledge. — Stephen Hawking]],
 	[[The universe doesn’t allow perfection. — Stephen Hawking]],
-	[[Even people who claim everything is predestined look before they cross the road. — Stephen Hawking]],
+	[[Even people wh claim everything is predestined look before they cross the road. — Stephen Hawking]],
 	[[The past, like the future, is indefinite and exists only as a spectrum of possibilities. — Stephen Hawking]],
 	[[I have no special talent. I am only passionately curious. — Albert Einstein]],
 	[[The important thing is not to stop questioning. Curiosity has its own reason for existing. — Albert Einstein]],
@@ -713,6 +713,20 @@ return {
 				end,
 				desc = "Prev Reference",
 				mode = { "n", "t" },
+			},
+			{
+				"<leader>st",
+				function()
+					Snacks.picker.todo_comments()
+				end,
+				desc = "Todo",
+			},
+			{
+				"<leader>sT",
+				function()
+					Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
+				end,
+				desc = "Todo/Fix/Fixme",
 			},
 			{
 				"<leader>N",
