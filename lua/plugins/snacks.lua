@@ -157,14 +157,6 @@ return {
 								height = function()
 									return math.floor((vim.o.lines - vim.o.cmdheight) * 0.8)
 								end,
-								row = function()
-									return math.floor(
-										((vim.o.lines - vim.o.cmdheight) - ((vim.o.lines - vim.o.cmdheight) * 0.7)) / 2
-									)
-								end,
-								col = function()
-									return math.floor((vim.o.columns - vim.o.columns * 0.7) / 2)
-								end,
 								backdrop = true,
 							},
 						},
