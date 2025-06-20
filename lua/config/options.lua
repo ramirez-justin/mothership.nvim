@@ -54,7 +54,7 @@ opt.foldexpr = "nvim_treesitter#foldexpr()" -- Use treesitter for folding
 opt.foldcolumn = "0" -- Disable fold column
 opt.foldtext = "" -- Disable fold text
 opt.foldlevel = 999 -- Disable all folds by default
-opt.foldlevelstart = 1 -- Start with folds open
+opt.foldlevelstart = 2 -- Start with folds open
 opt.foldnestmax = 4 -- Maximum fold nesting level
 
 if vim.fn.has("nvim-0.9.0") == 1 then
