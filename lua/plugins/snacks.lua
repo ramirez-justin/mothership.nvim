@@ -187,7 +187,6 @@ return {
 									["u"] = "explorer_update",
 									["<c-c>"] = "tcd",
 									["<leader>/"] = "picker_grep",
-									["<c-t>"] = "terminal",
 									["."] = "explorer_focus",
 									["I"] = "toggle_ignored",
 									["H"] = "toggle_hidden",
@@ -692,11 +691,12 @@ return {
 				mode = { "n", "t" },
 			},
 			{
-				"<c-_>",
+				"<C-a>",
 				function()
-					Snacks.terminal()
+					Snacks.terminal("claude")
 				end,
-				desc = "which_key_ignore",
+				desc = "Toggle Claude Code",
+				mode = { "n", "t" },
 			},
 			{
 				"]]",
