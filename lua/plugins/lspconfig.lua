@@ -60,7 +60,6 @@ return {
 			"nvim-telescope/telescope.nvim", -- For LSP references, definitions, etc.
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -229,10 +228,15 @@ return {
 			-- Setup all servers
 			for server_name, config in pairs(servers) do
 				config = config or {}
-				lspconfig[server_name].setup(vim.tbl_extend("force", {
+				vim.lsp.config[server_name] = vim.tbl_extend("force", {
+					cmd = config.cmd,
+					filetypes = config.filetypes,
+					root_dir = config.root_dir,
+					init_options = config.init_options,
+					settings = config.settings,
 					on_attach = on_attach,
 					capabilities = capabilities,
-				}, config))
+				}, config)
 			end
 
 			-- Format on save configurations

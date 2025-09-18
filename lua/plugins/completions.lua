@@ -19,8 +19,8 @@ return {
 		"saadparwaiz1/cmp_luasnip",
 
 		-- AI completion
-		"zbirenbaum/copilot.lua",
-		"zbirenbaum/copilot-cmp",
+		-- "zbirenbaum/copilot.lua",
+		-- "zbirenbaum/copilot-cmp",
 		"Exafunction/windsurf.nvim",
 
 		-- Autopairs integration
@@ -69,7 +69,7 @@ return {
 			Event = "",
 			Operator = "",
 			TypeParameter = "󰉺",
-			Copilot = "",
+			-- Copilot = "",
 			Codeium = "",
 		}
 		-- find more here: https://www.nerdfonts.com/cheat-sheet
@@ -104,7 +104,7 @@ return {
 
 					-- Add source-specific labels
 					vim_item.menu = ({
-						copilot = "[Copilot]",
+						-- copilot = "[Copilot]",
 						codeium = "[Codeium]",
 						nvim_lsp = "[LSP]",
 						luasnip = "[Snippet]",
@@ -121,7 +121,7 @@ return {
 				end,
 			},
 			sources = {
-				{ name = "copilot" },
+				-- { name = "copilot" },
 				{ name = "codeium" },
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
@@ -163,11 +163,11 @@ return {
 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 		-- Setup Copilot
-		require("copilot").setup({
-			suggestion = { enabled = false },
-			panel = { enabled = false },
-		})
-		require("copilot_cmp").setup()
+		-- require("copilot").setup({
+		-- 	suggestion = { enabled = false },
+		-- 	panel = { enabled = false },
+		-- })
+		-- require("copilot_cmp").setup()
 
 		-- Setup Codeium
 		require("codeium").setup({})

@@ -83,8 +83,12 @@ return {
 	-- },
 	{
 		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
 		opts = {
-			strategy = {
+			strategies = {
 				chat = {
 					adapter = "anthropic",
 				},
@@ -92,28 +96,23 @@ return {
 					adapter = "anthropic",
 				},
 			},
-			adapters = {},
+			adapters = {
+				http = {
+					anthropic = function()
+						return require("codecompanion.adapters").extend("anthropic", {
+							env = {
+								api_key = "cmd:op read op://dev_vault/ANTHROPIC_API_KEY/credential --no-newline",
+							},
+							schema = {
+								model = {
+									default = "claude-sonnet-4-20250514",
+								},
+							},
+						})
+					end,
+				},
+			},
 		},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = function(_, opts)
-			opts.adapters.anthropic = function()
-				return require("codecompanion.adapters").extend("anthropic", {
-					env = {
-						api_key = "cmd:op read op://dev_vault/ANTHROPIC_API_KEY/credential --no-newline",
-					},
-					schema = {
-						model = {
-							default = "claude-sonnet-4-20250514",
-						},
-					},
-				})
-			end
-
-			require("codecompanion").setup(opts)
-		end,
 	},
 	{
 		"Exafunction/windsurf.nvim",
