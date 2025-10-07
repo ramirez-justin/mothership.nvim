@@ -1,8 +1,13 @@
 return {
+	-- Python DAP - defined separately to disable rocks
+	{ "mfussenegger/nvim-dap-python", rocks = { enabled = false } },
+
 	-- Mason: Package manager for LSP servers, DAP servers, linters, and formatters
 	-- https://github.com/williamboman/mason.nvim
 	{
 		"williamboman/mason.nvim",
+		cmd = "Mason",
+		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
 		opts = {
 			log_level = vim.log.levels.INFO, -- Changed from DEBUG to INFO for less verbose logs
 			ui = {
@@ -53,6 +58,7 @@ return {
 	-- https://github.com/neovim/nvim-lspconfig
 	{
 		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
@@ -436,7 +442,7 @@ return {
 
 			-- Set up language-specific debugging
 			require("dap-go").setup()
-			require("dap-python").setup()
+			require("dap-python").setup("uv")
 
 			-- Key mappings for debugging
 			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })

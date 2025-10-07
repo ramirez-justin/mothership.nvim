@@ -3,12 +3,12 @@ return {
 	{ -- A blazing fast and easy to configure Neovim statusline written in Lua.
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = function(_, opts)
-			opts.options = {
+		opts = {
+			options = {
 				icons_enabled = true,
 				theme = "auto",
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = { "NvimTree" },
 					winbar = {},
@@ -21,24 +21,24 @@ return {
 					tabline = 300,
 					winbar = 300,
 				},
-			}
-			opts.sections = {
+			},
+			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = { { "filename", path = 3 } },
 				lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_y = { "progress" },
 				lualine_z = {},
-			}
-			opts.inactive_sections = {
+			},
+			inactive_sections = {
 				lualine_a = {},
 				lualine_b = {},
 				lualine_c = {},
 				lualine_x = { "location" },
 				lualine_y = {},
 				lualine_z = {},
-			}
-		end,
+			},
+		},
 	},
 
 	{ -- Highlight todo, notes, etc in comments
@@ -59,11 +59,7 @@ return {
 	{ --  helps you remember your Neovim keymaps, by showing available keybindings in a popup as you type.
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		opts = {},
 		keys = {
 			{
 				"<leader>?",
@@ -74,7 +70,6 @@ return {
 			},
 		},
 		config = function()
-			require("which-key").setup({})
 			require("config.keymaps")
 		end,
 	},
@@ -88,11 +83,9 @@ return {
 	-- <https://github.com/akinsho/bufferline.nvim>
 	{ -- A snazzy 💅 buffer line (with tabpage integration) for Neovim built using lua.
 		"akinsho/bufferline.nvim",
-		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
-		opts = function(_, opts)
-			-- Merge your custom configuration into `opts`
-			opts.options = {
+		opts = {
+			options = {
 				close_command = "bdelete! %d",
 				number = false,
 				right_mouse_command = nil,
@@ -102,11 +95,11 @@ return {
 					icon = "▎", -- This should be omitted if indicator style is not 'icon'
 					style = "icon",
 				},
-				buffer_close_icon = "",
+				buffer_close_icon = "",
 				modified_icon = "●",
-				close_icon = "",
-				left_trunc_marker = "",
-				right_trunc_marker = "",
+				close_icon = "",
+				left_trunc_marker = "",
+				right_trunc_marker = "",
 				max_name_length = 18,
 				max_prefix_length = 15,
 				tab_size = 10,
@@ -134,16 +127,16 @@ return {
 						separator = true, -- Use "true" to enable the default, or set your own character
 					},
 				},
-			}
-			opts.highlights = {
+			},
+			highlights = {
 				fill = {
 					bg = {
 						attribute = "fg",
 						highlight = "Pmenu",
 					},
 				},
-			}
-		end,
+			},
+		},
 	},
 
 	-- <https://github.com/numToStr/Comment.nvim>
@@ -159,37 +152,34 @@ return {
 	{ -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = function(_, opts)
-			opts.setup = {
-				lsp = {
-					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-					overrides = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-						["vim.lsp.util.stylize_markdown"] = false,
-					},
+		opts = {
+			lsp = {
+				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true,
 				},
-				-- you can enable a preset for easier configuration
-				presets = {
-					bottom_search = false, -- use a classic bottom cmdline for search
-					command_palette = true, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = false, -- add a border to hover docs and signature help
-				},
-			}
-		end,
+			},
+			-- you can enable a preset for easier configuration
+			presets = {
+				bottom_search = false, -- use a classic bottom cmdline for search
+				command_palette = true, -- position the cmdline and popupmenu together
+				long_message_to_split = true, -- long messages will be sent to a split
+				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false, -- add a border to hover docs and signature help
+			},
+		},
 		dependencies = {
 			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
 			{
 				"rcarriga/nvim-notify",
-				config = function()
-					require("notify").setup({
-						background_colour = "#1e1e2e",
-						stages = "fade_in_slide_out",
-						timeout = 5000,
-					})
-				end,
+				opts = {
+					background_colour = "#1e1e2e",
+					stages = "fade_in_slide_out",
+					timeout = 5000,
+				},
 			},
 		},
 	},
@@ -198,8 +188,6 @@ return {
 	{
 		"jiaoshijie/undotree",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("undotree").setup()
-		end,
+		opts = {},
 	},
 }

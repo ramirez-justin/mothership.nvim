@@ -27,6 +27,24 @@ require("lazy").setup({
 	-- install = { colorscheme = { "habamax" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
+	rocks = {
+		enabled = true,
+		hererocks = true,
+	},
+	performance = {
+		cache = {
+			enabled = true,
+		},
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 })
 
 -- TODO: Add the following plugins:

@@ -2,6 +2,8 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
+		priority = 1000,
+		lazy = false,
 		config = function()
 			require("rose-pine").setup({
 				variant = "main", -- Using main variant for a richer color palette
