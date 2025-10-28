@@ -32,6 +32,9 @@ return {
 		---@type snacks.Config
 		opts = {
 			bigfile = { enabled = true },
+			image = {
+				formats = { "png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "heic", "avif", "pdf", "icns" },
+			},
 			dashboard = {
 				preset = {
 					header = [[
