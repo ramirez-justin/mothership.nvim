@@ -61,7 +61,7 @@ wk.add({
     { "<Leader>Dde", "<Plug>(DBUI_EditBindParameters)",          desc = "Edit Bind Parameters" },
 
     -- Comment group
-    { "gc",          group = "Linewise Comments" }, -- Group for linewise comment mappings
+    { "gc",          group = "Linewise Comments" },  -- Group for linewise comment mappings
     { "gb",          group = "Blockwise Comments" }, -- Group for blockwise comment mappings
     { "gcL",         "<Plug>(comment_toggle_linewise)",          desc = "Toggle Linewise Comment" },
     { "gcO",         "<Plug>(comment_insert_above)",             desc = "Insert Linewise Comment Above" },

@@ -6,7 +6,7 @@ return {
         lazy = false,
         config = function()
             require("rose-pine").setup({
-                variant = "main", -- Using main variant for a richer color palette
+                variant = "main",            -- Using main variant for a richer color palette
                 dark_variant = "main",
                 dim_inactive_windows = true, -- Dim inactive windows for better focus
                 extend_background_behind_borders = true,
@@ -126,19 +126,19 @@ return {
                     Identifier = { fg = "rose" },
 
                     -- Enhance mode indicators with better colors and contrast
-                    ModesInsert = { fg = "base", bg = "foam", bold = true }, -- Teal/cyan for Insert mode
-                    ModesNormal = { fg = "base", bg = "iris", bold = true }, -- Purple for Normal mode
-                    ModesVisual = { fg = "base", bg = "gold", bold = true }, -- Gold for Visual mode
+                    ModesInsert = { fg = "base", bg = "foam", bold = true },  -- Teal/cyan for Insert mode
+                    ModesNormal = { fg = "base", bg = "iris", bold = true },  -- Purple for Normal mode
+                    ModesVisual = { fg = "base", bg = "gold", bold = true },  -- Gold for Visual mode
                     ModesReplace = { fg = "base", bg = "love", bold = true }, -- Red/pink for Replace mode
-                    ModesCopy = { fg = "base", bg = "pine", bold = true }, -- Green for Copy mode
-                    ModesDelete = { fg = "base", bg = "love", bold = true }, -- Red/pink for Delete mode
+                    ModesCopy = { fg = "base", bg = "pine", bold = true },    -- Green for Copy mode
+                    ModesDelete = { fg = "base", bg = "love", bold = true },  -- Red/pink for Delete mode
                     ModesCommand = { fg = "base", bg = "gold", bold = true }, -- Gold for Command mode
 
                     -- Fix popup menu selection for better readability
-                    Pmenu = { fg = "text", bg = "overlay" }, -- Popup menu normal item
+                    Pmenu = { fg = "text", bg = "overlay" },              -- Popup menu normal item
                     PmenuSel = { fg = "base", bg = "iris", bold = true }, -- Selected item in the popup menu
-                    PmenuSbar = { bg = "overlay" },        -- Popup menu scrollbar
-                    PmenuThumb = { bg = "subtle" },        -- Popup menu scrollbar thumb
+                    PmenuSbar = { bg = "overlay" },                       -- Popup menu scrollbar
+                    PmenuThumb = { bg = "subtle" },                       -- Popup menu scrollbar thumb
                 },
             })
 

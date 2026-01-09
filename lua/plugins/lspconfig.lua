@@ -28,27 +28,27 @@ return {
             automatic_installation = true,
             ensure_installed = {
                 -- Languages
-                "lua_ls", -- Lua
+                "lua_ls",        -- Lua
                 "rust_analyzer", -- Rust
-                "clangd", -- C/C++
-                "ts_ls", -- TypeScript
-                "ruff", -- Python
+                "clangd",        -- C/C++
+                "ts_ls",         -- TypeScript
+                "ruff",          -- Python
 
                 -- Web development
-                "cssls", -- CSS
-                "html", -- HTML
+                "cssls",  -- CSS
+                "html",   -- HTML
                 "jsonls", -- JSON
                 "eslint", -- JavaScript/TypeScript linting
 
                 -- DevOps
-                "bashls", -- Bash
-                "dockerls", -- Docker
+                "bashls",      -- Bash
+                "dockerls",    -- Docker
                 "terraformls", -- Terraform
-                "tflint", -- Terraform linting
-                "yamlls", -- YAML
+                "tflint",      -- Terraform linting
+                "yamlls",      -- YAML
 
                 -- Others
-                "vimls", -- Vim script
+                "vimls",     -- Vim script
                 "jinja_lsp", -- Jinja templates
             },
         },
@@ -341,7 +341,7 @@ return {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
             "theHamsta/nvim-dap-virtual-text",
-            "leoluz/nvim-dap-go",  -- Go debugging
+            "leoluz/nvim-dap-go",           -- Go debugging
             "mfussenegger/nvim-dap-python", -- Python debugging
         },
         config = function()

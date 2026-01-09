@@ -1,28 +1,28 @@
 -- https://github.com/hrsh7th/nvim-cmp
 return {
     -- Completion sources - lazy loaded via events
-    { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter" },
-    { "hrsh7th/cmp-buffer", event = "InsertEnter" },
-    { "hrsh7th/cmp-path", event = "InsertEnter" },
-    { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
-    { "hrsh7th/cmp-calc", event = "InsertEnter" },
-    { "hrsh7th/cmp-emoji", event = "InsertEnter" },
+    { "hrsh7th/cmp-nvim-lsp",                      event = "InsertEnter" },
+    { "hrsh7th/cmp-buffer",                        event = "InsertEnter" },
+    { "hrsh7th/cmp-path",                          event = "InsertEnter" },
+    { "hrsh7th/cmp-cmdline",                       event = "CmdlineEnter" },
+    { "hrsh7th/cmp-calc",                          event = "InsertEnter" },
+    { "hrsh7th/cmp-emoji",                         event = "InsertEnter" },
 
     -- Snippets
-    { "L3MON4D3/LuaSnip", event = "InsertEnter" },
-    { "rafamadriz/friendly-snippets", event = "InsertEnter" },
-    { "saadparwaiz1/cmp_luasnip", event = "InsertEnter" },
+    { "L3MON4D3/LuaSnip",                          event = "InsertEnter" },
+    { "rafamadriz/friendly-snippets",              event = "InsertEnter" },
+    { "saadparwaiz1/cmp_luasnip",                  event = "InsertEnter" },
 
     -- AI completion
-    { "Exafunction/windsurf.nvim", event = "InsertEnter" },
+    { "Exafunction/windsurf.nvim",                 event = "InsertEnter" },
 
     -- Autopairs integration
-    { "windwp/nvim-autopairs", event = "InsertEnter" },
+    { "windwp/nvim-autopairs",                     event = "InsertEnter" },
 
     -- Database completion
-    { "tpope/vim-dadbod", cmd = "DB" },
-    { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
-    { "kristijanhusak/vim-dadbod-ui", cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection" }, dependencies = { "tpope/vim-dadbod" } },
+    { "tpope/vim-dadbod",                          cmd = "DB" },
+    { "kristijanhusak/vim-dadbod-completion",      ft = { "sql", "mysql", "plsql" } },
+    { "kristijanhusak/vim-dadbod-ui",              cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection" }, dependencies = { "tpope/vim-dadbod" } },
 
     -- Markdown rendering
     { "MeanderingProgrammer/render-markdown.nvim", ft = "markdown" },
