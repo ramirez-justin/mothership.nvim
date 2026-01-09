@@ -18,11 +18,11 @@ return {
                 "toml",
                 "terraform",
                 "hcl",
-            },                                 -- A list of languages to install
-            sync_install = false,              -- Install parsers synchronously
-            auto_install = true,               -- Automatically install missing parsers
+            },                                             -- A list of languages to install
+            sync_install = false,                          -- Install parsers synchronously
+            auto_install = true,                           -- Automatically install missing parsers
             highlight = {
-                enable = true,                 -- Enable syntax highlighting
+                enable = true,                             -- Enable syntax highlighting
                 additional_vim_regex_highlighting = false, -- Use Treesitter only for highlighting
             },
         },
