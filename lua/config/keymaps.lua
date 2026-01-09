@@ -33,6 +33,13 @@ keymap("n", "<Down>", ":resize +1<CR>", opts)
 -- Rapid escape
 keymap("i", "jk", "<ESC>", opts)
 
+-- TERMINAL MODE --
+-- Proper multi-line paste in terminal mode (use Ctrl+V instead of Cmd+V)
+keymap("t", "<C-v>", function()
+    local clipboard = vim.fn.getreg("+")
+    vim.api.nvim_paste(clipboard, true, -1)
+end, { desc = "Paste in terminal mode" })
+
 local wk = require("which-key")
 
 -- VISUAL MODE --
