@@ -1,8 +1,8 @@
 return {
     {
         -- Treesitter Plugin
+        -- Note: playground is deprecated, use built-in :InspectTree instead
         "nvim-treesitter/nvim-treesitter",
-        dependencies = "nvim-treesitter/playground",
         opts = {
             ensure_installed = {
                 "c",

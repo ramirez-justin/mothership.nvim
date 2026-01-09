@@ -79,8 +79,7 @@ wk.add({
 	{ "<leader>q", "<cmd>q<cr>", desc = "Quit" },
 	{ "<leader>w", "<cmd>w<cr>", desc = "Write File" },
 
-	-- Undotree (leader+z is used by Snacks.zen)
-	{ "<leader>U", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
+	-- Undo history: use <leader>su (Snacks.picker.undo)
 
 	-- Avante.nvim
 	{ "<leader>a", group = "Avante" }, -- Group for Avante.nvim actions

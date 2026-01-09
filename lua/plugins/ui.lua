@@ -74,12 +74,6 @@ return {
 		end,
 	},
 
-	-- <https://github.com/KostkaBrukowa/definition-or-references.nvim>
-	{ -- Definition-or-references.nvim: JetBrains like definition and references handling
-		"KostkaBrukowa/definition-or-references.nvim",
-		opts = {},
-	},
-
 	-- <https://github.com/akinsho/bufferline.nvim>
 	{ -- A snazzy 💅 buffer line (with tabpage integration) for Neovim built using lua.
 		"akinsho/bufferline.nvim",
@@ -161,6 +155,10 @@ return {
 					["cmp.entry.get_documentation"] = true,
 				},
 			},
+			-- Disable noice's notify - using Snacks.notifier instead
+			notify = {
+				enabled = false,
+			},
 			-- you can enable a preset for easier configuration
 			presets = {
 				bottom_search = false, -- use a classic bottom cmdline for search
@@ -171,23 +169,10 @@ return {
 			},
 		},
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			{
-				"rcarriga/nvim-notify",
-				opts = {
-					background_colour = "#1e1e2e",
-					stages = "fade_in_slide_out",
-					timeout = 5000,
-				},
-			},
+			-- nvim-notify removed - using Snacks.notifier instead
 		},
 	},
 
-	-- Undotree plugin and config
-	{
-		"jiaoshijie/undotree",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {},
-	},
+	-- Undotree removed - using Snacks.picker.undo() at <leader>su instead
 }
