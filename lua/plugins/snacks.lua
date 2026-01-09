@@ -276,14 +276,7 @@ return {
 				end,
 				desc = "Command History",
 			},
-			{
-				"<leader>n",
-				function()
-					Snacks.picker.notifications()
-				end,
-				desc = "Notification History",
-			},
-			{
+				{
 				"<leader>e",
 				function()
 					Snacks.explorer()
@@ -435,13 +428,6 @@ return {
 					Snacks.picker.autocmds()
 				end,
 				desc = "Autocmds",
-			},
-			{
-				"<leader>sb",
-				function()
-					Snacks.picker.lines()
-				end,
-				desc = "Buffer Lines",
 			},
 			{
 				"<leader>sc",

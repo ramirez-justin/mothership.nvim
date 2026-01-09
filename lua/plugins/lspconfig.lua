@@ -63,7 +63,6 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"hrsh7th/cmp-nvim-lsp",
-			"nvim-telescope/telescope.nvim", -- For LSP references, definitions, etc.
 		},
 		config = function()
 			local capabilities =
@@ -75,13 +74,10 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
 				end
 
-				-- Navigation
-				buf_map("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", "Go to Type Definition")
-				buf_map("n", "gd", "<cmd>Telescope lsp_definitions<CR>", "Go to Definition")
-				buf_map("n", "gi", "<cmd>Telescope lsp_implementations<CR>", "Go to Implementation")
-				buf_map("n", "gr", "<cmd>Telescope lsp_references<CR>", "Find References")
+				-- Navigation handled by Snacks picker (snacks.lua)
+			-- gd, gD, gi, gr, gy are mapped globally there
 
-				-- Documentation
+			-- Documentation
 				buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
 				buf_map("n", "gh", vim.lsp.buf.signature_help, "Signature Help")
 
@@ -290,26 +286,8 @@ return {
 					}),
 					null_ls.builtins.formatting.shfmt,
 				},
-				on_attach = function(client, bufnr)
-					-- Add format on save for null-ls formatters
-					if client.supports_method("textDocument/formatting") then
-						local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
-						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							group = augroup,
-							buffer = bufnr,
-							callback = function()
-								vim.lsp.buf.format({
-									filter = function(formatting_client)
-										-- Only use null-ls for formatting
-										return formatting_client.name == "null-ls"
-									end,
-									bufnr = bufnr,
-								})
-							end,
-						})
-					end
-				end,
+				-- Format-on-save handled centrally in lspconfig.lua
+				-- Use <leader>lf for manual formatting with null-ls sources
 			}
 		end,
 	},

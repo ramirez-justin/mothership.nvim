@@ -3,12 +3,6 @@ local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- NORMAL MODE --
--- Save
-keymap("n", "<leader>w", "<cmd>w<cr>", opts)
-
--- Quit
-keymap("n", "<leader>q", "<cmd>q<cr>", opts)
-
 -- Close buffer
 keymap("n", "<C-c>", "<cmd>bd<cr>", opts)
 
@@ -51,31 +45,31 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("v", "p", '"_dP', opts) -- paste without yanking
 
 wk.add({
-	-- Dadbod UI
-	{ "<leader>b", group = "Database" }, -- Group for all database-related actions
-	{ "<leader>bu", "<cmd>DBUI<CR>", desc = "Open DBUI Interface" },
-	{ "<leader>bt", "<cmd>DBUIToggle<CR>", desc = "Toggle DBUI Interface" },
-	{ "<leader>ba", "<cmd>DBUIAddConnection<CR>", desc = "Add DB Connection" },
-	{ "<leader>bf", "<cmd>DBUIFindBuffer<CR>", desc = "Find DB Buffer" },
-	{ "<leader>br", "<cmd>DBUIRenameBuffer<CR>", desc = "Rename Buffer or Query" },
-	{ "<leader>bi", "<cmd>DBUILastQueryInfo<CR>", desc = "Last Query Info" },
-	{ "<leader>nh", "<cmd>DBUIHideNotifications<CR>", desc = "Hide Notifications" },
+	-- Dadbod UI (leader+b conflicts with Snacks.bufdelete)
+	{ "<leader>D", group = "Database" }, -- Group for all database-related actions
+	{ "<leader>Du", "<cmd>DBUI<CR>", desc = "Open DBUI Interface" },
+	{ "<leader>Dt", "<cmd>DBUIToggle<CR>", desc = "Toggle DBUI Interface" },
+	{ "<leader>Da", "<cmd>DBUIAddConnection<CR>", desc = "Add DB Connection" },
+	{ "<leader>Df", "<cmd>DBUIFindBuffer<CR>", desc = "Find DB Buffer" },
+	{ "<leader>Dr", "<cmd>DBUIRenameBuffer<CR>", desc = "Rename Buffer or Query" },
+	{ "<leader>Di", "<cmd>DBUILastQueryInfo<CR>", desc = "Last Query Info" },
+	{ "<leader>Dh", "<cmd>DBUIHideNotifications<CR>", desc = "Hide Notifications" },
 
 	-- Remap query-related actions
-	{ "<Leader>bqs", "<Plug>(DBUI_ExecuteQuery)", desc = "Execute Query (Selection)" },
-	{ "<Leader>bnn", "<Plug>(DBUI_ToggleResultLayout)", desc = "Toggle Result Layout" },
-	{ "<Leader>bde", "<Plug>(DBUI_EditBindParameters)", desc = "Edit Bind Parameters" },
+	{ "<Leader>Dqs", "<Plug>(DBUI_ExecuteQuery)", desc = "Execute Query (Selection)" },
+	{ "<Leader>Dnn", "<Plug>(DBUI_ToggleResultLayout)", desc = "Toggle Result Layout" },
+	{ "<Leader>Dde", "<Plug>(DBUI_EditBindParameters)", desc = "Edit Bind Parameters" },
 
 	-- Comment group
-	{ "<gc>", group = "Linewise Comments" }, -- Group for linewise comment mappings
-	{ "<gb>", group = "Blockwise Comments" }, -- Group for blockwise comment mappings
-	{ "<gcL>", "<Plug>(comment_toggle_linewise)", desc = "Toggle Linewise Comment" },
-	{ "<gcO>", "<Plug>(comment_insert_above)", desc = "Insert Linewise Comment Above" },
-	{ "<gco>", "<Plug>(comment_insert_below)", desc = "Insert Linewise Comment Below" },
-	{ "<gcA>", "<Plug>(comment_insert_eol)", desc = "Insert Comment at EOL" },
-	{ "<gcc>", "<Plug>(comment_toggle_linewise_current)", desc = "Toggle Linewise Current Line" },
-	{ "<gbl>", "<Plug>(comment_toggle_blockwise)", desc = "Toggle Blockwise Comment", remap = true },
-	{ "<gbc>", "<Plug>(comment_toggle_blockwise_current)", desc = "Toggle Blockwise Current Block" },
+	{ "gc", group = "Linewise Comments" }, -- Group for linewise comment mappings
+	{ "gb", group = "Blockwise Comments" }, -- Group for blockwise comment mappings
+	{ "gcL", "<Plug>(comment_toggle_linewise)", desc = "Toggle Linewise Comment" },
+	{ "gcO", "<Plug>(comment_insert_above)", desc = "Insert Linewise Comment Above" },
+	{ "gco", "<Plug>(comment_insert_below)", desc = "Insert Linewise Comment Below" },
+	{ "gcA", "<Plug>(comment_insert_eol)", desc = "Insert Comment at EOL" },
+	{ "gcc", "<Plug>(comment_toggle_linewise_current)", desc = "Toggle Linewise Current Line" },
+	{ "gbl", "<Plug>(comment_toggle_blockwise)", desc = "Toggle Blockwise Comment", remap = true },
+	{ "gbc", "<Plug>(comment_toggle_blockwise_current)", desc = "Toggle Blockwise Current Block" },
 
 	-- Precommit group
 	{ "<leader>p", group = "Precommit" }, -- Group for pre-commit-related actions
@@ -85,15 +79,9 @@ wk.add({
 	{ "<leader>q", "<cmd>q<cr>", desc = "Quit" },
 	{ "<leader>w", "<cmd>w<cr>", desc = "Write File" },
 
-	-- Undotree
-	{ "<leader>z", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
+	-- Undotree (leader+z is used by Snacks.zen)
+	{ "<leader>U", "<cmd>UndotreeToggle<cr>", desc = "UndoTree" },
 
-	-- Nested example (NORMAL and VISUAL modes)
-	{
-		mode = { "n", "v" },
-		{ "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- Inherited modes
-		{ "<leader>w", "<cmd>w<cr>", desc = "Write" },
-	},
 	-- Avante.nvim
 	{ "<leader>a", group = "Avante" }, -- Group for Avante.nvim actions
 })
