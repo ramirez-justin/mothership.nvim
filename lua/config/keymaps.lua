@@ -84,22 +84,3 @@ wk.add({
     -- Avante.nvim
     { "<leader>a",   group = "Avante" }, -- Group for Avante.nvim actions
 })
-
--- -- TODO: Toggle GH Dash
--- -- local gh_dash = Terminal:new({
--- -- 	cmd = "gh dash",
--- -- 	direction = "float",
--- -- 	dir = "~/",
--- -- 	close_on_exit = true,
--- -- })
--- -- local function toggle_gh_dash()
--- -- 	gh_dash:toggle()
--- -- end
--- -- keymap("n", "<leader>gb", toggle_gh_dash, opts)
---
--- -- Light/Dark Theme Toggle
--- local function toggle_light_dark_theme()
---     -- May need to change this to toggle between sub-theme names
---     vim.o.background = vim.o.background == "light" and "dark" or "light"
--- end
--- keymap("n", "<leader>vt", toggle_light_dark_theme, { desc = "Toggle Light/Dark Theme" })

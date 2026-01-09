@@ -1,28 +1,28 @@
 -- https://github.com/hrsh7th/nvim-cmp
 return {
-    -- Completion sources - defined separately for better lazy loading
-    { "hrsh7th/cmp-nvim-lsp",                      event = "InsertEnter" },
-    { "hrsh7th/cmp-buffer",                        event = "InsertEnter" },
-    { "hrsh7th/cmp-path",                          event = "InsertEnter" },
-    { "hrsh7th/cmp-cmdline",                       event = "CmdlineEnter" },
-    { "hrsh7th/cmp-calc",                          event = "InsertEnter" },
-    { "hrsh7th/cmp-emoji",                         event = "InsertEnter" },
+    -- Completion sources - lazy loaded via events
+    { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter" },
+    { "hrsh7th/cmp-buffer", event = "InsertEnter" },
+    { "hrsh7th/cmp-path", event = "InsertEnter" },
+    { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
+    { "hrsh7th/cmp-calc", event = "InsertEnter" },
+    { "hrsh7th/cmp-emoji", event = "InsertEnter" },
 
     -- Snippets
-    { "L3MON4D3/LuaSnip",                          event = "InsertEnter" },
-    { "rafamadriz/friendly-snippets",              event = "InsertEnter" },
-    { "saadparwaiz1/cmp_luasnip",                  event = "InsertEnter" },
+    { "L3MON4D3/LuaSnip", event = "InsertEnter" },
+    { "rafamadriz/friendly-snippets", event = "InsertEnter" },
+    { "saadparwaiz1/cmp_luasnip", event = "InsertEnter" },
 
     -- AI completion
-    { "Exafunction/windsurf.nvim",                 event = "InsertEnter" },
+    { "Exafunction/windsurf.nvim", event = "InsertEnter" },
 
     -- Autopairs integration
-    { "windwp/nvim-autopairs",                     event = "InsertEnter" },
+    { "windwp/nvim-autopairs", event = "InsertEnter" },
 
     -- Database completion
-    { "tpope/vim-dadbod" },
-    { "kristijanhusak/vim-dadbod-completion",      ft = { "sql", "mysql", "plsql" } },
-    { "kristijanhusak/vim-dadbod-ui",              cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection" } },
+    { "tpope/vim-dadbod", cmd = "DB" },
+    { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
+    { "kristijanhusak/vim-dadbod-ui", cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection" }, dependencies = { "tpope/vim-dadbod" } },
 
     -- Markdown rendering
     { "MeanderingProgrammer/render-markdown.nvim", ft = "markdown" },
@@ -31,24 +31,9 @@ return {
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-calc",
-            "hrsh7th/cmp-emoji",
-            "L3MON4D3/LuaSnip",
-            "rafamadriz/friendly-snippets",
-            "saadparwaiz1/cmp_luasnip",
-            "Exafunction/windsurf.nvim",
-            "windwp/nvim-autopairs",
-            "kristijanhusak/vim-dadbod-completion",
-            "MeanderingProgrammer/render-markdown.nvim",
-        },
+        -- Dependencies removed - plugins above have their own lazy loading
 
         config = function()
-            -- Set up nvim-cmp
             local cmp = require("cmp")
             local luasnip = require("luasnip")
             local autopairs = require("nvim-autopairs")
@@ -83,7 +68,6 @@ return {
                 TypeParameter = "󰉺",
                 Codeium = "",
             }
-            -- find more here: https://www.nerdfonts.com/cheat-sheet
 
             vim.api.nvim_set_hl(0, "CmpItemKindCodeium", { fg = "#09B6A2" })
 
@@ -104,15 +88,12 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ["<CR>"] = cmp.mapping.confirm({ select = false }),
                 }),
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
                     format = function(entry, vim_item)
-                        -- Add icons
                         vim_item.kind = kind_icons[vim_item.kind]
-
-                        -- Add source-specific labels
                         vim_item.menu = ({
                             codeium = "[Codeium]",
                             nvim_lsp = "[LSP]",
@@ -125,7 +106,6 @@ return {
                             ["vim-dadbod-completion"] = "[DB]",
                             ["render-markdown"] = "[Markdown]",
                         })[entry.source.name]
-
                         return vim_item
                     end,
                 },
@@ -170,7 +150,7 @@ return {
             })
             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
-            -- Setup Codeium
+            -- Setup Codeium (windsurf.nvim)
             require("codeium").setup({})
         end,
     },

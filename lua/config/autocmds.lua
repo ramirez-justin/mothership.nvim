@@ -1,8 +1,8 @@
 -- Automatically set the `shiftwidth` and `tabstop` to 2 spaces for specific file types.
 -- This ensures consistent indentation for files commonly written with 2-space indentation,
--- such as JavaScript, TypeScript, JSON, GraphQL, Markdown, and Terraform files.
+-- such as JavaScript, TypeScript, JSON, GraphQL, Markdown, YAML, and Terraform files.
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.graphql", "*.md", "*.mdx", "*.tf" },
+    pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.graphql", "*.md", "*.mdx", "*.tf", "*.yaml", "*.yml" },
     callback = function()
         vim.bo.shiftwidth = 2
         vim.bo.tabstop = 2
