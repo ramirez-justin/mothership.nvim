@@ -7,8 +7,7 @@ return {
     },
     { -- Task Runner
         "stevearc/overseer.nvim",
-        commit = "68a2d344cea4a2e11acfb5690dc8ecd1a1ec0ce0",
-        cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+        cmd = { "OverseerRun", "OverseerToggle", "OverseerOpen" },
         opts = {
             task_list = {
                 direction = "bottom",

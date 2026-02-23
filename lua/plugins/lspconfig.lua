@@ -9,7 +9,7 @@ return {
         cmd = "Mason",
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
         opts = {
-            log_level = vim.log.levels.INFO, -- Changed from DEBUG to INFO for less verbose logs
+            log_level = vim.log.levels.INFO,
             ui = {
                 icons = {
                     package_installed = "✓",
@@ -25,7 +25,6 @@ return {
     {
         "williamboman/mason-lspconfig.nvim",
         opts = {
-            automatic_installation = true,
             ensure_installed = {
                 -- Languages
                 "lua_ls",        -- Lua
@@ -68,31 +67,34 @@ return {
             local capabilities =
                 require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-            -- Shared `on_attach` function for key mappings and settings
-            local on_attach = function(client, bufnr)
-                local buf_map = function(mode, lhs, rhs, desc)
-                    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
-                end
+            -- LspAttach autocmd for key mappings (replaces on_attach)
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local bufnr = args.buf
+                    local buf_map = function(mode, lhs, rhs, desc)
+                        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+                    end
 
-                -- Navigation handled by Snacks picker (snacks.lua)
-                -- gd, gD, gi, gr, gy are mapped globally there
+                    -- Navigation handled by Snacks picker (snacks.lua)
+                    -- gd, gD, gi, gr, gy are mapped globally there
 
-                -- Documentation
-                buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-                buf_map("n", "gh", vim.lsp.buf.signature_help, "Signature Help")
+                    -- Documentation
+                    buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+                    buf_map("n", "gh", vim.lsp.buf.signature_help, "Signature Help")
 
-                -- Diagnostics
-                buf_map("n", "[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
-                buf_map("n", "]d", vim.diagnostic.goto_next, "Next Diagnostic")
+                    -- Diagnostics
+                    buf_map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous Diagnostic")
+                    buf_map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next Diagnostic")
 
-                -- Actions
-                buf_map("n", "<leader>ll", vim.lsp.codelens.run, "Run CodeLens")
-                buf_map("n", "<leader>lR", vim.lsp.buf.rename, "Rename Symbol")
-                buf_map("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
-                buf_map("n", "<leader>lf", function()
-                    vim.lsp.buf.format({ async = true })
-                end, "Format Document")
-            end
+                    -- Actions
+                    buf_map("n", "<leader>ll", vim.lsp.codelens.run, "Run CodeLens")
+                    buf_map("n", "<leader>lR", vim.lsp.buf.rename, "Rename Symbol")
+                    buf_map("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
+                    buf_map("n", "<leader>lf", function()
+                        vim.lsp.buf.format({ async = true })
+                    end, "Format Document")
+                end,
+            })
 
             -- Format on save configuration (centralized)
             local format_on_save = function(pattern, server_name, opts)
@@ -114,13 +116,13 @@ return {
 
             -- Define LSP servers and their settings
             local servers = {
-                -- Lua
+                -- Lua (formatting handled by stylua via none-ls)
                 lua_ls = {
                     settings = {
                         Lua = {
                             runtime = { version = "LuaJIT" },
                             diagnostics = { globals = { "vim", "Snacks" } },
-                            workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
+                            workspace = { checkThirdParty = false },
                             telemetry = { enable = false },
                         },
                     },
@@ -130,8 +132,8 @@ return {
                 rust_analyzer = {
                     settings = {
                         ["rust-analyzer"] = {
-                            checkOnSave = { command = "clippy" },
-                            cargo = { loadOutDirsFromCheck = true },
+                            check = { command = "clippy" },
+                            cargo = { buildScripts = { enable = true } },
                             procMacro = { enable = true },
                             inlayHints = { locationLinks = false },
                         },
@@ -230,14 +232,7 @@ return {
 
             -- Setup all servers
             for server_name, config in pairs(servers) do
-                config = config or {}
                 vim.lsp.config[server_name] = vim.tbl_extend("force", {
-                    cmd = config.cmd,
-                    filetypes = config.filetypes,
-                    root_dir = config.root_dir,
-                    init_options = config.init_options,
-                    settings = config.settings,
-                    on_attach = on_attach,
                     capabilities = capabilities,
                 }, config)
             end
@@ -245,7 +240,6 @@ return {
             -- Format on save configurations
             format_on_save({ "*.tf", "*.tfvars", "*.hcl", "terragrunt.hcl", "*.tofu" }, "terraformls")
             format_on_save({ "*.py", "*.pyi" }, "ruff")
-            format_on_save({ "*.lua" }, "lua_ls")
             format_on_save({ "*.rs" }, "rust_analyzer")
         end,
     },
@@ -313,7 +307,7 @@ return {
     -- https://github.com/folke/trouble.nvim
     {
         "folke/trouble.nvim",
-        opts = { vim.diagnostic.config({ virtual_text = true }) }, -- for default options, refer to the configuration section for custom setup.
+        opts = {},
         cmd = "Trouble",
         keys = {
             {
@@ -357,8 +351,8 @@ return {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
             "theHamsta/nvim-dap-virtual-text",
-            "leoluz/nvim-dap-go",           -- Go debugging
-            "mfussenegger/nvim-dap-python", -- Python debugging
+            "leoluz/nvim-dap-go",
+            "mfussenegger/nvim-dap-python",
         },
         config = function()
             local dap, dapui = require("dap"), require("dapui")
@@ -367,7 +361,6 @@ return {
             dapui.setup({
                 icons = { expanded = "▾", collapsed = "▸", current_frame = "→" },
                 mappings = {
-                    -- Use a table to apply multiple mappings
                     expand = { "<CR>", "<2-LeftMouse>" },
                     open = "o",
                     remove = "d",

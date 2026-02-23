@@ -10,7 +10,7 @@ return {
                 component_separators = { left = "", right = "" },
                 section_separators = { left = "", right = "" },
                 disabled_filetypes = {
-                    statusline = { "NvimTree" },
+                    statusline = {},
                     winbar = {},
                 },
                 ignore_focus = {},
@@ -49,7 +49,6 @@ return {
     -- <https://github.com/dstein64/nvim-scrollview>
     { -- a Neovim plugin that displays interactive vertical scrollbars and signs.
         "dstein64/nvim-scrollview",
-        enabled = true,
         opts = {
             current_only = true,
         },
@@ -69,24 +68,25 @@ return {
                 desc = "Buffer Local Keymaps (which-key)",
             },
         },
-        config = function()
+        config = function(_, opts)
+            require("which-key").setup(opts)
             require("config.keymaps")
         end,
     },
 
     -- <https://github.com/akinsho/bufferline.nvim>
-    { -- A snazzy 💅 buffer line (with tabpage integration) for Neovim built using lua.
+    { -- A snazzy buffer line (with tabpage integration) for Neovim built using lua.
         "akinsho/bufferline.nvim",
         dependencies = "nvim-tree/nvim-web-devicons",
         opts = {
             options = {
                 close_command = "bdelete! %d",
-                number = false,
+                numbers = "none",
                 right_mouse_command = nil,
                 left_mouse_command = "buffer %d",
                 middle_mouse_command = nil,
                 indicator = {
-                    icon = "▎", -- This should be omitted if indicator style is not 'icon'
+                    icon = "▎",
                     style = "icon",
                 },
                 buffer_close_icon = "",
@@ -99,7 +99,6 @@ return {
                 tab_size = 10,
                 diagnostics = false,
                 custom_filter = function(bufnr)
-                    -- Filter out specific filetypes
                     local exclude_ft = { "qf", "fugitive", "git" }
                     local cur_ft = vim.bo[bufnr].filetype
                     return not vim.tbl_contains(exclude_ft, cur_ft)
@@ -108,19 +107,10 @@ return {
                 show_buffer_close_icons = true,
                 show_close_icon = true,
                 show_tab_indicators = true,
-                persist_buffer_sort = false, -- Whether or not custom sorted buffers should persist
                 separator_style = "slant",
                 enforce_regular_tabs = false,
                 always_show_bufferline = true,
                 sort_by = "id",
-                offsets = {
-                    {
-                        filetype = "NvimTree",
-                        text = "File Explorer",
-                        highlight = "Directory",
-                        separator = true, -- Use "true" to enable the default, or set your own character
-                    },
-                },
             },
             highlights = {
                 fill = {
@@ -131,15 +121,6 @@ return {
                 },
             },
         },
-    },
-
-    -- <https://github.com/numToStr/Comment.nvim>
-    { -- ⚡ Smart and Powerful commenting plugin for neovim ⚡
-        "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup() -- Simple setup without defining keymaps here
-        end,
-        event = "BufReadPost",         -- Optional lazy-load on buffer read
     },
 
     -- <https://github.com/folke/noice.nvim>
@@ -159,20 +140,16 @@ return {
             notify = {
                 enabled = false,
             },
-            -- you can enable a preset for easier configuration
             presets = {
-                bottom_search = false,        -- use a classic bottom cmdline for search
-                command_palette = true,       -- position the cmdline and popupmenu together
-                long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = false,       -- add a border to hover docs and signature help
+                bottom_search = false,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = false,
             },
         },
         dependencies = {
             "MunifTanjim/nui.nvim",
-            -- nvim-notify removed - using Snacks.notifier instead
         },
     },
-
-    -- Undotree removed - using Snacks.picker.undo() at <leader>su instead
 }

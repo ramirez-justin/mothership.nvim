@@ -67,16 +67,9 @@ wk.add({
     { "<Leader>Dnn", "<Plug>(DBUI_ToggleResultLayout)",          desc = "Toggle Result Layout" },
     { "<Leader>Dde", "<Plug>(DBUI_EditBindParameters)",          desc = "Edit Bind Parameters" },
 
-    -- Comment group
-    { "gc",          group = "Linewise Comments" },  -- Group for linewise comment mappings
-    { "gb",          group = "Blockwise Comments" }, -- Group for blockwise comment mappings
-    { "gcL",         "<Plug>(comment_toggle_linewise)",          desc = "Toggle Linewise Comment" },
-    { "gcO",         "<Plug>(comment_insert_above)",             desc = "Insert Linewise Comment Above" },
-    { "gco",         "<Plug>(comment_insert_below)",             desc = "Insert Linewise Comment Below" },
-    { "gcA",         "<Plug>(comment_insert_eol)",               desc = "Insert Comment at EOL" },
-    { "gcc",         "<Plug>(comment_toggle_linewise_current)",  desc = "Toggle Linewise Current Line" },
-    { "gbl",         "<Plug>(comment_toggle_blockwise)",         desc = "Toggle Blockwise Comment",      remap = true },
-    { "gbc",         "<Plug>(comment_toggle_blockwise_current)", desc = "Toggle Blockwise Current Block" },
+    -- Comment keymaps (built-in gc/gcc in Neovim 0.10+)
+    { "gc",          group = "Comments" },
+    { "gcc",         desc = "Toggle Line Comment" },
 
     -- Precommit group
     { "<leader>p",   group = "Precommit" }, -- Group for pre-commit-related actions
@@ -87,7 +80,4 @@ wk.add({
     { "<leader>w",   "<cmd>w<cr>",                               desc = "Write File" },
 
     -- Undo history: use <leader>su (Snacks.picker.undo)
-
-    -- Avante.nvim
-    { "<leader>a",   group = "Avante" }, -- Group for Avante.nvim actions
 })

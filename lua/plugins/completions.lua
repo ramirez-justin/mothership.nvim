@@ -9,20 +9,28 @@ return {
     { "hrsh7th/cmp-emoji",                         event = "InsertEnter" },
 
     -- Snippets
-    { "L3MON4D3/LuaSnip",                          event = "InsertEnter" },
-    { "rafamadriz/friendly-snippets",              event = "InsertEnter" },
+    {
+        "L3MON4D3/LuaSnip",
+        event = "InsertEnter",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+    },
     { "saadparwaiz1/cmp_luasnip",                  event = "InsertEnter" },
 
     -- AI completion
-    { "Exafunction/windsurf.nvim",                 event = "InsertEnter" },
+    {
+        "Exafunction/windsurf.nvim",
+        event = "InsertEnter",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "hrsh7th/nvim-cmp",
+        },
+    },
 
     -- Autopairs integration
     { "windwp/nvim-autopairs",                     event = "InsertEnter" },
-
-    -- Database completion
-    { "tpope/vim-dadbod",                          cmd = "DB" },
-    { "kristijanhusak/vim-dadbod-completion",      ft = { "sql", "mysql", "plsql" } },
-    { "kristijanhusak/vim-dadbod-ui",              cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection" }, dependencies = { "tpope/vim-dadbod" } },
 
     -- Markdown rendering
     { "MeanderingProgrammer/render-markdown.nvim", ft = "markdown" },
@@ -31,7 +39,6 @@ return {
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
-        -- Dependencies removed - plugins above have their own lazy loading
 
         config = function()
             local cmp = require("cmp")
@@ -89,6 +96,24 @@ return {
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm({ select = false }),
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
                 }),
                 formatting = {
                     fields = { "kind", "abbr", "menu" },
@@ -134,8 +159,7 @@ return {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources(
                     { { name = "path" } },
-                    { { name = "cmdline" } },
-                    { { name = "render-markdown" } }
+                    { { name = "cmdline" } }
                 ),
             })
 
