@@ -665,6 +665,13 @@ return {
                 desc = "Lazygit",
             },
             {
+                "<leader>gD",
+                function()
+                    Snacks.terminal("gh dash")
+                end,
+                desc = "GitHub Dashboard",
+            },
+            {
                 "<leader>un",
                 function()
                     Snacks.notifier.hide()
