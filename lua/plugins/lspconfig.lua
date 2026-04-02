@@ -20,220 +20,154 @@ return {
         },
     },
 
-    -- Mason-LSPConfig: Bridge between Mason and LSP config
+    -- LSP: Mason-lspconfig bridges Mason with Neovim's native LSP (0.11+ API).
+    -- nvim-lspconfig is a dependency only — provides server defaults (cmd, filetypes, root_dir).
     -- https://github.com/williamboman/mason-lspconfig.nvim
     {
         "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("mason-lspconfig").setup({
-                -- stylua is a formatter not an LSP — exclude from auto-enable
-                automatic_enable = { exclude = { "stylua" } },
-                ensure_installed = {
-                    -- Languages
-                    "lua_ls",        -- Lua
-                    "rust_analyzer", -- Rust
-                    "clangd",        -- C/C++
-                    "ts_ls",         -- TypeScript
-                    "ruff",          -- Python
-
-                    -- Web development
-                    "cssls",  -- CSS
-                    "html",   -- HTML
-                    "jsonls", -- JSON
-                    "eslint", -- JavaScript/TypeScript linting
-
-                    -- DevOps
-                    "bashls",      -- Bash
-                    "dockerls",    -- Docker
-                    "terraformls", -- Terraform
-                    "tflint",      -- Terraform linting
-                    "yamlls",      -- YAML
-
-                    -- Others
-                    "gopls",     -- Go
-                    "sqlls",     -- SQL
-                    "vimls",     -- Vim script
-                    "jinja_lsp", -- Jinja templates
-                },
-            })
-
-            -- Register per-server configs at startup so vim.lsp health checks pass.
-            -- Capabilities are added globally by nvim-lspconfig when it loads on BufReadPre.
-            local servers = {
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            runtime = { version = "LuaJIT" },
-                            diagnostics = { globals = { "vim", "Snacks" } },
-                            workspace = { checkThirdParty = false },
-                            telemetry = { enable = false },
-                        },
-                    },
-                },
-                rust_analyzer = {
-                    settings = {
-                        ["rust-analyzer"] = {
-                            check = { command = "clippy" },
-                            cargo = { buildScripts = { enable = true } },
-                            procMacro = { enable = true },
-                            inlayHints = { locationLinks = false },
-                        },
-                    },
-                },
-                ts_ls = {
-                    settings = {
-                        documentFormatting = false,
-                        typescript = {
-                            inlayHints = {
-                                includeInlayParameterNameHints = "all",
-                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                                includeInlayFunctionParameterTypeHints = true,
-                                includeInlayVariableTypeHints = true,
-                                includeInlayPropertyDeclarationTypeHints = true,
-                                includeInlayFunctionLikeReturnTypeHints = true,
-                            },
-                        },
-                        javascript = {
-                            inlayHints = {
-                                includeInlayParameterNameHints = "all",
-                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                                includeInlayFunctionParameterTypeHints = true,
-                                includeInlayVariableTypeHints = true,
-                                includeInlayPropertyDeclarationTypeHints = true,
-                                includeInlayFunctionLikeReturnTypeHints = true,
-                            },
-                        },
-                    },
-                },
-                clangd = {
-                    cmd = { "clangd", "--background-index", "--clang-tidy" },
-                    filetypes = { "c", "cpp", "objc", "objcpp" },
-                    init_options = {
-                        clangdFileStatus = true,
-                        usePlaceholders = true,
-                        completeUnimported = true,
-                    },
-                },
-                terraformls = {
-                    filetypes = { "terraform", "terraform-vars", "tf", "tfvars", "hcl", "tofu" },
-                    settings = {
-                        terraform = {
-                            languageServer = { enable = true },
-                            validation = {
-                                enableEnhancedValidation = true,
-                                moduleCalls = true,
-                                moduleVariables = true,
-                                variables = true,
-                            },
-                        },
-                    },
-                },
-                yamlls = {
-                    settings = {
-                        yaml = {
-                            schemas = {
-                                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-                                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
-                                "docker-compose*.yml",
-                                ["https://json.schemastore.org/github-action.json"] = "action.yml",
-                            },
-                            validate = true,
-                            format = { enable = true },
-                        },
-                    },
-                },
-                ruff = {
-                    settings = {
-                        ruff = { lint = { run = "onSave" } },
-                    },
-                },
-                bashls = {},
-                cssls = {},
-                dockerls = {},
-                eslint = {},
-                gopls = {},
-                html = {},
-                jsonls = {},
-                sqlls = {},
-                tflint = {},
-                vimls = {},
-                jinja_lsp = {},
-            }
-
-            for server_name, server_config in pairs(servers) do
-                vim.lsp.config(server_name, server_config)
-            end
-        end,
-    },
-
-    -- LSP Config: Configure Neovim's built-in LSP client
-    -- https://github.com/neovim/nvim-lspconfig
-    {
-        "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        lazy = false,
         dependencies = {
             "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
+            "neovim/nvim-lspconfig",
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
-            local capabilities =
-                require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            -- Global capabilities for all servers
+            vim.lsp.config("*", {
+                capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            })
 
-            -- Set capabilities globally for all LSP servers registered at startup
-            vim.lsp.config("*", { capabilities = capabilities })
+            -- Per-server settings
+            vim.lsp.config("lua_ls", {
+                settings = {
+                    Lua = {
+                        runtime = { version = "LuaJIT" },
+                        diagnostics = { globals = { "vim", "Snacks" } },
+                        workspace = { checkThirdParty = false },
+                        telemetry = { enable = false },
+                    },
+                },
+            })
+            vim.lsp.config("rust_analyzer", {
+                settings = {
+                    ["rust-analyzer"] = {
+                        check = { command = "clippy" },
+                        cargo = { buildScripts = { enable = true } },
+                        procMacro = { enable = true },
+                        inlayHints = { locationLinks = false },
+                    },
+                },
+            })
+            vim.lsp.config("ts_ls", {
+                settings = {
+                    documentFormatting = false,
+                    typescript = {
+                        inlayHints = {
+                            includeInlayParameterNameHints = "all",
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayVariableTypeHints = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                        },
+                    },
+                    javascript = {
+                        inlayHints = {
+                            includeInlayParameterNameHints = "all",
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayVariableTypeHints = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                        },
+                    },
+                },
+            })
+            vim.lsp.config("clangd", {
+                cmd = { "clangd", "--background-index", "--clang-tidy" },
+                filetypes = { "c", "cpp", "objc", "objcpp" },
+                init_options = {
+                    clangdFileStatus = true,
+                    usePlaceholders = true,
+                    completeUnimported = true,
+                },
+            })
+            vim.lsp.config("terraformls", {
+                filetypes = { "terraform", "terraform-vars", "tf", "tfvars", "hcl", "tofu" },
+                settings = {
+                    terraform = {
+                        languageServer = { enable = true },
+                        validation = {
+                            enableEnhancedValidation = true,
+                            moduleCalls = true,
+                            moduleVariables = true,
+                            variables = true,
+                        },
+                    },
+                },
+            })
+            vim.lsp.config("yamlls", {
+                settings = {
+                    yaml = {
+                        schemas = {
+                            ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.yml",
+                            ["https://json.schemastore.org/github-action.json"] = "action.yml",
+                        },
+                        validate = true,
+                        format = { enable = true },
+                    },
+                },
+            })
+            vim.lsp.config("ruff", {
+                settings = { ruff = { lint = { run = "onSave" } } },
+            })
 
-            -- LspAttach autocmd for key mappings (replaces on_attach)
+            -- Mason-lspconfig: ensure servers are installed
+            -- stylua is a formatter, not an LSP — exclude from auto-enable
+            require("mason-lspconfig").setup({
+                automatic_enable = { exclude = { "stylua" } },
+                ensure_installed = {
+                    "lua_ls", "rust_analyzer", "clangd", "ts_ls", "ruff",
+                    "cssls", "html", "jsonls", "eslint",
+                    "bashls", "dockerls", "terraformls", "tflint", "yamlls",
+                    "gopls", "sqlls", "vimls", "jinja_lsp",
+                },
+            })
+
+            -- Keymaps on LSP attach
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(args)
                     local bufnr = args.buf
-                    local buf_map = function(mode, lhs, rhs, desc)
+                    local map = function(mode, lhs, rhs, desc)
                         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
                     end
-
-                    -- Navigation handled by Snacks picker (snacks.lua)
-                    -- gd, gD, gi, gr, gy are mapped globally there
-
-                    -- Documentation
-                    buf_map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-                    buf_map("n", "gh", vim.lsp.buf.signature_help, "Signature Help")
-
-                    -- Diagnostics
-                    buf_map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous Diagnostic")
-                    buf_map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next Diagnostic")
-
-                    -- Actions
-                    buf_map("n", "<leader>ll", vim.lsp.codelens.run, "Run CodeLens")
-                    buf_map("n", "<leader>lR", vim.lsp.buf.rename, "Rename Symbol")
-                    buf_map("n", "<leader>la", vim.lsp.buf.code_action, "Code Action")
-                    buf_map("n", "<leader>lf", function()
-                        vim.lsp.buf.format({ async = true })
-                    end, "Format Document")
+                    map("n", "K",           vim.lsp.buf.hover,         "Hover Documentation")
+                    map("n", "gh",          vim.lsp.buf.signature_help, "Signature Help")
+                    map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous Diagnostic")
+                    map("n", "]d", function() vim.diagnostic.jump({ count = 1 })  end, "Next Diagnostic")
+                    map("n", "<leader>ll",  vim.lsp.codelens.run,       "Run CodeLens")
+                    map("n", "<leader>lR",  vim.lsp.buf.rename,         "Rename Symbol")
+                    map("n", "<leader>la",  vim.lsp.buf.code_action,    "Code Action")
+                    map("n", "<leader>lf",  function() vim.lsp.buf.format({ async = true }) end, "Format Document")
                 end,
             })
 
-            -- Format on save configuration (centralized)
-            local format_on_save = function(pattern, server_name, opts)
-                opts = opts or {}
+            -- Format on save via LSP
+            local function fmt_on_save(pattern, server)
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     pattern = pattern,
                     callback = function()
                         vim.lsp.buf.format({
-                            timeout_ms = opts.timeout_ms or 3000,
-                            async = opts.async or false,
-                            filter = function(client)
-                                return client.name == server_name
-                            end,
+                            timeout_ms = 3000,
+                            filter = function(client) return client.name == server end,
                         })
                     end,
-                    desc = "Format " .. table.concat(pattern, "/") .. " files on save with " .. server_name,
                 })
             end
-
-            -- Format on save configurations
-            format_on_save({ "*.tf", "*.tfvars", "*.hcl", "terragrunt.hcl", "*.tofu" }, "terraformls")
-            format_on_save({ "*.py", "*.pyi" }, "ruff")
-            format_on_save({ "*.rs" }, "rust_analyzer")
+            fmt_on_save({ "*.tf", "*.tfvars", "*.hcl", "terragrunt.hcl", "*.tofu" }, "terraformls")
+            fmt_on_save({ "*.py", "*.pyi" }, "ruff")
+            fmt_on_save({ "*.rs" }, "rust_analyzer")
         end,
     },
 
