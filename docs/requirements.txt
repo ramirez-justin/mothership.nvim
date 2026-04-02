@@ -1,18 +1,34 @@
-brew install neovim
-brew install ripgrip
-brew install cask font-space-mono-nerd-font
-brew install lua-language-server
-`mason.nvim` relaxes the minimum requirements by attempting multiple different
-utilities (for example, `wget`, `curl`, and `Invoke-WebRequest` are all
-perfect substitutes). The _minimum_ recommended requirements are:
+# System Requirements
 
--   neovim `>= 0.7.0`
--   For Unix systems: `git(1)`, `curl(1)` or `wget(1)`, `unzip(1)`, `tar(1)`,
-    `gzip(1)`
--   For Windows systems: pwsh or powershell, git, tar, and 7zip or peazip or
-    archiver or winzip or WinRAR
+## Neovim
+brew install neovim   # must be >= 0.12.0
 
-Note that Mason will regularly shell out to external package managers,
-such as `cargo` and `npm`. Depending on your personal usage, some of these
-will also need to be installed. Refer to `:checkhealth mason` for a full list.
+## Core Tools
+brew install ripgrep fd git curl tar unzip
 
+## Fonts (pick one Nerd Font)
+brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-space-mono-nerd-font
+
+## Runtimes (for LSP servers via Mason)
+brew install node npm       # JS/TS/YAML/HTML/CSS LSPs
+brew install go             # gopls
+brew install python         # ruff, debugpy
+brew install rust           # rust-analyzer, tree-sitter-cli
+
+## tree-sitter CLI (required by nvim-treesitter main branch)
+cargo install tree-sitter-cli --locked
+
+## Formatters (or install via :Mason inside Neovim)
+brew install stylua prettier shfmt
+
+## Git tools
+brew install lazygit gh
+
+## Image rendering (optional, for snacks.image)
+brew install imagemagick ghostscript
+
+## tmux (if used) — add to tmux.conf:
+#   set-option -g default-terminal 'tmux-256color'
+#   set-option -g terminal-overrides ',xterm-ghostty:RGB:Tc'
+#   set-option -g allow-passthrough on
