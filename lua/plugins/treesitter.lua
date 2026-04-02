@@ -1,10 +1,12 @@
 return {
     {
-        -- Treesitter Plugin
-        -- Note: playground is deprecated, use built-in :InspectTree instead
         "nvim-treesitter/nvim-treesitter",
-        opts = {
-            ensure_installed = {
+        branch = "main",
+        lazy = false,
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter").setup()
+            require("nvim-treesitter").install({
                 "c",
                 "lua",
                 "vim",
@@ -18,16 +20,14 @@ return {
                 "toml",
                 "terraform",
                 "hcl",
-            },                                             -- A list of languages to install
-            sync_install = false,                          -- Install parsers synchronously
-            auto_install = true,                           -- Automatically install missing parsers
-            highlight = {
-                enable = true,                             -- Enable syntax highlighting
-                additional_vim_regex_highlighting = false, -- Use Treesitter only for highlighting
-            },
-        },
-        config = function(_, opts)
-            require("nvim-treesitter.configs").setup(opts)
+                "markdown",
+                "markdown_inline",
+                "bash",
+                "typescript",
+                "javascript",
+                "css",
+                "yaml",
+            })
         end,
     },
 }

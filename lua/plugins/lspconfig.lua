@@ -24,33 +24,146 @@ return {
     -- https://github.com/williamboman/mason-lspconfig.nvim
     {
         "williamboman/mason-lspconfig.nvim",
-        opts = {
-            ensure_installed = {
-                -- Languages
-                "lua_ls",        -- Lua
-                "rust_analyzer", -- Rust
-                "clangd",        -- C/C++
-                "ts_ls",         -- TypeScript
-                "ruff",          -- Python
+        config = function()
+            require("mason-lspconfig").setup({
+                -- stylua is a formatter not an LSP — exclude from auto-enable
+                automatic_enable = { exclude = { "stylua" } },
+                ensure_installed = {
+                    -- Languages
+                    "lua_ls",        -- Lua
+                    "rust_analyzer", -- Rust
+                    "clangd",        -- C/C++
+                    "ts_ls",         -- TypeScript
+                    "ruff",          -- Python
 
-                -- Web development
-                "cssls",  -- CSS
-                "html",   -- HTML
-                "jsonls", -- JSON
-                "eslint", -- JavaScript/TypeScript linting
+                    -- Web development
+                    "cssls",  -- CSS
+                    "html",   -- HTML
+                    "jsonls", -- JSON
+                    "eslint", -- JavaScript/TypeScript linting
 
-                -- DevOps
-                "bashls",      -- Bash
-                "dockerls",    -- Docker
-                "terraformls", -- Terraform
-                "tflint",      -- Terraform linting
-                "yamlls",      -- YAML
+                    -- DevOps
+                    "bashls",      -- Bash
+                    "dockerls",    -- Docker
+                    "terraformls", -- Terraform
+                    "tflint",      -- Terraform linting
+                    "yamlls",      -- YAML
 
-                -- Others
-                "vimls",     -- Vim script
-                "jinja_lsp", -- Jinja templates
-            },
-        },
+                    -- Others
+                    "gopls",     -- Go
+                    "sqlls",     -- SQL
+                    "vimls",     -- Vim script
+                    "jinja_lsp", -- Jinja templates
+                },
+            })
+
+            -- Register per-server configs at startup so vim.lsp health checks pass.
+            -- Capabilities are added globally by nvim-lspconfig when it loads on BufReadPre.
+            local servers = {
+                lua_ls = {
+                    settings = {
+                        Lua = {
+                            runtime = { version = "LuaJIT" },
+                            diagnostics = { globals = { "vim", "Snacks" } },
+                            workspace = { checkThirdParty = false },
+                            telemetry = { enable = false },
+                        },
+                    },
+                },
+                rust_analyzer = {
+                    settings = {
+                        ["rust-analyzer"] = {
+                            check = { command = "clippy" },
+                            cargo = { buildScripts = { enable = true } },
+                            procMacro = { enable = true },
+                            inlayHints = { locationLinks = false },
+                        },
+                    },
+                },
+                ts_ls = {
+                    settings = {
+                        documentFormatting = false,
+                        typescript = {
+                            inlayHints = {
+                                includeInlayParameterNameHints = "all",
+                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                includeInlayFunctionParameterTypeHints = true,
+                                includeInlayVariableTypeHints = true,
+                                includeInlayPropertyDeclarationTypeHints = true,
+                                includeInlayFunctionLikeReturnTypeHints = true,
+                            },
+                        },
+                        javascript = {
+                            inlayHints = {
+                                includeInlayParameterNameHints = "all",
+                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                includeInlayFunctionParameterTypeHints = true,
+                                includeInlayVariableTypeHints = true,
+                                includeInlayPropertyDeclarationTypeHints = true,
+                                includeInlayFunctionLikeReturnTypeHints = true,
+                            },
+                        },
+                    },
+                },
+                clangd = {
+                    cmd = { "clangd", "--background-index", "--clang-tidy" },
+                    filetypes = { "c", "cpp", "objc", "objcpp" },
+                    init_options = {
+                        clangdFileStatus = true,
+                        usePlaceholders = true,
+                        completeUnimported = true,
+                    },
+                },
+                terraformls = {
+                    filetypes = { "terraform", "terraform-vars", "tf", "tfvars", "hcl", "tofu" },
+                    settings = {
+                        terraform = {
+                            languageServer = { enable = true },
+                            validation = {
+                                enableEnhancedValidation = true,
+                                moduleCalls = true,
+                                moduleVariables = true,
+                                variables = true,
+                            },
+                        },
+                    },
+                },
+                yamlls = {
+                    settings = {
+                        yaml = {
+                            schemas = {
+                                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
+                                "docker-compose*.yml",
+                                ["https://json.schemastore.org/github-action.json"] = "action.yml",
+                            },
+                            validate = true,
+                            format = { enable = true },
+                        },
+                    },
+                },
+                ruff = {
+                    settings = {
+                        ruff = { lint = { run = "onSave" } },
+                    },
+                },
+                bashls = {},
+                cssls = {},
+                dockerls = {},
+                eslint = {},
+                gopls = {},
+                html = {},
+                jsonls = {},
+                sqlls = {},
+                tflint = {},
+                vimls = {},
+                jinja_lsp = {},
+            }
+
+            for server_name, server_config in pairs(servers) do
+                vim.lsp.config(server_name, server_config)
+            end
+        end,
     },
 
     -- LSP Config: Configure Neovim's built-in LSP client
@@ -66,6 +179,9 @@ return {
         config = function()
             local capabilities =
                 require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+            -- Set capabilities globally for all LSP servers registered at startup
+            vim.lsp.config("*", { capabilities = capabilities })
 
             -- LspAttach autocmd for key mappings (replaces on_attach)
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -114,129 +230,6 @@ return {
                 })
             end
 
-            -- Define LSP servers and their settings
-            local servers = {
-                -- Lua (formatting handled by stylua via none-ls)
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            runtime = { version = "LuaJIT" },
-                            diagnostics = { globals = { "vim", "Snacks" } },
-                            workspace = { checkThirdParty = false },
-                            telemetry = { enable = false },
-                        },
-                    },
-                },
-
-                -- Rust
-                rust_analyzer = {
-                    settings = {
-                        ["rust-analyzer"] = {
-                            check = { command = "clippy" },
-                            cargo = { buildScripts = { enable = true } },
-                            procMacro = { enable = true },
-                            inlayHints = { locationLinks = false },
-                        },
-                    },
-                },
-
-                -- TypeScript/JavaScript
-                ts_ls = {
-                    settings = {
-                        documentFormatting = false,
-                        typescript = {
-                            inlayHints = {
-                                includeInlayParameterNameHints = "all",
-                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                                includeInlayFunctionParameterTypeHints = true,
-                                includeInlayVariableTypeHints = true,
-                                includeInlayPropertyDeclarationTypeHints = true,
-                                includeInlayFunctionLikeReturnTypeHints = true,
-                            },
-                        },
-                        javascript = {
-                            inlayHints = {
-                                includeInlayParameterNameHints = "all",
-                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                                includeInlayFunctionParameterTypeHints = true,
-                                includeInlayVariableTypeHints = true,
-                                includeInlayPropertyDeclarationTypeHints = true,
-                                includeInlayFunctionLikeReturnTypeHints = true,
-                            },
-                        },
-                    },
-                },
-
-                -- C/C++
-                clangd = {
-                    cmd = { "clangd", "--background-index", "--clang-tidy" },
-                    filetypes = { "c", "cpp", "objc", "objcpp" },
-                    init_options = {
-                        clangdFileStatus = true,
-                        usePlaceholders = true,
-                        completeUnimported = true,
-                    },
-                },
-
-                -- Terraform
-                terraformls = {
-                    filetypes = { "terraform", "terraform-vars", "tf", "tfvars", "hcl", "tofu" },
-                    settings = {
-                        terraform = {
-                            languageServer = { enable = true },
-                            validation = {
-                                enableEnhancedValidation = true,
-                                moduleCalls = true,
-                                moduleVariables = true,
-                                variables = true,
-                            },
-                        },
-                    },
-                },
-
-                -- YAML
-                yamlls = {
-                    settings = {
-                        yaml = {
-                            schemas = {
-                                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-                                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
-                                "docker-compose*.yml",
-                                ["https://json.schemastore.org/github-action.json"] = "action.yml",
-                            },
-                            validate = true,
-                            format = { enable = true },
-                        },
-                    },
-                },
-
-                -- Python
-                ruff = {
-                    settings = {
-                        ruff = {
-                            lint = { run = "onSave" },
-                        },
-                    },
-                },
-
-                -- Simple servers (no special config needed)
-                bashls = {},
-                cssls = {},
-                dockerls = {},
-                eslint = {},
-                html = {},
-                jsonls = {},
-                vimls = {},
-                jinja_lsp = {},
-            }
-
-            -- Setup all servers
-            for server_name, config in pairs(servers) do
-                vim.lsp.config[server_name] = vim.tbl_extend("force", {
-                    capabilities = capabilities,
-                }, config)
-            end
-
             -- Format on save configurations
             format_on_save({ "*.tf", "*.tfvars", "*.hcl", "terragrunt.hcl", "*.tofu" }, "terraformls")
             format_on_save({ "*.py", "*.pyi" }, "ruff")
@@ -265,6 +258,7 @@ return {
                     null_ls.builtins.code_actions.gitsigns,
 
                     -- Formatting
+                    null_ls.builtins.formatting.sqlfmt,
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.prettier.with({
                         filetypes = {
@@ -282,7 +276,7 @@ return {
                     null_ls.builtins.formatting.shfmt,
                 },
                 on_attach = function(client, bufnr)
-                    if client.supports_method("textDocument/formatting") then
+                    if client:supports_method("textDocument/formatting") then
                         local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
                         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
                         vim.api.nvim_create_autocmd("BufWritePre", {

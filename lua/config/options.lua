@@ -50,7 +50,7 @@ opt.wildmode = "longest:full,full"          -- Command-line completion mode
 opt.winminwidth = 5                         -- Minimum window width
 opt.wrap = false                            -- Disable line wrap
 opt.foldmethod = "expr"                     -- Enable folding based on expression
-opt.foldexpr = "nvim_treesitter#foldexpr()" -- Use treesitter for folding
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Use treesitter for folding
 opt.foldcolumn = "0"                        -- Disable fold column
 opt.foldtext = ""                           -- Disable fold text
 opt.foldlevelstart = 99                     -- Start with all folds open
@@ -60,6 +60,12 @@ opt.shortmess:append({ C = true })          -- Don't show "scanning" messages
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
+
+-- Disable unused providers to suppress checkhealth warnings
+vim.g.loaded_perl_provider = 0
+
+-- Always ensure files end with a newline (linters expect this)
+vim.opt.fixendofline = true
 
 vim.diagnostic.config({
     -- Global settings for diagnostics
