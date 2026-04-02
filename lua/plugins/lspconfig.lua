@@ -135,21 +135,17 @@ return {
                 },
             })
 
-            -- Keymaps on LSP attach
+            -- Keymaps on LSP attach.
+            -- Note: 0.12 sets these automatically: K, grn, gra, grr, gri, grt, grx
+            -- We only add what isn't covered by defaults.
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(args)
                     local bufnr = args.buf
-                    local map = function(mode, lhs, rhs, desc)
-                        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+                    local map = function(lhs, rhs, desc)
+                        vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
                     end
-                    map("n", "K",           vim.lsp.buf.hover,         "Hover Documentation")
-                    map("n", "gh",          vim.lsp.buf.signature_help, "Signature Help")
-                    map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous Diagnostic")
-                    map("n", "]d", function() vim.diagnostic.jump({ count = 1 })  end, "Next Diagnostic")
-                    map("n", "<leader>ll",  vim.lsp.codelens.run,       "Run CodeLens")
-                    map("n", "<leader>lR",  vim.lsp.buf.rename,         "Rename Symbol")
-                    map("n", "<leader>la",  vim.lsp.buf.code_action,    "Code Action")
-                    map("n", "<leader>lf",  function() vim.lsp.buf.format({ async = true }) end, "Format Document")
+                    map("gh", vim.lsp.buf.signature_help, "Signature Help")
+                    map("<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "Format Document")
                 end,
             })
 

@@ -26,6 +26,7 @@ opt.mouse = "a"            -- Enable mouse mode
 opt.number = true          -- Print line number
 opt.pumblend = 10          -- Popup blend
 opt.pumheight = 10         -- Maximum number of entries in a popup
+opt.pumborder = "rounded"  -- 0.12: completion popup border
 opt.relativenumber = true  -- Relative line numbers
 opt.scrolloff = 4          -- Lines of context
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
@@ -68,13 +69,17 @@ vim.g.loaded_perl_provider = 0
 vim.opt.fixendofline = true
 
 vim.diagnostic.config({
-    -- Global settings for diagnostics
-    virtual_text = {
-        spacing = 2, -- Adjust spacing for virtual text
-        prefix = "●", -- Set a prefix for virtual text
+    virtual_text = { spacing = 2, prefix = "●" },
+    -- 0.12: sign_define() no longer works; configure icons here
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN]  = " ",
+            [vim.diagnostic.severity.INFO]  = " ",
+            [vim.diagnostic.severity.HINT]  = " ",
+        },
     },
-    signs = true, -- Enable signs in the signcolumn
-    underline = true, -- Enable underlines for diagnostics
-    update_in_insert = false, -- Disable diagnostic updates in insert mode
-    severity_sort = true, -- Sort diagnostics by severity
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
 })
