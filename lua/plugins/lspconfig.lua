@@ -188,7 +188,8 @@ return {
                     null_ls.builtins.code_actions.gitsigns,
 
                     -- Formatting
-                    null_ls.builtins.formatting.sqlfmt,
+                    null_ls.builtins.formatting.sqlfluff,
+                    null_ls.builtins.diagnostics.sqlfluff,
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.prettier.with({
                         filetypes = {
