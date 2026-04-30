@@ -695,6 +695,14 @@ return {
                 mode = { "n", "t" },
             },
             {
+                "<C-p>",
+                function()
+                    Snacks.terminal("pi")
+                end,
+                desc = "Toggle Pi",
+                mode = { "n", "t" },
+            },
+            {
                 "]]",
                 function()
                     Snacks.words.jump(vim.v.count1)
