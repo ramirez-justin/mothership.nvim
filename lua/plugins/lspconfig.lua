@@ -215,6 +215,7 @@ return {
                             buffer = bufnr,
                             callback = function()
                                 vim.lsp.buf.format({
+                                    timeout_ms = 10000,
                                     filter = function(formatting_client)
                                         return formatting_client.name == "null-ls"
                                     end,
