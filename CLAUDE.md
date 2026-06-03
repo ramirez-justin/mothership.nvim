@@ -81,7 +81,7 @@ All LSP configuration lives in `lua/plugins/lspconfig.lua` in a **single non-laz
 | Python | ruff (also via LSP format-on-save) |
 | Rust | rust_analyzer (format-on-save) |
 | Terraform | terraformls (format-on-save) |
-| SQL | sqlfmt |
+| SQL | sqlfluff |
 | Shell | shfmt |
 
 ## Known Headless Checkhealth False-Positives

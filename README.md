@@ -66,7 +66,7 @@ Verify setup:
 - **LSP** via Mason + mason-lspconfig + Neovim 0.12 native `vim.lsp.config` API
 - **Treesitter** via `nvim-treesitter` main branch (0.12 rewrite)
 - **Completion** via nvim-cmp + Copilot
-- **Formatting/linting** via none-ls (stylua, prettier, ruff, sqlfmt, shfmt)
+- **Formatting/linting** via none-ls (stylua, prettier, ruff, sqlfluff, shfmt)
 - **Debugging** via nvim-dap (Go, Python, with UI)
 - **Git** via gitsigns, Lazygit, octo.nvim (PR review), git-blame
 - **AI** via Copilot + avante.nvim

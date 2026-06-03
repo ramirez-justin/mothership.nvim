@@ -207,7 +207,21 @@ return {
                     null_ls.builtins.formatting.shfmt,
                 },
                 on_attach = function(client, bufnr)
-                    if client:supports_method("textDocument/formatting") then
+                    local autoformat_filetypes = {
+                        lua = true,
+                        javascript = true,
+                        typescript = true,
+                        css = true,
+                        scss = true,
+                        html = true,
+                        json = true,
+                        yaml = true,
+                        markdown = true,
+                        graphql = true,
+                        sh = true,
+                    }
+
+                    if client:supports_method("textDocument/formatting") and autoformat_filetypes[vim.bo[bufnr].filetype] then
                         local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
                         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
                         vim.api.nvim_create_autocmd("BufWritePre", {
