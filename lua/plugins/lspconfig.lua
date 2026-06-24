@@ -122,6 +122,23 @@ return {
             vim.lsp.config("ruff", {
                 settings = { ruff = { lint = { run = "onSave" } } },
             })
+            vim.lsp.config("sqlls", {
+                -- dbt models are .sql files, but contain Jinja like {{ ref() }}.
+                -- sql-language-server parses buffers as plain SQL and reports
+                -- false syntax errors on those template blocks.
+                root_dir = function(bufnr, on_dir)
+                    local fname = vim.api.nvim_buf_get_name(bufnr)
+                    if fname == "" then
+                        return
+                    end
+
+                    if vim.fs.root(vim.fs.dirname(fname), { "dbt_project.yml", "dbt_project.yaml" }) then
+                        return
+                    end
+
+                    on_dir(vim.fs.root(bufnr, ".sqllsrc.json") or vim.fs.dirname(fname))
+                end,
+            })
 
             -- Mason-lspconfig: ensure servers are installed
             -- stylua is a formatter, not an LSP — exclude from auto-enable
